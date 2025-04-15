@@ -92,3 +92,45 @@ class EnsemblePredictionResponse(BaseResponse):
     result: PredictionResult = Field(..., description="Ensemble prediction result")
     ensemble_id: int = Field(..., description="ID of the ensemble used")
     base_predictions: Optional[List[Dict[str, Any]]] = Field(None, description="Predictions from base models")
+
+# New schemas for daily inference pipeline
+
+class DailyPredictionRequest(BaseModel):
+    """Request model for triggering the daily prediction pipeline"""
+    model_id: int = Field(..., description="ID of the model to use")
+    symbols: List[str] = Field(..., description="List of symbols to generate predictions for")
+    update_data: bool = Field(True, description="Whether to update market data before generating predictions")
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "model_id": 1,
+                "symbols": ["AAPL", "MSFT", "GOOG", "AMZN", "META"],
+                "update_data": True
+            }
+        }
+
+class DailyPredictionResponse(BaseResponse):
+    """Response model for daily prediction pipeline"""
+    model_id: int = Field(..., description="ID of the model used")
+    symbols: List[str] = Field(..., description="Symbols requested for prediction")
+    data_update_status: str = Field(..., description="Status of data update process")
+    scheduled_at: str = Field(..., description="Timestamp when the pipeline was scheduled")
+    message: str = Field(..., description="Status message")
+
+class TradingSignal(BaseModel):
+    """Model for a trading signal"""
+    symbol: str = Field(..., description="Symbol")
+    action: str = Field(..., description="Trading action (BUY, SELL, HOLD)")
+    reason: str = Field(..., description="Reason for the signal")
+    target_price: Optional[float] = Field(None, description="Target price for profit taking")
+    stop_loss: Optional[float] = Field(None, description="Stop loss price")
+    confidence: Optional[float] = Field(None, description="Confidence score (if available)")
+
+class TradingSignalResponse(BaseResponse):
+    """Response model for trading signals"""
+    model_id: int = Field(..., description="ID of the model used")
+    prediction_date: str = Field(..., description="Date of predictions")
+    buy_signals: List[TradingSignal] = Field([], description="List of buy signals")
+    sell_signals: List[TradingSignal] = Field([], description="List of sell signals")
+    hold_signals: List[TradingSignal] = Field([], description="List of hold signals")

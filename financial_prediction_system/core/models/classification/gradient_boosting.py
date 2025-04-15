@@ -2,7 +2,7 @@ from typing import Dict, Any, Optional, Union, List
 import numpy as np
 import joblib
 import torch
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor
 
 from ..base import PredictionModel
 from ..factory import ModelFactory
@@ -11,8 +11,8 @@ from ..factory import ModelFactory
 class GradientBoostingModel(PredictionModel):
     """PyTorch-compatible wrapper for Gradient Boosting.
     
-    Strong performance for predicting price movements by 
-    combining multiple weak learners.
+    Can be used for both classification (market direction) and regression (price prediction)
+    by combining multiple weak learners for strong predictive performance.
     """
     
     def __init__(self, 
@@ -23,7 +23,8 @@ class GradientBoostingModel(PredictionModel):
                  min_samples_leaf: int = 1,
                  subsample: float = 1.0,
                  max_features: Optional[Union[str, int, float]] = None,
-                 random_state: Optional[int] = None):
+                 random_state: Optional[int] = None,
+                 regression: bool = False):
         """Initialize the Gradient Boosting model.
         
         Args:
@@ -35,17 +36,26 @@ class GradientBoostingModel(PredictionModel):
             subsample: Fraction of samples to be used for fitting the individual trees
             max_features: Number of features to consider when looking for the best split
             random_state: Random state for reproducibility
+            regression: Whether to use GradientBoostingRegressor instead of GradientBoostingClassifier
         """
-        self.model = GradientBoostingClassifier(
-            n_estimators=n_estimators,
-            learning_rate=learning_rate,
-            max_depth=max_depth,
-            min_samples_split=min_samples_split,
-            min_samples_leaf=min_samples_leaf,
-            subsample=subsample,
-            max_features=max_features,
-            random_state=random_state
-        )
+        self.regression = regression
+        
+        # Common parameters for both classifier and regressor
+        common_params = {
+            'n_estimators': n_estimators,
+            'learning_rate': learning_rate,
+            'max_depth': max_depth,
+            'min_samples_split': min_samples_split,
+            'min_samples_leaf': min_samples_leaf,
+            'subsample': subsample,
+            'max_features': max_features,
+            'random_state': random_state
+        }
+        
+        if self.regression:
+            self.model = GradientBoostingRegressor(**common_params)
+        else:
+            self.model = GradientBoostingClassifier(**common_params)
         
     def train(self, features, targets, **params):
         """Train the Gradient Boosting model.
@@ -63,6 +73,26 @@ class GradientBoostingModel(PredictionModel):
             features = features.cpu().numpy()
         if isinstance(targets, torch.Tensor):
             targets = targets.cpu().numpy()
+            
+        # Auto-detect regression if the target has continuous values
+        if not self.regression:
+            # Check if targets appear to be continuous
+            unique_targets = np.unique(targets)
+            if len(unique_targets) > 10 or np.issubdtype(targets.dtype, np.floating):
+                print("Detected continuous targets, switching to regression mode")
+                # Reinitialize as a regressor with the same parameters
+                regressor_params = {
+                    'n_estimators': self.model.n_estimators,
+                    'learning_rate': self.model.learning_rate,
+                    'max_depth': self.model.max_depth,
+                    'min_samples_split': self.model.min_samples_split,
+                    'min_samples_leaf': self.model.min_samples_leaf,
+                    'subsample': self.model.subsample,
+                    'max_features': self.model.max_features,
+                    'random_state': self.model.random_state
+                }
+                self.model = GradientBoostingRegressor(**regressor_params)
+                self.regression = True
             
         # Train the model
         self.model.fit(features, targets)
@@ -94,7 +124,7 @@ class GradientBoostingModel(PredictionModel):
         return predictions
     
     def predict_proba(self, features):
-        """Generate class probabilities.
+        """Generate class probabilities (classification only).
         
         Args:
             features: Input features (numpy array or torch tensor)
@@ -102,6 +132,9 @@ class GradientBoostingModel(PredictionModel):
         Returns:
             torch.Tensor or numpy.ndarray: Class probabilities
         """
+        if self.regression:
+            raise ValueError("predict_proba is only available for classification models")
+            
         # Convert torch tensors to numpy if necessary
         if isinstance(features, torch.Tensor):
             features = features.cpu().numpy()
@@ -119,7 +152,7 @@ class GradientBoostingModel(PredictionModel):
         return probabilities
     
     def staged_predict_proba(self, features):
-        """Generate class probabilities for each boosting iteration.
+        """Generate class probabilities for each boosting iteration (classification only).
         
         Args:
             features: Input features (numpy array or torch tensor)
@@ -127,6 +160,9 @@ class GradientBoostingModel(PredictionModel):
         Returns:
             List[numpy.ndarray] or List[torch.Tensor]: Class probabilities per stage
         """
+        if self.regression:
+            raise ValueError("staged_predict_proba is only available for classification models")
+            
         # Convert torch tensors to numpy if necessary
         if isinstance(features, torch.Tensor):
             features = features.cpu().numpy()
@@ -159,18 +195,31 @@ class GradientBoostingModel(PredictionModel):
         if isinstance(targets, torch.Tensor):
             targets = targets.cpu().numpy()
             
-        # Calculate accuracy
-        accuracy = self.model.score(features, targets)
+        # Calculate score
+        score = self.model.score(features, targets)
         
         # Get feature importances
         feature_importances = self.model.feature_importances_.tolist() if hasattr(self.model, "feature_importances_") else None
         
-        # Additional metrics could be added here
-        metrics = {
-            "accuracy": accuracy,
-            "feature_importances": feature_importances,
-            "train_score": self.model.train_score_.tolist() if hasattr(self.model, "train_score_") else None
-        }
+        # Prepare appropriate metrics based on model type
+        if self.regression:
+            predictions = self.model.predict(features)
+            mse = np.mean((predictions - targets) ** 2)
+            mae = np.mean(np.abs(predictions - targets))
+            
+            metrics = {
+                "r2": score,
+                "mse": mse,
+                "mae": mae,
+                "feature_importances": feature_importances,
+                "train_score": self.model.train_score_.tolist() if hasattr(self.model, "train_score_") else None
+            }
+        else:
+            metrics = {
+                "accuracy": score,
+                "feature_importances": feature_importances,
+                "train_score": self.model.train_score_.tolist() if hasattr(self.model, "train_score_") else None
+            }
         
         return metrics
         
@@ -192,6 +241,7 @@ class GradientBoostingModel(PredictionModel):
             self: The loaded model
         """
         self.model = joblib.load(path)
+        self.regression = isinstance(self.model, GradientBoostingRegressor)
         return self
 
 

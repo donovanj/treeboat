@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from financial_prediction_system.api.routes import models, predictions, backtests
+from financial_prediction_system.api.routes import models, predictions, backtests, daily_inference
 from financial_prediction_system.api.schemas import ErrorResponse
 from financial_prediction_system.logging_config import logger
 
@@ -62,6 +62,7 @@ async def http_exception_handler(request: Request, exc: HTTPException):
 app.include_router(models.router)
 app.include_router(predictions.router)
 app.include_router(backtests.router)
+app.include_router(daily_inference.router)
 
 # Root endpoint
 @app.get("/")
@@ -143,6 +144,40 @@ async def predictions_api_info():
                 "path": "/predictions/ensemble",
                 "method": "POST",
                 "description": "Make a prediction using an ensemble of models"
+            }
+        ]
+    }
+
+# Add daily inference endpoints for non-interactive API exploration
+@app.get("/daily-api")
+async def daily_api_info():
+    """Information about the daily inference API endpoints"""
+    return {
+        "endpoints": [
+            {
+                "path": "/daily/run",
+                "method": "POST",
+                "description": "Manually trigger the daily prediction pipeline"
+            },
+            {
+                "path": "/daily/schedule",
+                "method": "POST",
+                "description": "Schedule a daily prediction pipeline to run automatically"
+            },
+            {
+                "path": "/daily/schedule/{model_id}",
+                "method": "DELETE",
+                "description": "Remove a scheduled daily pipeline for a model"
+            },
+            {
+                "path": "/daily/last-prediction/{model_id}",
+                "method": "GET",
+                "description": "Get the most recent daily prediction for a model"
+            },
+            {
+                "path": "/daily/signals/{model_id}",
+                "method": "GET",
+                "description": "Get the current trading signals for a model"
             }
         ]
     }

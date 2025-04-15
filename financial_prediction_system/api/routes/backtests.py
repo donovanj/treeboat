@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, Path, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional, Dict, Any
 from datetime import datetime
+import pandas as pd
 
 from financial_prediction_system.api.dependencies import get_db
 from financial_prediction_system.api.schemas import (
@@ -35,18 +36,40 @@ async def create_backtest(request: BacktestRequest, db: Session = Depends(get_db
         model = load_model(model_record.model_path)
         
         # 2. Load data for the symbol
-        loader = DataLoaderFactory.create_loader(request.symbol)
+        loader_type = "stock"  # Default to stock for equity symbols
+        loader = DataLoaderFactory.get_loader(loader_type, db)
+        
+        # Convert datetime to date for database compatibility
+        start_date = request.start_date.date() if hasattr(request.start_date, 'date') else request.start_date
+        end_date = request.end_date.date() if hasattr(request.end_date, 'date') else request.end_date
+        
         data = loader.load_data(
-            start_date=request.start_date,
-            end_date=request.end_date
+            symbol=request.symbol,
+            start_date=start_date,
+            end_date=end_date
         )
+        
+        # Load market index data if needed
+        index_data = {}
+        if any(feature_set in ["market_regime", "market_index_relationship", "sector_behavior"] for feature_set in model_record.feature_sets):
+            # Load index data for market-related features
+            index_data = DataLoaderFactory.get_index_data(db, start_date, end_date)
+            
+        # Load treasury data if needed
+        treasury_data = pd.DataFrame()
+        if any(feature_set in ["treasury_rate", "treasury_rate_equity_relationship"] for feature_set in model_record.feature_sets):
+            # Load treasury data
+            treasury_loader = DataLoaderFactory.get_loader("treasury", db)
+            treasury_data = treasury_loader.load_data("", start_date, end_date)
         
         # 3. Run backtest
         backtester = Backtester(
             model=model,
             data=data,
             features=model_record.feature_sets,
-            parameters=request.parameters or {}
+            parameters=request.parameters or {},
+            index_data=index_data,  # Pass the index data to the backtester
+            treasury_data=treasury_data  # Pass the treasury data to the backtester
         )
         
         backtest_results = backtester.run()
@@ -98,11 +121,31 @@ async def create_ensemble_backtest(request: EnsembleBacktestRequest, db: Session
         ensemble_model = load_model(ensemble_record.model_path)
         
         # 2. Load data for the symbol
-        loader = DataLoaderFactory.create_loader(request.symbol)
+        loader_type = "stock"  # Default to stock for equity symbols
+        loader = DataLoaderFactory.get_loader(loader_type, db)
+        
+        # Convert datetime to date for database compatibility
+        start_date = request.start_date.date() if hasattr(request.start_date, 'date') else request.start_date
+        end_date = request.end_date.date() if hasattr(request.end_date, 'date') else request.end_date
+        
         data = loader.load_data(
-            start_date=request.start_date,
-            end_date=request.end_date
+            symbol=request.symbol,
+            start_date=start_date,
+            end_date=end_date
         )
+        
+        # Load market index data if needed
+        index_data = {}
+        if any(feature_set in ["market_regime", "market_index_relationship", "sector_behavior"] for feature_set in all_feature_sets):
+            # Load index data for market-related features
+            index_data = DataLoaderFactory.get_index_data(db, start_date, end_date)
+            
+        # Load treasury data if needed
+        treasury_data = pd.DataFrame()
+        if any(feature_set in ["treasury_rate", "treasury_rate_equity_relationship"] for feature_set in all_feature_sets):
+            # Load treasury data
+            treasury_loader = DataLoaderFactory.get_loader("treasury", db)
+            treasury_data = treasury_loader.load_data("", start_date, end_date)
         
         # 3. Get feature sets from all component models
         all_feature_sets = set()
@@ -116,7 +159,9 @@ async def create_ensemble_backtest(request: EnsembleBacktestRequest, db: Session
             model=ensemble_model,
             data=data,
             features=list(all_feature_sets),
-            parameters=request.parameters or {}
+            parameters=request.parameters or {},
+            index_data=index_data,  # Pass the index data to the backtester
+            treasury_data=treasury_data  # Pass the treasury data to the backtester
         )
         
         backtest_results = backtester.run()

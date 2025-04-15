@@ -172,9 +172,9 @@ class FeatureBuilder:
         elif feature_set_name == 'treasury_rate':
             from financial_prediction_system.core.features.treasury_yield.yields import add_treasury_yield_features
             add_treasury_yield_features(self, **kwargs) 
-        elif feature_set_name == 'treasury_rate_equity_reationship':
-            from financial_prediction_system.core.features.treasury_yield.rate_equity_relationship import add_rates_equity_features
-            add_treasury_yield_features(self, **kwargs)
+        elif feature_set_name == 'treasury_rate_equity_relationship':
+            from financial_prediction_system.core.features.treasury_yield.rates_equity_relationship import add_rates_equity_features
+            add_rates_equity_features(self, **kwargs)
         elif feature_set_name == 'volatility':
             from financial_prediction_system.core.features.technical.volatility import add_volatility_features
             add_volatility_features(self, **kwargs)

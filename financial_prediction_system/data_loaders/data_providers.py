@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Set
 from datetime import date, datetime, timedelta
 import yfinance as yf
 import pandas as pd
@@ -12,11 +12,19 @@ from dotenv import load_dotenv
 from ratelimit import limits, sleep_and_retry
 import time
 from financial_prediction_system.logging_config import logger
+import QuantLib as ql
+from .rate_limiter import rate_limited, with_retry
 
 load_dotenv()
 
 class YahooFinanceProvider:
     """Data provider for Yahoo Finance"""
+    
+    @with_retry(max_retries=3, base_delay=2.0, exceptions=(Exception,))
+    @rate_limited(name="yahoo_finance_api", tokens=1, tokens_per_second=2.0, max_tokens=3)
+    def _fetch_ticker_history(self, ticker, start_date, end_date):
+        """Rate-limited method to fetch ticker history from Yahoo Finance"""
+        return ticker.history(start=start_date, end=end_date, interval="1d")
     
     def fetch_data(self, start_date: Optional[date] = None, end_date: Optional[date] = None, symbol: Optional[str] = None) -> List[Dict[str, Any]]:
         """Fetch data from Yahoo Finance"""
@@ -29,7 +37,7 @@ class YahooFinanceProvider:
             
         try:
             ticker = yf.Ticker(symbol)
-            df = ticker.history(start=start_date, end=end_date, interval="1d")
+            df = self._fetch_ticker_history(ticker, start_date, end_date)
             
             if df.empty:
                 return []
@@ -61,6 +69,16 @@ class AlpacaProvider:
         )
         self.max_days_per_request = 1000  # Alpaca's limit
         
+    @with_retry(max_retries=3, base_delay=2.0, exceptions=(Exception,))
+    @rate_limited(name="alpaca_api", tokens=1, tokens_per_second=5.0, max_tokens=5)
+    def _get_stock_bars(self, request):
+        """
+        Rate-limited method to get stock bars from Alpaca.
+        Alpaca has a rate limit of 200 requests per minute (about 3.33 req/sec).
+        We use a more conservative 5 req/sec with max burst of 5 to stay comfortably under the limit.
+        """
+        return self.client.get_stock_bars(request)
+        
     def fetch_data(self, start_date: Optional[date] = None, end_date: Optional[date] = None, symbol: Optional[str] = None) -> List[Dict[str, Any]]:
         """Fetch data from Alpaca"""
         if not start_date:
@@ -88,7 +106,9 @@ class AlpacaProvider:
                     end=chunk_end_date
                 )
                 
-                bars = self.client.get_stock_bars(request)
+                # Use the rate-limited method
+                bars = self._get_stock_bars(request)
+                
                 if bars and hasattr(bars, 'data') and symbol in bars.data:
                     for bar in bars.data[symbol]:
                         record = {
@@ -197,3 +217,93 @@ class TreasuryProvider:
             current_year += 1
             
         return all_records 
+
+def get_market_calendar_dates(start_date: date, end_date: date, calendar_name: str = "NYSE") -> List[date]:
+    """
+    Get a list of dates when the market was open between start_date and end_date.
+    
+    Args:
+        start_date: Start date
+        end_date: End date
+        calendar_name: Market calendar to use (default: NYSE)
+        
+    Returns:
+        List of dates when market was open
+    """
+    # Map calendar names to QuantLib calendar classes
+    calendar_map = {
+        "NYSE": ql.UnitedStates(ql.UnitedStates.NYSE)
+    }
+    
+    if calendar_name not in calendar_map:
+        raise ValueError(f"Unknown calendar: {calendar_name}")
+    
+    calendar = calendar_map[calendar_name]
+    
+    # Convert Python dates to QuantLib dates
+    ql_start_date = ql.Date(start_date.day, start_date.month, start_date.year)
+    ql_end_date = ql.Date(end_date.day, end_date.month, end_date.year)
+    
+    # Generate list of business days
+    market_dates = []
+    current_date = ql_start_date
+    
+    while current_date <= ql_end_date:
+        if calendar.isBusinessDay(current_date):
+            # Convert back to Python date
+            py_date = date(current_date.year(), current_date.month(), current_date.dayOfMonth())
+            market_dates.append(py_date)
+        current_date = current_date + 1
+    
+    return market_dates
+
+def check_missing_market_dates(db_dates: Set[date], start_date: date, end_date: date, calendar_name: str = "NYSE") -> List[date]:
+    """
+    Check for missing market dates in the database.
+    
+    Args:
+        db_dates: Set of dates present in the database
+        start_date: Start date to check from
+        end_date: End date to check to
+        calendar_name: Market calendar to use
+        
+    Returns:
+        List of dates that are missing from the database
+    """
+    market_dates = set(get_market_calendar_dates(start_date, end_date, calendar_name))
+    return sorted(market_dates - db_dates)
+
+def get_market_date_ranges(db_dates: Set[date], start_date: date, end_date: date, calendar_name: str = "NYSE") -> List[tuple]:
+    """
+    Get ranges of missing market dates.
+    
+    Args:
+        db_dates: Set of dates present in the database
+        start_date: Start date to check from
+        end_date: End date to check to
+        calendar_name: Market calendar to use
+        
+    Returns:
+        List of (start_date, end_date) tuples for missing date ranges
+    """
+    missing_dates = check_missing_market_dates(db_dates, start_date, end_date, calendar_name)
+    
+    if not missing_dates:
+        return []
+        
+    date_ranges = []
+    start_range = missing_dates[0]
+    prev_date = start_range
+    
+    for i in range(1, len(missing_dates)):
+        curr_date = missing_dates[i]
+        # If dates are not consecutive business days
+        if (curr_date - prev_date).days > 3:  # Allow for weekends
+            date_ranges.append((start_range, prev_date))
+            start_range = curr_date
+        prev_date = curr_date
+        
+    # Add the last range
+    date_ranges.append((start_range, missing_dates[-1]))
+    
+    return date_ranges 

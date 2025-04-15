@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, Path
 from sqlalchemy.orm import Session
 from typing import List, Optional, Dict, Any
 from datetime import datetime
+import pandas as pd
 
 from financial_prediction_system.api.dependencies import get_db
 from financial_prediction_system.api.schemas import (
@@ -43,22 +44,48 @@ async def make_prediction(request: PredictionRequest, db: Session = Depends(get_
         model = load_model(model_record.model_path)
         
         # 2. Load data for the symbol
-        loader = DataLoaderFactory.create_loader(request.symbol)
+        loader_type = "stock"  # Default to stock for equity symbols
+        loader = DataLoaderFactory.get_loader(loader_type, db)
         
         # Set end_date to prediction_date or current date if not specified
         end_date = request.prediction_date or datetime.now()
+        # Convert to date object for database compatibility
+        end_date = end_date.date() if hasattr(end_date, 'date') else end_date
         
         # Load some historical data to create features
-        # Adjust the start_date based on the feature requirements
         # For simplicity, we'll use 100 days of history
-        start_date = datetime(end_date.year, end_date.month, end_date.day) - datetime.timedelta(days=100)
+        from datetime import timedelta
+        start_date = end_date - timedelta(days=100)
         
-        data = loader.load_data(start_date=start_date, end_date=end_date)
+        data = loader.load_data(symbol=request.symbol, start_date=start_date, end_date=end_date)
+        
+        # Load market index data if needed
+        index_data = {}
+        if any(feature_set in ["market_regime", "market_index_relationship", "sector_behavior"] for feature_set in model_record.feature_sets):
+            # Load index data for market-related features
+            index_data = DataLoaderFactory.get_index_data(db, start_date, end_date)
+        
+        # Load treasury data if needed
+        treasury_data = pd.DataFrame()
+        if any(feature_set in ["treasury_rate", "treasury_rate_equity_relationship"] for feature_set in model_record.feature_sets):
+            # Load treasury data
+            treasury_loader = DataLoaderFactory.get_loader("treasury", db)
+            treasury_data = treasury_loader.load_data("", start_date, end_date)
         
         # 3. Prepare features
         feature_builder = FeatureBuilder(data)
         for feature_set in model_record.feature_sets:
-            feature_builder.add_feature_set(feature_set)
+            if feature_set in ["market_regime", "market_index_relationship", "sector_behavior"]:
+                # Pass index data for market-related features
+                feature_builder.add_feature_set(feature_set, index_data=index_data)
+            elif feature_set == "treasury_rate":
+                # Pass treasury data for yield features
+                feature_builder.add_feature_set(feature_set, yields_data=treasury_data)
+            elif feature_set == "treasury_rate_equity_relationship":
+                # Pass both treasury and index data for relationship features
+                feature_builder.add_feature_set(feature_set, yields_data=treasury_data, index_data=index_data)
+            else:
+                feature_builder.add_feature_set(feature_set)
         
         # Apply any custom features from the request
         if request.custom_features:
@@ -135,13 +162,42 @@ async def make_batch_prediction(request: BatchPredictionRequest, db: Session = D
         
         for symbol in request.symbols:
             # 2. Load data for each symbol
-            loader = DataLoaderFactory.create_loader(symbol)
-            data = loader.load_data(start_date=start_date, end_date=end_date)
+            loader_type = "stock"  # Default to stock for equity symbols
+            loader = DataLoaderFactory.get_loader(loader_type, db)
+            
+            # Convert to date objects
+            end_date_obj = end_date.date() if hasattr(end_date, 'date') else end_date
+            start_date_obj = start_date.date() if hasattr(start_date, 'date') else start_date
+            
+            data = loader.load_data(symbol=symbol, start_date=start_date_obj, end_date=end_date_obj)
+            
+            # Load market index data if needed
+            index_data = {}
+            if any(feature_set in ["market_regime", "market_index_relationship", "sector_behavior"] for feature_set in model_record.feature_sets):
+                # Load index data for market-related features
+                index_data = DataLoaderFactory.get_index_data(db, start_date_obj, end_date_obj)
+            
+            # Load treasury data if needed
+            treasury_data = pd.DataFrame()
+            if any(feature_set in ["treasury_rate", "treasury_rate_equity_relationship"] for feature_set in model_record.feature_sets):
+                # Load treasury data
+                treasury_loader = DataLoaderFactory.get_loader("treasury", db)
+                treasury_data = treasury_loader.load_data("", start_date_obj, end_date_obj)
             
             # 3. Prepare features
             feature_builder = FeatureBuilder(data)
             for feature_set in model_record.feature_sets:
-                feature_builder.add_feature_set(feature_set)
+                if feature_set in ["market_regime", "market_index_relationship", "sector_behavior"]:
+                    # Pass index data for market-related features
+                    feature_builder.add_feature_set(feature_set, index_data=index_data)
+                elif feature_set == "treasury_rate":
+                    # Pass treasury data for yield features
+                    feature_builder.add_feature_set(feature_set, yields_data=treasury_data)
+                elif feature_set == "treasury_rate_equity_relationship":
+                    # Pass both treasury and index data for relationship features
+                    feature_builder.add_feature_set(feature_set, yields_data=treasury_data, index_data=index_data)
+                else:
+                    feature_builder.add_feature_set(feature_set)
             
             # Apply any custom features from the request
             custom_features = request.custom_features.get(symbol, {}) if request.custom_features else {}
@@ -223,15 +279,32 @@ async def make_ensemble_prediction(request: EnsemblePredictionRequest, db: Sessi
                 models.append((model_id, model, model_record.model_type))
         
         # 3. Load data for the symbol
-        loader = DataLoaderFactory.create_loader(request.symbol)
+        loader_type = "stock"  # Default to stock for equity symbols
+        loader = DataLoaderFactory.get_loader(loader_type, db)
         
         # Set end_date to prediction_date or current date if not specified
         end_date = request.prediction_date or datetime.now()
+        # Convert to date object for database compatibility
+        end_date = end_date.date() if hasattr(end_date, 'date') else end_date
         
         # Load some historical data to create features
-        start_date = datetime(end_date.year, end_date.month, end_date.day) - datetime.timedelta(days=100)
+        from datetime import timedelta
+        start_date = end_date - timedelta(days=100)
         
-        data = loader.load_data(start_date=start_date, end_date=end_date)
+        data = loader.load_data(symbol=request.symbol, start_date=start_date, end_date=end_date)
+        
+        # Load market index data if needed
+        index_data = {}
+        if any(feature_set in ["market_regime", "market_index_relationship", "sector_behavior"] for feature_set in model_record.feature_sets):
+            # Load index data for market-related features
+            index_data = DataLoaderFactory.get_index_data(db, start_date, end_date)
+        
+        # Load treasury data if needed
+        treasury_data = pd.DataFrame()
+        if any(feature_set in ["treasury_rate", "treasury_rate_equity_relationship"] for feature_set in model_record.feature_sets):
+            # Load treasury data
+            treasury_loader = DataLoaderFactory.get_loader("treasury", db)
+            treasury_data = treasury_loader.load_data("", start_date, end_date)
         
         # 4. Make predictions with each model
         base_predictions = []
@@ -242,7 +315,17 @@ async def make_ensemble_prediction(request: EnsemblePredictionRequest, db: Sessi
             feature_builder = FeatureBuilder(data)
             
             for feature_set in model_record.feature_sets:
-                feature_builder.add_feature_set(feature_set)
+                if feature_set in ["market_regime", "market_index_relationship", "sector_behavior"]:
+                    # Pass index data for market-related features
+                    feature_builder.add_feature_set(feature_set, index_data=index_data)
+                elif feature_set == "treasury_rate":
+                    # Pass treasury data for yield features
+                    feature_builder.add_feature_set(feature_set, yields_data=treasury_data)
+                elif feature_set == "treasury_rate_equity_relationship":
+                    # Pass both treasury and index data for relationship features
+                    feature_builder.add_feature_set(feature_set, yields_data=treasury_data, index_data=index_data)
+                else:
+                    feature_builder.add_feature_set(feature_set)
             
             # Apply any custom features from the request
             if request.custom_features:

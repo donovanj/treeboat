@@ -3,7 +3,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Path
 from sqlalchemy.orm import Session
 from typing import List, Optional, Dict, Any
-from datetime import datetime
+from datetime import datetime, timedelta
+import pandas as pd
 
 from financial_prediction_system.api.dependencies import get_db
 from financial_prediction_system.api.schemas import (
@@ -17,6 +18,8 @@ from financial_prediction_system.core.features.feature_builder import FeatureBui
 from financial_prediction_system.core.targets.target_builder import TargetBuilder
 from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
 from financial_prediction_system.core.evaluation.metrics import calculate_metrics
+from financial_prediction_system.data_loaders.data_providers import get_market_calendar_dates
+import QuantLib as ql
 
 router = APIRouter(prefix="/models", tags=["models"])
 
@@ -28,16 +31,49 @@ async def train_model(request: CreateModelRequest, db: Session = Depends(get_db)
     
     try:
         # 1. Load data
-        loader = DataLoaderFactory.create_loader(request.symbol)
+        # Determine loader type based on symbol - stock symbols like AAPL use the stock loader
+        loader_type = "stock"  # Default to stock for equity symbols
+        loader = DataLoaderFactory.get_loader(loader_type, db)
+        
+        # Convert datetime to date for database compatibility
+        train_start = request.train_start_date.date() if hasattr(request.train_start_date, 'date') else request.train_start_date
+        train_end = request.train_end_date.date() if hasattr(request.train_end_date, 'date') else request.train_end_date
+        
         data = loader.load_data(
-            start_date=request.train_start_date,
-            end_date=request.train_end_date
+            symbol=request.symbol,
+            start_date=train_start,
+            end_date=train_end
         )
+        
+        # Load market index data if needed
+        index_data = {}
+        if any(feature.value in ["market_regime", "market_index_relationship", "sector_behavior"] for feature in request.features):
+            # Load index data starting from 100 days before the training period to account for lookback windows
+            extended_start = train_start - timedelta(days=100)
+            index_data = DataLoaderFactory.get_index_data(db, extended_start, train_end)
+        
+        # Load treasury data if needed
+        treasury_data = pd.DataFrame()
+        if any(feature.value in ["treasury_rate", "treasury_rate_equity_relationship"] for feature in request.features):
+            # Load treasury data with same extended window
+            extended_start = train_start - timedelta(days=100)
+            treasury_loader = DataLoaderFactory.get_loader("treasury", db)
+            treasury_data = treasury_loader.load_data("", extended_start, train_end)
         
         # 2. Prepare features
         feature_builder = FeatureBuilder(data)
         for feature_set in request.features:
-            feature_builder.add_feature_set(feature_set.value)
+            if feature_set.value in ["market_regime", "market_index_relationship", "sector_behavior"]:
+                # Pass index data for market-related features
+                feature_builder.add_feature_set(feature_set.value, index_data=index_data)
+            elif feature_set.value == "treasury_rate":
+                # Pass treasury data for yield features
+                feature_builder.add_feature_set(feature_set.value, yields_data=treasury_data)
+            elif feature_set.value == "treasury_rate_equity_relationship":
+                # Pass both treasury and index data for relationship features
+                feature_builder.add_feature_set(feature_set.value, yields_data=treasury_data, index_data=index_data)
+            else:
+                feature_builder.add_feature_set(feature_set.value)
         
         features_df = feature_builder.build()
         
@@ -239,7 +275,7 @@ async def get_available_models():
     
     available_features = [
         "technical", "volume", "date", "treasury_rate", 
-        "treasury_rate_equity_reationship", "volatility", 
+        "treasury_rate_equity_relationship", "volatility", 
         "price_action_ranges", "price_action_gaps", "sector_behavior", 
         "market_index_relationship", "market_regime"
     ]
@@ -250,3 +286,190 @@ async def get_available_models():
         "target_types": available_targets,
         "feature_sets": available_features
     }
+
+@router.post("/update-market-data", response_model=dict)
+async def update_market_data(db: Session = Depends(get_db)):
+    """
+    Update the database with the latest market data
+    """
+    from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
+    from datetime import date, timedelta, datetime
+    
+    try:
+        results = {}
+        
+        # Update stock data
+        stock_loader = DataLoaderFactory.get_loader("stock", db)
+        stock_latest = stock_loader.get_latest_date()
+        if stock_latest:
+            stocks_updated = stock_loader.update_daily_data()
+            results["stocks"] = {
+                "latest_date_before": stock_latest.isoformat(),
+                "records_updated": stocks_updated
+            }
+        else:
+            # If no data exists, load a limited history (e.g., 1 year)
+            one_year_ago = date.today() - timedelta(days=365)
+            stocks_updated = stock_loader.load_historical_data(start_date=one_year_ago)
+            results["stocks"] = {
+                "message": "No existing data found - loaded initial data",
+                "records_loaded": stocks_updated
+            }
+        
+        # Update index data
+        index_loader = DataLoaderFactory.get_loader("index", db)
+        index_latest = index_loader.get_latest_date()
+        if index_latest:
+            indices_updated = index_loader.update_daily_data()
+            results["indices"] = {
+                "latest_date_before": index_latest.isoformat(),
+                "records_updated": indices_updated
+            }
+        else:
+            # If no data exists, load a limited history (e.g., 1 year)
+            one_year_ago = date.today() - timedelta(days=365)
+            indices_updated = index_loader.load_historical_data(start_date=one_year_ago)
+            results["indices"] = {
+                "message": "No existing data found - loaded initial data",
+                "records_loaded": indices_updated
+            }
+        
+        # Update treasury data
+        treasury_loader = DataLoaderFactory.get_loader("treasury", db)
+        treasury_latest = treasury_loader.get_latest_date()
+        if treasury_latest:
+            treasuries_updated = treasury_loader.update_daily_data()
+            results["treasuries"] = {
+                "latest_date_before": treasury_latest.isoformat(),
+                "records_updated": treasuries_updated
+            }
+        else:
+            # If no data exists, load a limited history (e.g., 1 year)
+            one_year_ago = date.today() - timedelta(days=365)
+            treasuries_updated = treasury_loader.load_historical_data(start_date=one_year_ago)
+            results["treasuries"] = {
+                "message": "No existing data found - loaded initial data",
+                "records_loaded": treasuries_updated
+            }
+        
+        # Commit all changes
+        db.commit()
+        
+        return {
+            "success": True,
+            "message": "Market data updated successfully",
+            "results": results
+        }
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Error updating market data: {str(e)}")
+
+@router.post("/fill-data-gap", response_model=dict)
+async def fill_data_gap(
+    lookback_days: int = 7,
+    specific_date: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
+    """
+    Fill market data gaps within the specified lookback period or for a specific date.
+    
+    Args:
+        lookback_days: Number of days to look back for gaps (default: 7)
+        specific_date: Optional specific date to fill (format: YYYY-MM-DD)
+    """
+    from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
+    from financial_prediction_system.data_loaders.data_providers import get_market_calendar_dates
+    from datetime import date, datetime, timedelta
+    import QuantLib as ql
+    
+    try:
+        results = {}
+        
+        # Handle specific date if provided
+        if specific_date:
+            try:
+                target_date = date.fromisoformat(specific_date)
+                
+                # Verify it's a valid market date
+                ql_date = ql.Date(target_date.day, target_date.month, target_date.year)
+                nyse = ql.UnitedStates(ql.UnitedStates.NYSE)
+                
+                if not nyse.isBusinessDay(ql_date):
+                    return {
+                        "success": False,
+                        "message": f"The date {specific_date} is not a valid NYSE market day"
+                    }
+                
+                # Set date range to just this date
+                start_date = target_date
+                end_date = target_date
+                
+            except ValueError:
+                return {
+                    "success": False,
+                    "message": f"Invalid date format: {specific_date}. Use YYYY-MM-DD format."
+                }
+        else:
+            # Use lookback period
+            end_date = datetime.now().date()
+            start_date = end_date - timedelta(days=lookback_days)
+            
+        # Get list of market days in the date range
+        market_dates = get_market_calendar_dates(start_date, end_date, "NYSE")
+        
+        if not market_dates:
+            return {
+                "success": True,
+                "message": "No market days in the specified period"
+            }
+            
+        # Update stock data for the period
+        stock_loader = DataLoaderFactory.get_loader("stock", db)
+        stock_records = stock_loader.load_historical_data(
+            start_date=market_dates[0], 
+            end_date=market_dates[-1]
+        )
+        
+        results["stocks"] = {
+            "date_range": f"{market_dates[0].isoformat()} to {market_dates[-1].isoformat()}",
+            "market_days": len(market_dates),
+            "records_filled": stock_records
+        }
+        
+        # Update index data for the period
+        index_loader = DataLoaderFactory.get_loader("index", db)
+        index_records = index_loader.load_historical_data(
+            start_date=market_dates[0], 
+            end_date=market_dates[-1]
+        )
+        
+        results["indices"] = {
+            "date_range": f"{market_dates[0].isoformat()} to {market_dates[-1].isoformat()}",
+            "market_days": len(market_dates),
+            "records_filled": index_records
+        }
+        
+        # Update treasury data for the period
+        treasury_loader = DataLoaderFactory.get_loader("treasury", db)
+        treasury_records = treasury_loader.load_historical_data(
+            start_date=market_dates[0], 
+            end_date=market_dates[-1]
+        )
+        
+        results["treasuries"] = {
+            "date_range": f"{market_dates[0].isoformat()} to {market_dates[-1].isoformat()}",
+            "market_days": len(market_dates),
+            "records_filled": treasury_records
+        }
+        
+        # Force commit all changes
+        db.commit()
+        
+        return {
+            "success": True,
+            "message": f"Filled data gaps for market days from {market_dates[0].isoformat()} to {market_dates[-1].isoformat()}",
+            "results": results
+        }
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Error filling data gap: {str(e)}")

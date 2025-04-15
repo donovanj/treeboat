@@ -8,7 +8,7 @@ import pandas as pd
 from sqlalchemy import text, func
 from financial_prediction_system.logging_config import logger
 from financial_prediction_system.infrastructure.database.models_and_schemas.models import SPXPrice, NDXPrice, DJIPrice, RUTPrice, VIXPrice, SOXPrice, OSXPrice
-from .data_providers import YahooFinanceProvider
+from .data_providers import YahooFinanceProvider, check_missing_market_dates, get_market_date_ranges
 from .cache_decorator import cacheable, invalidate_cache
 from .cache import RedisCache
 
@@ -38,6 +38,72 @@ class IndexDataLoader(BaseDataLoader):
             "sox_prices": SOXPrice,
             "osx_prices": OSXPrice
         }
+
+    def load_data(self, symbol: str, start_date: date, end_date: date) -> pd.DataFrame:
+        """
+        Load data for a specific index symbol between start_date and end_date.
+        This is a facade method that calls the appropriate internal methods.
+        
+        Parameters
+        ----------
+        symbol : str
+            The index symbol to load data for (e.g., 'SPX', 'VIX')
+        start_date : date
+            Start date for the data
+        end_date : date
+            End date for the data
+            
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame containing the index data
+        """
+        self._log_progress(f"Loading data for index {symbol} from {start_date} to {end_date}")
+        
+        # Find the config for this symbol
+        config = None
+        for cfg in self.index_configs:
+            if cfg['db_symbol'] == symbol:
+                config = cfg
+                break
+                
+        if not config:
+            self._log_progress(f"Unknown index symbol: {symbol}", "error")
+            return pd.DataFrame()
+        
+        # Don't automatically load data - only use what's in the database
+        try:
+            # Query the database directly
+            model_class = self.model_map.get(config['table_name'])
+            if not model_class:
+                raise ValueError(f"Unknown table name: {config['table_name']}")
+                
+            query = self.db.query(model_class).filter(
+                model_class.symbol == symbol,
+                model_class.date >= start_date,
+                model_class.date <= end_date
+            ).order_by(model_class.date)
+            
+            data = [{
+                'date': record.date,
+                'open': float(record.open) if record.open is not None else None,
+                'high': float(record.high) if record.high is not None else None,
+                'low': float(record.low) if record.low is not None else None,
+                'close': float(record.close) if record.close is not None else None,
+                'volume': int(record.volume) if record.volume is not None else None
+            } for record in query]
+            
+            if not data:
+                self._log_progress(f"No data found for index {symbol} from {start_date} to {end_date}")
+                return pd.DataFrame()
+                
+            df = pd.DataFrame(data)
+            df.set_index('date', inplace=True)
+            return df
+            
+        except Exception as e:
+            self._handle_error(e, f"querying database for index {symbol}")
+            return pd.DataFrame()
 
     @cacheable("index_historical")
     def load_historical_data(self, start_date: Optional[date] = None, end_date: Optional[date] = None, symbol: Optional[str] = None) -> int:
@@ -79,12 +145,22 @@ class IndexDataLoader(BaseDataLoader):
                 if not latest_date:
                     validated_data, records = self._load_index_data(config)
                 else:
-                    start_date = latest_date + timedelta(days=1)
-                    end_date = today
-                    if start_date > end_date:
+                    # Check for gaps in the data
+                    date_ranges = self._check_for_data_gaps(latest_date, config['table_name'], config['db_symbol'])
+                    if not date_ranges:
                         self._log_progress(f"{config['db_symbol']} is up to date")
                         continue
-                    validated_data, records = self._load_index_data(config, start_date, end_date)
+                    
+                    # Process each date range to fill gaps
+                    records_for_symbol = 0
+                    validated_data_for_symbol = []
+                    for start_date, end_date in date_ranges:
+                        data, rec = self._load_index_data(config, start_date, end_date)
+                        validated_data_for_symbol.extend(data)
+                        records_for_symbol += rec
+                    
+                    validated_data = validated_data_for_symbol
+                    records = records_for_symbol
                 
                 total_records += records
                 all_validated_data.extend(validated_data)
@@ -121,7 +197,7 @@ class IndexDataLoader(BaseDataLoader):
         validated_data = []
         for record in data:
             try:
-                if not all(key in record for key in ['symbol', 'date', 'open', 'high', 'low', 'close', 'volume']):
+                if not all(key in record for key in ['symbol', 'date', 'open', 'high', 'low', 'close']):
                     continue
 
                 validated_record = {
@@ -131,7 +207,7 @@ class IndexDataLoader(BaseDataLoader):
                     'high': float(record['high']) if pd.notna(record['high']) else None,
                     'low': float(record['low']) if pd.notna(record['low']) else None,
                     'close': float(record['close']) if pd.notna(record['close']) else None,
-                    'volume': int(record['volume']) if pd.notna(record['volume']) else None
+                    'volume': int(record['volume']) if pd.notna(record['volume']) else 0  # Default to 0 for null volume
                 }
 
                 if validated_record['close'] is not None and validated_record['close'] > 0:
@@ -151,10 +227,63 @@ class IndexDataLoader(BaseDataLoader):
         try:
             # Use the data provider strategy to fetch data
             yahoo_symbol = config['yahoo_symbol']
+            self._log_progress(f"Fetching data for {yahoo_symbol} from {start_date} to {end_date}", "debug")
             raw_data = self.data_provider.fetch_data(start_date, end_date, yahoo_symbol)
             
             if not raw_data:
+                self._log_progress(f"No data returned from provider for {config['db_symbol']} between {start_date} and {end_date}", "warning")
+                # In case of no data, check if this is a special case for specific dates
+                if (end_date - start_date).days <= 5:  # If we're fetching a small date range
+                    # Try to fill in with the most recent data available
+                    self._log_progress(f"Checking if we can fill in missing data for index {config['db_symbol']}", "debug")
+                    model_class = self.model_map.get(config['table_name'])
+                    last_record = self.db.query(model_class).filter(
+                        model_class.symbol == config['db_symbol'],
+                        model_class.date < start_date
+                    ).order_by(model_class.date.desc()).first()
+                    
+                    if last_record:
+                        self._log_progress(f"Found previous data for {config['db_symbol']}, will use for filling", "debug")
+                        # Create records for each day in the missing range
+                        current_date = start_date
+                        filled_records = []
+                        while current_date <= end_date:
+                            # Skip weekends
+                            if current_date.weekday() < 5:  # 0-4 are Monday to Friday
+                                filled_records.append({
+                                    'symbol': config['db_symbol'],
+                                    'date': current_date,
+                                    'open': last_record.close,
+                                    'high': last_record.close,
+                                    'low': last_record.close,
+                                    'close': last_record.close,
+                                    'volume': 0  # Zero volume indicates trading was limited
+                                })
+                                self._log_progress(f"Filled missing data for {config['db_symbol']} on {current_date}", "info")
+                            current_date += timedelta(days=1)
+                        
+                        if filled_records:
+                            validated_records = self.validate_data(filled_records)
+                            self._save_records(validated_records, config['table_name'])
+                            return validated_records, len(validated_records)
+                
                 return [], 0
+
+            # Log received data
+            self._log_progress(f"Received {len(raw_data)} records for {config['db_symbol']}", "debug")
+            
+            # Check for specific dates in the returned data
+            received_dates = {r['date'] for r in raw_data}
+            expected_dates = set()
+            check_date = start_date
+            while check_date <= end_date:
+                if check_date.weekday() < 5:  # Skip weekends
+                    expected_dates.add(check_date)
+                check_date += timedelta(days=1)
+                
+            missing_dates = expected_dates - received_dates
+            if missing_dates:
+                self._log_progress(f"Provider missing data for {config['db_symbol']} on dates: {sorted(missing_dates)}", "warning")
 
             # Map Yahoo symbol to DB symbol
             records = []
@@ -199,4 +328,46 @@ class IndexDataLoader(BaseDataLoader):
             result = query.scalar()
             return result
         except Exception as e:
-            self._handle_error(e, f"getting latest date for {table_name}") 
+            self._handle_error(e, f"getting latest date for {table_name}")
+
+    def _check_for_data_gaps(self, latest_date: date, table_name: str, symbol: str) -> List[tuple]:
+        """
+        Check for gaps in index data from latest_date to today using QuantLib's NYSE calendar.
+        
+        Args:
+            latest_date: The latest date for which we have data
+            table_name: Table name to query
+            symbol: Index symbol to check
+            
+        Returns:
+            List of tuples (start_date, end_date) for each gap that needs to be filled
+        """
+        today = datetime.now().date()
+            
+        # Check if we already have any of these dates in the database
+        model_class = self.model_map.get(table_name)
+        if not model_class:
+            self._log_progress(f"Unknown table name: {table_name}", "error")
+            return []
+            
+        # Get existing dates from the database
+        existing_dates = set()
+        query = self.db.query(model_class.date).filter(
+            model_class.symbol == symbol,
+            model_class.date > latest_date,
+            model_class.date <= today
+        ).distinct()
+        
+        existing_dates = set(date for (date,) in query)
+        
+        # Use the market calendar to check for missing dates
+        date_ranges = get_market_date_ranges(existing_dates, latest_date, today, "NYSE")
+        
+        # Log the findings
+        for start, end in date_ranges:
+            if start == end:
+                self._log_progress(f"Will fetch index {symbol} data for market date {start.strftime('%Y-%m-%d')}", "info")
+            else:
+                self._log_progress(f"Will fetch index {symbol} data for market dates from {start.strftime('%Y-%m-%d')} to {end.strftime('%Y-%m-%d')}", "info")
+        
+        return date_ranges 

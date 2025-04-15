@@ -56,6 +56,27 @@ class BaseDataLoader(ABC):
         pass
 
     @abstractmethod
+    def load_data(self, symbol: str, start_date: date, end_date: date) -> Dict[str, Any]:
+        """
+        Load data for a specific symbol between start_date and end_date.
+        
+        Parameters
+        ----------
+        symbol : str
+            The symbol to load data for
+        start_date : date
+            Start date for the data
+        end_date : date
+            End date for the data
+            
+        Returns
+        -------
+        Dict[str, Any]
+            Data structure containing the loaded data
+        """
+        pass
+
+    @abstractmethod
     def update_daily_data(self, symbol: Optional[str] = None) -> int:
         """Update data with the latest available information"""
         pass

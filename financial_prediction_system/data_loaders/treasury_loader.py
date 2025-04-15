@@ -13,6 +13,7 @@ import time
 from .data_providers import TreasuryProvider
 from .cache_decorator import cacheable, invalidate_cache
 from .cache import RedisCache
+import pandas as pd
 
 load_dotenv()
 
@@ -28,6 +29,61 @@ class TreasuryDataLoader(BaseDataLoader):
         }
         self.rate_limit = 1  # requests per second
         self.last_request_time = 0
+
+    def load_data(self, symbol: str, start_date: date, end_date: date) -> pd.DataFrame:
+        """
+        Load Treasury yield data between start_date and end_date.
+        
+        Parameters
+        ----------
+        symbol : str
+            Not used for Treasury data but required by interface
+        start_date : date
+            Start date for the data
+        end_date : date
+            End date for the data
+            
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame containing Treasury yield data
+        """
+        self._log_progress(f"Loading Treasury yield data from {start_date} to {end_date}")
+        
+        # Ensure we have the data in the database
+        self.load_historical_data(start_date=start_date, end_date=end_date)
+        
+        try:
+            # Query the database directly
+            query = self.db.query(TreasuryYield).filter(
+                TreasuryYield.date >= start_date,
+                TreasuryYield.date <= end_date
+            ).order_by(TreasuryYield.date)
+            
+            data = [{
+                'date': record.date,
+                'mo1': record.mo1,
+                'mo2': record.mo2,
+                'mo3': record.mo3,
+                'mo6': record.mo6,
+                'yr1': record.yr1,
+                'yr2': record.yr2,
+                'yr5': record.yr5,
+                'yr10': record.yr10,
+                'yr30': record.yr30
+            } for record in query]
+            
+            if not data:
+                self._log_progress(f"No Treasury yield data found from {start_date} to {end_date}")
+                return pd.DataFrame()
+                
+            df = pd.DataFrame(data)
+            df.set_index('date', inplace=True)
+            return df
+            
+        except Exception as e:
+            self._handle_error(e, "querying Treasury yield database")
+            return pd.DataFrame()
 
     @sleep_and_retry
     @limits(calls=1, period=1)  # 1 request per second

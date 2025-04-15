@@ -84,10 +84,10 @@ POST /models/train
   "model_type": "random_forest_classifier",
   "target_type": "price",
   "features": ["technical", "volume", "market_regime"],
-  "train_start_date": "2020-01-01T00:00:00",
-  "train_end_date": "2021-12-31T00:00:00",
-  "test_start_date": "2022-01-01T00:00:00",
-  "test_end_date": "2022-12-31T00:00:00",
+  "train_start_date": "2020-01-01",
+  "train_end_date": "2021-12-31",
+  "test_start_date": "2022-01-01",
+  "test_end_date": "2022-12-31",
   "hyperparameters": {
     "n_estimators": 100,
     "max_depth": 10
@@ -103,7 +103,7 @@ POST /predictions/
 {
   "model_id": 1,
   "symbol": "SPX",
-  "prediction_date": "2023-04-15T00:00:00",
+  "prediction_date": "2023-04-15",
   "custom_features": {
     "market_regime": "bullish"
   }
@@ -118,8 +118,8 @@ POST /backtests/
 {
   "model_id": 1,
   "symbol": "SPX",
-  "start_date": "2022-01-01T00:00:00",
-  "end_date": "2022-12-31T00:00:00",
+  "start_date": "2022-01-01",
+  "end_date": "2022-12-31",
   "parameters": {
     "threshold": 0.75,
     "trade_size": 100000

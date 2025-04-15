@@ -12,3 +12,7 @@ __pycache__/
 .env.production.local
 .env.development
 .env.test
+.cursor/
+.pytest_cache/
+__init__.py
+__pycache__/

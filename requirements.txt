@@ -87,6 +87,7 @@ jaraco.functools==4.1.0
 jeepney==0.9.0
 Jinja2==3.1.2
 jmespath==1.0.1
+joblib==1.4.2
 jsonpatch==1.32
 jsonpointer==2.0
 jsonschema==4.10.3
@@ -181,7 +182,8 @@ requests==2.31.0
 requests-toolbelt==1.0.0
 rich==13.7.1
 s3transfer==0.10.1
-SciPy==1.11.4
+scikit-learn==1.6.1
+scipy==1.15.2
 SecretStorage==3.3.3
 service-identity==24.1.0
 setuptools==68.1.2
@@ -196,6 +198,7 @@ starlette==0.46.1
 sympy==1.12
 systemd-python==235
 texttable==1.6.7
+threadpoolctl==3.6.0
 tomlkit==0.13.2
 trove-classifiers==2025.3.19.19
 Twisted==24.3.0

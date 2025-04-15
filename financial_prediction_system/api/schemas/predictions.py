@@ -19,7 +19,7 @@ class PredictionRequest(BaseModel):
         json_schema_extra = {
             "example": {
                 "model_id": 1,
-                "symbol": "SPX",
+                "symbol": "AAPL",
                 "prediction_date": "2023-04-15T00:00:00",
                 "custom_features": {
                     "market_regime": "bullish"
@@ -38,7 +38,7 @@ class EnsemblePredictionRequest(BaseModel):
         json_schema_extra = {
             "example": {
                 "ensemble_id": 1,
-                "symbol": "SPX",
+                "symbol": "AAPL",
                 "prediction_date": "2023-04-15T00:00:00",
                 "custom_features": {
                     "market_regime": "bullish"
@@ -57,11 +57,12 @@ class BatchPredictionRequest(BaseModel):
         json_schema_extra = {
             "example": {
                 "model_id": 1,
-                "symbols": ["SPX", "NDX", "DJI"],
+                "symbols": ["AAPL", "MSFT", "GOOG"],
                 "prediction_date": "2023-04-15T00:00:00",
                 "custom_features": {
-                    "SPX": {"market_regime": "bullish"},
-                    "NDX": {"market_regime": "neutral"}
+                    "AAPL": {"market_regime": "bullish"},
+                    "MSFT": {"market_regime": "neutral"},
+                    "GOOG": {"market_regime": "bearish"}
                 }
             }
         }

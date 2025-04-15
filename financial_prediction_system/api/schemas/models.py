@@ -9,11 +9,9 @@ from .base import BaseResponse, PaginatedResponse
 
 # Enums for valid values
 class ModelTypeEnum(str, Enum):
-    RANDOM_FOREST_CLASSIFIER = "random_forest_classifier"
-    RANDOM_FOREST_REGRESSOR = "random_forest_regressor"
-    GRADIENT_BOOSTING_CLASSIFIER = "gradient_boosting_classifier"
-    GRADIENT_BOOSTING_REGRESSOR = "gradient_boosting_regressor"
-    SUPPORT_VECTOR_MACHINE = "support_vector_machine"
+    RANDOM_FOREST = "random_forest"
+    SVM = "svm"
+    GRADIENT_BOOSTING = "gradient_boosting"
     LOGISTIC_REGRESSION = "logistic_regression"
     LSTM = "lstm"
     TRANSFORMER = "transformer"
@@ -62,14 +60,14 @@ class CreateModelRequest(BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
-                "symbol": "SPX",
-                "model_type": "random_forest_classifier",
+                "symbol": "AAPL",
+                "model_type": "random_forest",
                 "target_type": "price",
                 "features": ["technical", "volume", "market_regime"],
-                "train_start_date": "2020-01-01T00:00:00",
-                "train_end_date": "2021-12-31T00:00:00",
-                "test_start_date": "2022-01-01T00:00:00",
-                "test_end_date": "2022-12-31T00:00:00",
+                "train_start_date": "2020-01-01",
+                "train_end_date": "2021-12-31",
+                "test_start_date": "2022-01-01",
+                "test_end_date": "2022-12-31",
                 "hyperparameters": {
                     "n_estimators": 100,
                     "max_depth": 10

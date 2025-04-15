@@ -19,9 +19,9 @@ class BacktestRequest(BaseModel):
         json_schema_extra = {
             "example": {
                 "model_id": 1,
-                "symbol": "SPX",
-                "start_date": "2022-01-01T00:00:00",
-                "end_date": "2022-12-31T00:00:00",
+                "symbol": "AAPL",
+                "start_date": "2022-01-01",
+                "end_date": "2022-12-31",
                 "parameters": {
                     "threshold": 0.75,
                     "trade_size": 100000
@@ -41,9 +41,9 @@ class EnsembleBacktestRequest(BaseModel):
         json_schema_extra = {
             "example": {
                 "ensemble_id": 1,
-                "symbol": "SPX",
-                "start_date": "2022-01-01T00:00:00",
-                "end_date": "2022-12-31T00:00:00",
+                "symbol": "AAPL",
+                "start_date": "2022-01-01",
+                "end_date": "2022-12-31",
                 "parameters": {
                     "threshold": 0.75,
                     "trade_size": 100000

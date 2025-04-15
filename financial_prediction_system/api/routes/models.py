@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional, Dict, Any
 from datetime import datetime, timedelta
 import pandas as pd
+import numpy as np
 
 from financial_prediction_system.api.dependencies import get_db
 from financial_prediction_system.api.schemas import (
@@ -22,6 +23,22 @@ from financial_prediction_system.data_loaders.data_providers import get_market_c
 import QuantLib as ql
 
 router = APIRouter(prefix="/models", tags=["models"])
+
+# Helper function to convert NumPy types to Python native types
+def convert_numpy_to_python(value):
+    """Convert NumPy data types to native Python types for database storage"""
+    if isinstance(value, np.integer):
+        return int(value)
+    elif isinstance(value, np.floating):
+        return float(value)
+    elif isinstance(value, np.ndarray):
+        return value.tolist()
+    elif isinstance(value, dict):
+        return {k: convert_numpy_to_python(v) for k, v in value.items()}
+    elif isinstance(value, list):
+        return [convert_numpy_to_python(item) for item in value]
+    else:
+        return value
 
 @router.post("/train", response_model=ModelTrainingResponse, status_code=202)
 async def train_model(request: CreateModelRequest, db: Session = Depends(get_db)):
@@ -84,8 +101,21 @@ async def train_model(request: CreateModelRequest, db: Session = Depends(get_db)
         
         targets_df = target_builder.build()
         
+        # FIX: Align features and targets dataframes to ensure consistent samples
+        # Get common dates between features and targets
+        common_dates = features_df.index.intersection(targets_df.index)
+        if len(common_dates) == 0:
+            raise ValueError("No overlapping dates between features and targets. Check feature and target generation.")
+            
+        features_df = features_df.loc[common_dates]
+        targets_df = targets_df.loc[common_dates]
+        
+        # Verify alignment
+        if features_df.shape[0] != targets_df.shape[0]:
+            raise ValueError(f"Features and targets arrays still have inconsistent sizes after alignment: {features_df.shape[0]} vs {targets_df.shape[0]}")
+        
         # 4. Create model
-        model_type = request.model_type.value
+        model_type = request.model_type.value.lower()  # Convert to lowercase
         model = ModelFactory.create_model(model_type, **request.hyperparameters or {})
         
         # 5. Save initial model entry to get an ID
@@ -111,7 +141,8 @@ async def train_model(request: CreateModelRequest, db: Session = Depends(get_db)
         # We would split the data for proper testing
         metrics = model.evaluate(features_df, targets_df[target_column])
         
-        # 8. Update the model record with metrics
+        # 8. Update the model record with metrics - Convert NumPy types to Python native types
+        metrics = convert_numpy_to_python(metrics)
         updated_model_data = {
             "test_mse": metrics.get("mse"),
             "test_r2": metrics.get("r2"),
@@ -128,9 +159,13 @@ async def train_model(request: CreateModelRequest, db: Session = Depends(get_db)
         
         # 9. Add feature importance if available
         if hasattr(model, "feature_importance_"):
+            feature_importance = model.feature_importance_
+            if hasattr(feature_importance, "tolist"):
+                feature_importance = feature_importance.tolist()
+                
             feature_importance_data = [
-                {"feature": feature, "importance": importance}
-                for feature, importance in zip(features_df.columns, model.feature_importance_)
+                {"feature": feature, "importance": convert_numpy_to_python(importance)}
+                for feature, importance in zip(features_df.columns, feature_importance)
             ]
             repo.add_feature_importance(model_record.id, feature_importance_data)
         
@@ -262,10 +297,11 @@ async def get_ensemble(ensemble_id: int = Path(..., ge=1), db: Session = Depends
         "ensemble": ensemble
     }
 
-@router.get("/available-models", response_model=Dict[str, List[str]])
+@router.get("/available-models", response_model=Dict[str, Any])
 async def get_available_models():
-    """Get lists of available model types, target types, and feature sets"""
+    """Get lists of available model types, target types, and feature sets with descriptions"""
     available_models = ModelFactory.get_available_models()
+    model_docs = ModelFactory.get_model_documentation()
     
     # Get available targets and feature sets
     # In a real implementation, we would get these from the respective modules
@@ -283,6 +319,7 @@ async def get_available_models():
     return {
         "success": True,
         "model_types": available_models,
+        "model_documentation": model_docs,
         "target_types": available_targets,
         "feature_sets": available_features
     }

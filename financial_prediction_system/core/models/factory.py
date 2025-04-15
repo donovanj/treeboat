@@ -74,6 +74,21 @@ class ModelFactory:
         return list(cls._models.keys())
     
     @classmethod
+    def get_model_documentation(cls) -> Dict[str, Dict[str, str]]:
+        """Get documentation for all registered models.
+        
+        Returns:
+            Dictionary mapping model names to their documentation
+        """
+        docs = {}
+        for model_name, model_class in cls._models.items():
+            docs[model_name] = {
+                "description": model_class.__doc__.strip().split("\n\n")[0] if model_class.__doc__ else "No description available",
+                "type": "classification" if "Classifier" in model_class.__name__ or model_name in ["random_forest", "svm", "gradient_boosting"] else "regression"
+            }
+        return docs
+    
+    @classmethod
     def create_target_builder(cls, builder_type: str, builder: Any, **params: Any) -> Any:
         """Create a target using the registered builder function.
         

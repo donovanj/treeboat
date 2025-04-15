@@ -27158,3 +27158,295 @@ alpaca_secret
 2025-04-15 13:30:42,237 - financial_prediction_system - WARNING - Retrying fail_then_succeed after error. Retry 2/3, waiting 0.20s
 2025-04-15 13:31:23,197 - financial_prediction_system - INFO - Financial Prediction API starting up
 2025-04-15 13:32:27,394 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:36:56,996 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:38:07,624 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:38:09,347 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:38:09,949 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:38:11,648 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:38:38,270 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:38:39,969 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:38:42,211 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 13:38:42,211 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 13:38:42,212 - financial_prediction_system - ERROR - Failed to connect to Redis: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 13:38:42,212 - financial_prediction_system - ERROR - Failed to initialize Redis cache: Redis connection failed: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 13:38:42,212 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 13:38:42,212 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 13:38:42,244 - financial_prediction_system - DEBUG - Loading index data from 2019-09-23 to 2021-12-31
+2025-04-15 13:38:42,244 - financial_prediction_system - DEBUG - Requesting loader for type: index
+2025-04-15 13:38:42,244 - financial_prediction_system - INFO - Creating IndexDataLoader instance
+2025-04-15 13:38:42,244 - financial_prediction_system - DEBUG - Initialized IndexDataLoader
+2025-04-15 13:38:42,408 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: Unsupported model type: random_forest_classifier
+2025-04-15 13:45:04,643 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:45:06,347 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:45:26,032 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:45:27,752 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:46:10,551 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:46:12,262 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:48:50,193 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:48:51,913 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:49:01,352 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:49:03,060 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:49:12,907 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:49:14,629 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:49:58,836 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 13:49:58,836 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 13:49:58,837 - financial_prediction_system - ERROR - Failed to connect to Redis: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 13:49:58,837 - financial_prediction_system - ERROR - Failed to initialize Redis cache: Redis connection failed: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 13:49:58,837 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 13:49:58,837 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 13:49:58,869 - financial_prediction_system - DEBUG - Loading index data from 2019-09-23 to 2021-12-31
+2025-04-15 13:49:58,869 - financial_prediction_system - DEBUG - Requesting loader for type: index
+2025-04-15 13:49:58,869 - financial_prediction_system - INFO - Creating IndexDataLoader instance
+2025-04-15 13:49:58,869 - financial_prediction_system - DEBUG - Initialized IndexDataLoader
+2025-04-15 13:49:59,032 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: Unsupported model type: random_forest
+2025-04-15 13:51:10,719 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 13:51:10,719 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 13:51:10,719 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 13:51:10,720 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 13:51:10,729 - financial_prediction_system - DEBUG - Loading index data from 2019-09-23 to 2021-12-31
+2025-04-15 13:51:10,729 - financial_prediction_system - DEBUG - Requesting loader for type: index
+2025-04-15 13:51:10,729 - financial_prediction_system - INFO - Creating IndexDataLoader instance
+2025-04-15 13:51:10,729 - financial_prediction_system - DEBUG - Initialized IndexDataLoader
+2025-04-15 13:51:10,867 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: Unsupported model type: svm
+2025-04-15 13:52:03,092 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 13:52:03,093 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 13:52:03,093 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 13:52:03,093 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 13:52:03,156 - financial_prediction_system - DEBUG - Loading index data from 2019-09-23 to 2021-12-31
+2025-04-15 13:52:03,156 - financial_prediction_system - DEBUG - Requesting loader for type: index
+2025-04-15 13:52:03,156 - financial_prediction_system - INFO - Creating IndexDataLoader instance
+2025-04-15 13:52:03,156 - financial_prediction_system - DEBUG - Initialized IndexDataLoader
+2025-04-15 13:52:03,292 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: Unsupported model type: random_forest
+2025-04-15 13:56:01,704 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:56:03,411 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:56:05,131 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:56:09,652 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:56:11,374 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:56:13,080 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:56:19,711 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:56:21,425 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:56:29,159 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:56:30,884 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:56:39,524 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:56:41,246 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:56:42,959 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:58:57,357 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:59:01,036 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:59:20,329 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 13:59:22,044 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:59:23,746 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 13:59:37,972 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 13:59:37,972 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 13:59:37,973 - financial_prediction_system - ERROR - Failed to connect to Redis: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 13:59:37,973 - financial_prediction_system - ERROR - Failed to initialize Redis cache: Redis connection failed: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 13:59:37,973 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 13:59:37,973 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 13:59:38,007 - financial_prediction_system - DEBUG - Loading index data from 2019-09-23 to 2021-12-31
+2025-04-15 13:59:38,007 - financial_prediction_system - DEBUG - Requesting loader for type: index
+2025-04-15 13:59:38,007 - financial_prediction_system - INFO - Creating IndexDataLoader instance
+2025-04-15 13:59:38,007 - financial_prediction_system - DEBUG - Initialized IndexDataLoader
+2025-04-15 13:59:38,183 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: Found input variables with inconsistent numbers of samples: [234, 360]
+2025-04-15 14:06:26,584 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 14:06:26,584 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 14:06:26,584 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 14:06:26,584 - financial_prediction_system - INFO - Loading data for AAPL from 2022-01-01 to 2023-12-31
+2025-04-15 14:06:26,612 - financial_prediction_system - DEBUG - Loading index data from 2021-09-23 to 2023-12-31
+2025-04-15 14:06:26,612 - financial_prediction_system - DEBUG - Requesting loader for type: index
+2025-04-15 14:06:26,612 - financial_prediction_system - INFO - Creating IndexDataLoader instance
+2025-04-15 14:06:26,612 - financial_prediction_system - DEBUG - Initialized IndexDataLoader
+2025-04-15 14:06:26,861 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: Found input variables with inconsistent numbers of samples: [230, 356]
+2025-04-15 14:08:23,304 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 14:08:25,022 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 14:08:59,584 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 14:09:01,289 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 14:12:38,673 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 14:12:38,674 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 14:12:38,674 - financial_prediction_system - ERROR - Failed to connect to Redis: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 14:12:38,674 - financial_prediction_system - ERROR - Failed to initialize Redis cache: Redis connection failed: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 14:12:38,674 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 14:12:38,674 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 14:12:38,674 - financial_prediction_system - ERROR - Error in querying database for AAPL: 'NoneType' object has no attribute 'query'
+2025-04-15 14:14:18,081 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 14:14:18,081 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 14:14:18,082 - financial_prediction_system - ERROR - Failed to connect to Redis: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 14:14:18,082 - financial_prediction_system - ERROR - Failed to initialize Redis cache: Redis connection failed: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 14:14:18,082 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 14:14:18,082 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 14:14:18,116 - financial_prediction_system - DEBUG - Loading index data from 2019-09-23 to 2021-12-31
+2025-04-15 14:14:18,116 - financial_prediction_system - DEBUG - Requesting loader for type: index
+2025-04-15 14:14:18,116 - financial_prediction_system - INFO - Creating IndexDataLoader instance
+2025-04-15 14:14:18,116 - financial_prediction_system - DEBUG - Initialized IndexDataLoader
+2025-04-15 14:14:18,293 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: Unknown label type: continuous. Maybe you are trying to fit a classifier, which expects discrete classes on a regression target with continuous values.
+2025-04-15 14:14:44,426 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 14:14:44,427 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 14:14:44,427 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 14:14:44,427 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 14:14:44,450 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: Unknown label type: continuous. Maybe you are trying to fit a classifier, which expects discrete classes on a regression target with continuous values.
+2025-04-15 14:15:04,722 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 14:15:04,722 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 14:15:04,722 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 14:15:04,722 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 14:15:04,734 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: LSTMRegressor.__init__() got an unexpected keyword argument 'max_depth'
+2025-04-15 14:15:36,164 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 14:15:36,164 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 14:15:36,165 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 14:15:36,165 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 14:15:36,176 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: SVMModel.__init__() got an unexpected keyword argument 'max_depth'
+2025-04-15 14:15:49,283 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 14:15:49,283 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 14:15:49,283 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 14:15:49,283 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 14:15:49,305 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: Unknown label type: continuous. Maybe you are trying to fit a classifier, which expects discrete classes on a regression target with continuous values.
+2025-04-15 14:17:22,956 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 14:17:24,676 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 14:18:04,860 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 14:18:06,571 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 14:21:12,937 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 14:21:12,937 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 14:21:12,938 - financial_prediction_system - ERROR - Failed to connect to Redis: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 14:21:12,938 - financial_prediction_system - ERROR - Failed to initialize Redis cache: Redis connection failed: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 14:21:12,938 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 14:21:12,938 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 14:21:12,970 - financial_prediction_system - DEBUG - Loading index data from 2019-09-23 to 2021-12-31
+2025-04-15 14:21:12,970 - financial_prediction_system - DEBUG - Requesting loader for type: index
+2025-04-15 14:21:12,970 - financial_prediction_system - INFO - Creating IndexDataLoader instance
+2025-04-15 14:21:12,970 - financial_prediction_system - DEBUG - Initialized IndexDataLoader
+2025-04-15 14:21:13,225 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: (psycopg2.errors.InvalidSchemaName) schema "np" does not exist
+LINE 1: UPDATE ml_model_results SET test_mse=np.float64(4.9246135107...
+                                             ^
+
+[SQL: UPDATE ml_model_results SET test_mse=%(test_mse)s, test_r2=%(test_r2)s, test_mae=%(test_mae)s, model_path=%(model_path)s, updated_at=%(updated_at)s WHERE ml_model_results.id = %(ml_model_results_id)s]
+[parameters: {'test_mse': np.float64(4.924613510742121e-05), 'test_r2': 0.7665767966261894, 'test_mae': np.float64(0.005607258739386125), 'model_path': '/models/6.pkl', 'updated_at': datetime.datetime(2025, 4, 15, 19, 21, 13, 224529), 'ml_model_results_id': 6}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-15 14:23:02,937 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 14:23:04,643 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 14:24:47,435 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 14:24:47,435 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 14:24:47,436 - financial_prediction_system - ERROR - Failed to connect to Redis: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 14:24:47,436 - financial_prediction_system - ERROR - Failed to initialize Redis cache: Redis connection failed: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 14:24:47,437 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 14:24:47,437 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 14:24:47,470 - financial_prediction_system - DEBUG - Loading index data from 2019-09-23 to 2021-12-31
+2025-04-15 14:24:47,470 - financial_prediction_system - DEBUG - Requesting loader for type: index
+2025-04-15 14:24:47,470 - financial_prediction_system - INFO - Creating IndexDataLoader instance
+2025-04-15 14:24:47,470 - financial_prediction_system - DEBUG - Initialized IndexDataLoader
+2025-04-15 14:25:22,936 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 14:25:22,936 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 14:25:22,936 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 14:25:22,936 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 14:25:22,945 - financial_prediction_system - DEBUG - Loading index data from 2019-09-23 to 2021-12-31
+2025-04-15 14:25:22,946 - financial_prediction_system - DEBUG - Requesting loader for type: index
+2025-04-15 14:25:22,946 - financial_prediction_system - INFO - Creating IndexDataLoader instance
+2025-04-15 14:25:22,946 - financial_prediction_system - DEBUG - Initialized IndexDataLoader
+2025-04-15 14:25:23,151 - financial_prediction_system - WARNING - HTTP exception: 500 - Error training model: SVR.__init__() got an unexpected keyword argument 'random_state'
+2025-04-15 14:27:01,204 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 14:27:02,925 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 14:27:26,432 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 14:27:28,155 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 14:27:31,107 - financial_prediction_system - DEBUG - Requesting loader for type: stock
+2025-04-15 14:27:31,107 - financial_prediction_system - INFO - Creating StockDataLoader instance
+2025-04-15 14:27:31,108 - financial_prediction_system - ERROR - Failed to connect to Redis: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 14:27:31,108 - financial_prediction_system - ERROR - Failed to initialize Redis cache: Redis connection failed: 2 validation errors for Settings
+alpaca_key
+  Extra inputs are not permitted [type=extra_forbidden, input_value='PKAXYQGYDZBJ13P5NL6D', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+alpaca_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='kOUi43hzeYjTUmpBR9z8qRqcDhrB8Og0NmCOEgHA', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/extra_forbidden
+2025-04-15 14:27:31,108 - financial_prediction_system - DEBUG - Initialized StockDataLoader
+2025-04-15 14:27:31,108 - financial_prediction_system - INFO - Loading data for AAPL from 2020-01-01 to 2021-12-31
+2025-04-15 14:27:31,141 - financial_prediction_system - DEBUG - Loading index data from 2019-09-23 to 2021-12-31
+2025-04-15 14:27:31,141 - financial_prediction_system - DEBUG - Requesting loader for type: index
+2025-04-15 14:27:31,141 - financial_prediction_system - INFO - Creating IndexDataLoader instance
+2025-04-15 14:27:31,141 - financial_prediction_system - DEBUG - Initialized IndexDataLoader
+2025-04-15 14:27:46,081 - financial_prediction_system - INFO - Financial Prediction API shutting down

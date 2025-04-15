@@ -1,0 +1,1 @@
+"""Infrastructure module for external interfaces in the Financial Prediction System.""" 

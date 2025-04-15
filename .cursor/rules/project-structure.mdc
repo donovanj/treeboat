@@ -1,0 +1,110 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+<Rule>
+Always refer to this before creating new files.
+
+Core idea of the project; I have a database with timeseries data and I'm creating a system for creating targets, features, training  models, and backtesting. Another core idea is for this system to be available via an API allowing for custom selection of targets, features, training methods, and backtesting.   
+
+financial_prediction_system/
+├── api/  # FastAPI application
+│   ├── routes/  # API endpoints
+│   │   ├── predictions.py  # Prediction endpoints
+│   │   ├── models.py  # Model management endpoints
+│   │   └── backtests.py  # Backtest endpoints
+│   ├── schemas/  # Pydantic models (renamed from models to avoid confusion)
+│   ├── dependencies.py  # Dependency injection
+│   └── main.py  # Application entrypoint
+├── core/  # Business logic
+│   ├── models/  # ML model implementations
+│   │   ├── base.py  # Base model interfaces
+│   │   ├── factory.py  # Model factory pattern implementation
+│   │   ├── registry.py  # Model registry & versioning
+│   │   ├── regression/  # Regression models
+│   │   │   ├── lstm.py  # LSTM implementation
+│   │   │   ├── transformer.py  # Transformer implementation
+│   │   │   └── neural_ode.py  # Neural ODE implementation
+│   │   ├── classification/  # Classification models
+│   │   │   ├── cnn.py  # CNN for pattern recognition
+│   │   │   ├── xgboost_nn.py  # Hybrid XGBoost+NN model
+│   │   │   └── transformer_classifier.py  # Transformer classifier
+│   │   └── specialized/  # Specialized financial models
+│   │       ├── deepar.py  # Probabilistic forecasting
+│   │       ├── gnn.py  # Graph Neural Networks
+│   │       └── reinforcement.py  # RL models
+│   ├── features/  # Feature engineering
+│   │   ├── technical.py  # Technical indicators
+│   │   ├── fundamental.py  # Fundamental features
+│   │   ├── sentiment.py  # Sentiment analysis
+│   │   └── market.py  # Market/macro features
+│   ├── targets/  # Target variable definitions
+│   │   ├── price_targets.py  # Price-based targets
+│   │   ├── volatility_targets.py  # Volatility-based targets
+│   │   └── alpha_targets.py  # Alpha/relative performance targets
+│   ├── ensemble/  # Model composition
+│   │   ├── stacking.py  # Stacking ensemble
+│   │   ├── boosting.py  # Boosting ensemble
+│   │   ├── bagging.py  # Bagging ensemble
+│   │   └── weighted.py  # Weighted ensemble
+│   └── evaluation/  # Performance evaluation
+│       ├── metrics.py  # Financial metrics
+│       ├── backtesting.py  # Backtesting framework
+│       └── cross_validation.py  # Time series cross-validation
+├── infrastructure/  # External interfaces
+│   ├── database/  # Database connections
+│   │   ├── timeseries_db.py  # Time series database
+│   │   └── model_store.py  # Model storage
+│   ├── repositories/  # Data access
+│   │   ├── market_data.py  # Market data repository
+│   │   ├── features.py  # Feature repository
+│   │   └── models.py  # Model repository
+│   ├── services/  # External services
+│   │   ├── data_providers.py  # Market data providers
+│   │   ├── trading.py  # Trading API interfaces
+│   │   └── notification.py  # Notification services
+│   └── streaming/  # Real-time data processing
+│       ├── kafka.py  # Kafka integration
+│       └── websocket.py  # WebSocket handlers
+├── utils/  # Utility functions
+│   ├── preprocessing.py  # Data preprocessing
+│   ├── visualization.py  # Data visualization
+│   └── logging.py  # Logging configuration
+├── pipelines/  # Training and prediction pipelines
+│   ├── training.py  # Model training pipeline
+│   ├── prediction.py  # Prediction pipeline
+│   └── optimization.py  # Hyperparameter optimization
+├── config/  # Configuration files
+│   ├── models.py  # Model configurations
+│   └── app.py  # Application settings
+├── tests/  # Test suite
+│   ├── unit/  # Unit tests
+│   ├── integration/  # Integration tests
+│   └── conftest.py  # Test fixtures
+├── .env  # Environment variables
+└── pyproject.toml  # Project dependencies
+
+
+Make sure to always use the right design pattern based on the use case and relation to other code. Make sure to think logically about implementation and:
+
+- Follow the DRY (Don't Repeat Yourself) Principle and Avoid Duplicating Code or Logic.
+- Avoid writing the same code more than once. Instead, reuse your code using functions, classes, modules, libraries, or other abstractions.
+- Modify code in one place if you need to change or update it.
+- Write short functions that only do one thing.
+- Follow the single responsibility principle (SRP), which means that a function should have one purpose and perform it effectively.
+- If a function becomes too long or complex, consider breaking it into smaller, more manageable functions.
+- Write code that is readable, understandable, and maintainable for future readers.
+- Aim to create software that is not only functional but also readable, maintainable, and efficient throughout its lifecycle.
+- Prioritize clarity to make reading, understanding, and modifying code easier.
+- Adhere to established coding standards and write well-structured code to reduce errors.
+- Regularly review and refactor code to improve structure, readability, and maintainability. Always leave the codebase cleaner than you found it.
+- Use version control systems (e.g., Git) to track changes and collaborate effectively.
+- Choose names for variables, functions, and classes that reflect their purpose and behavior.
+- A name should tell you why it exists, what it does, and how it is used. If a name requires a comment, then the name does not reveal its intent.
+- Use specific names that provide a clearer understanding of what the variables represent and how they are used.
+- Use comments sparingly, and when you do, make them meaningful.
+- Don't comment on obvious things. Excessive or unclear comments can clutter the codebase and become outdated.
+- Use comments to convey the "why" behind specific actions or explain unusual behavior and potential pitfalls.
+- Provide meaningful information about the function's behavior and explain unusual behavior and potential pitfalls.
+</Rule>

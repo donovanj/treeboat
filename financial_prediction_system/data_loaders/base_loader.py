@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime, date
 from typing import Optional, List, Dict, Any, Protocol, Set, Callable
 from sqlalchemy.orm import Session
-from logging_config import logger
+from financial_prediction_system.logging_config import logger
 
 class DataProviderStrategy(Protocol):
     """Strategy for data retrieval from different sources"""

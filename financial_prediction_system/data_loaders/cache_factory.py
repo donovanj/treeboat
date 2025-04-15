@@ -1,10 +1,8 @@
 from functools import lru_cache
 from typing import Optional
 from .cache import RedisCache, DataCache
-import logging
-from config import get_settings
-
-logger = logging.getLogger(__name__)
+from financial_prediction_system.logging_config import logger
+from financial_prediction_system.config import get_settings
 
 class CacheFactory:
     """Factory for creating cache instances"""

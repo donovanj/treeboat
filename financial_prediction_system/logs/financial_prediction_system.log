@@ -1,0 +1,132 @@
+2025-04-15 10:50:46,465 - financial_prediction_system - ERROR - Uncaught exception
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/main.py", line 7, in <module>
+    from financial_prediction_system.api.routes import models, predictions, backtests
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/routes/models.py", line 18, in <module>
+    from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/__init__.py", line 2, in <module>
+    from .stock_loader import StockDataLoader
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/stock_loader.py", line 5, in <module>
+    from database.models_and_schemas.models import Stock, StockPrice
+ModuleNotFoundError: No module named 'database'
+2025-04-15 10:51:45,435 - financial_prediction_system - ERROR - Uncaught exception
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/main.py", line 7, in <module>
+    from financial_prediction_system.api.routes import models, predictions, backtests
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/routes/models.py", line 18, in <module>
+    from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/__init__.py", line 2, in <module>
+    from .stock_loader import StockDataLoader
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/stock_loader.py", line 5, in <module>
+    from database.models_and_schemas.models import Stock, StockPrice
+ModuleNotFoundError: No module named 'database'
+2025-04-15 11:01:34,212 - financial_prediction_system - ERROR - Uncaught exception
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/main.py", line 7, in <module>
+    from financial_prediction_system.api.routes import models, predictions, backtests
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/routes/models.py", line 18, in <module>
+    from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/__init__.py", line 2, in <module>
+    from .stock_loader import StockDataLoader
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/stock_loader.py", line 7, in <module>
+    from .data_providers import AlpacaProvider
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/data_providers.py", line 3, in <module>
+    import yfinance as yf
+ModuleNotFoundError: No module named 'yfinance'
+2025-04-15 11:02:18,813 - financial_prediction_system - ERROR - Uncaught exception
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/main.py", line 7, in <module>
+    from financial_prediction_system.api.routes import models, predictions, backtests
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/routes/models.py", line 18, in <module>
+    from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/__init__.py", line 2, in <module>
+    from .stock_loader import StockDataLoader
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/stock_loader.py", line 7, in <module>
+    from .data_providers import AlpacaProvider
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/data_providers.py", line 5, in <module>
+    from alpaca.data.historical import StockHistoricalDataClient
+ModuleNotFoundError: No module named 'alpaca'
+2025-04-15 11:04:03,646 - financial_prediction_system - ERROR - Uncaught exception
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/main.py", line 7, in <module>
+    from financial_prediction_system.api.routes import models, predictions, backtests
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/routes/models.py", line 18, in <module>
+    from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/__init__.py", line 2, in <module>
+    from .stock_loader import StockDataLoader
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/stock_loader.py", line 7, in <module>
+    from .data_providers import AlpacaProvider
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/data_providers.py", line 12, in <module>
+    from ratelimit import limits, sleep_and_retry
+ModuleNotFoundError: No module named 'ratelimit'
+2025-04-15 11:04:53,567 - financial_prediction_system - ERROR - Uncaught exception
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/main.py", line 7, in <module>
+    from financial_prediction_system.api.routes import models, predictions, backtests
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/routes/models.py", line 18, in <module>
+    from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/__init__.py", line 2, in <module>
+    from .stock_loader import StockDataLoader
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/stock_loader.py", line 8, in <module>
+    from .cache_decorator import cacheable, invalidate_cache
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/cache_decorator.py", line 5, in <module>
+    from .cache import RedisCache, DataCache
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/cache.py", line 2, in <module>
+    import redis
+ModuleNotFoundError: No module named 'redis'
+2025-04-15 11:05:34,096 - financial_prediction_system - ERROR - Uncaught exception
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/main.py", line 7, in <module>
+    from financial_prediction_system.api.routes import models, predictions, backtests
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/routes/models.py", line 18, in <module>
+    from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/__init__.py", line 2, in <module>
+    from .stock_loader import StockDataLoader
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/stock_loader.py", line 8, in <module>
+    from .cache_decorator import cacheable, invalidate_cache
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/cache_decorator.py", line 5, in <module>
+    from .cache import RedisCache, DataCache
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/cache.py", line 5, in <module>
+    from config import get_settings
+ModuleNotFoundError: No module named 'config'
+2025-04-15 11:08:10,598 - financial_prediction_system - ERROR - Uncaught exception
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/main.py", line 7, in <module>
+    from financial_prediction_system.api.routes import models, predictions, backtests
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/api/routes/models.py", line 18, in <module>
+    from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/__init__.py", line 2, in <module>
+    from .stock_loader import StockDataLoader
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/stock_loader.py", line 8, in <module>
+    from .cache_decorator import cacheable, invalidate_cache
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/cache_decorator.py", line 5, in <module>
+    from .cache import RedisCache, DataCache
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/data_loaders/cache.py", line 5, in <module>
+    from financial_prediction_system.config import get_settings
+  File "/home/dj/projects/current/refined_yn/financial_prediction_system/config/__init__.py", line 4, in <module>
+    from pydantic import BaseSettings
+  File "/home/dj/projects/current/refined_yn/venv/lib/python3.12/site-packages/pydantic/__init__.py", line 426, in __getattr__
+    return _getattr_migration(attr_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dj/projects/current/refined_yn/venv/lib/python3.12/site-packages/pydantic/_migration.py", line 296, in wrapper
+    raise PydanticImportError(
+pydantic.errors.PydanticImportError: `BaseSettings` has been moved to the `pydantic-settings` package. See https://docs.pydantic.dev/2.11/migration/#basesettings-has-moved-to-pydantic-settings for more details.
+
+For further information visit https://errors.pydantic.dev/2.11/u/import-error
+2025-04-15 11:13:40,088 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 11:15:26,880 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 11:23:42,747 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 11:27:55,390 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 11:27:59,659 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 11:28:54,618 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 11:28:58,508 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-15 11:29:53,066 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-15 11:33:16,382 - financial_prediction_system - INFO - Financial Prediction API starting up

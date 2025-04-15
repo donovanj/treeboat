@@ -16,6 +16,7 @@ from financial_prediction_system.core.features.model_feature_builder import Mode
 from financial_prediction_system.core.targets.model_target_pipeline import ModelTargetPipeline
 from financial_prediction_system.core.models.factory import ModelFactory
 from financial_prediction_system.core.evaluation.metrics import calculate_metrics
+from financial_prediction_system.logging_config import logger
 
 
 class TrainingObserver:
@@ -40,15 +41,8 @@ class TrainingLogger(TrainingObserver):
     
     def __init__(self, log_level=logging.INFO):
         """Initialize the training logger."""
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(log_level)
-        
-        # Create console handler if none exists
-        if not self.logger.handlers:
-            handler = logging.StreamHandler()
-            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-            handler.setFormatter(formatter)
-            self.logger.addHandler(handler)
+        # Use the centralized logger
+        self.logger = logger
     
     def update(self, event_type: str, data: Dict[str, Any]) -> None:
         """Log training events."""

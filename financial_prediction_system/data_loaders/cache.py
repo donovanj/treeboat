@@ -1,12 +1,10 @@
 from typing import Optional, Any, Dict, List, Union
 import redis
 import json
-import logging
 from datetime import date
-from config import get_settings
+from financial_prediction_system.config import get_settings
 from abc import ABC, abstractmethod
-
-logger = logging.getLogger(__name__)
+from financial_prediction_system.logging_config import logger
 
 class CacheInterface(ABC):
     """Abstract interface for cache implementations"""

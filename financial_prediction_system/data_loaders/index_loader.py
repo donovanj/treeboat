@@ -6,8 +6,8 @@ import yfinance as yf
 from .base_loader import BaseDataLoader
 import pandas as pd
 from sqlalchemy import text, func
-from logging_config import logger
-from database.models_and_schemas.models import SPXPrice, NDXPrice, DJIPrice, RUTPrice, VIXPrice, SOXPrice, OSXPrice
+from financial_prediction_system.logging_config import logger
+from financial_prediction_system.infrastructure.database.models_and_schemas.models import SPXPrice, NDXPrice, DJIPrice, RUTPrice, VIXPrice, SOXPrice, OSXPrice
 from .data_providers import YahooFinanceProvider
 from .cache_decorator import cacheable, invalidate_cache
 from .cache import RedisCache

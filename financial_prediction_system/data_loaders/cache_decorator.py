@@ -3,9 +3,7 @@ from typing import Callable, Any, Optional, Dict, List
 from datetime import date
 import json
 from .cache import RedisCache, DataCache
-import logging
-
-logger = logging.getLogger(__name__)
+from financial_prediction_system.logging_config import logger
 
 def cacheable(cache_key_prefix: str):
     """

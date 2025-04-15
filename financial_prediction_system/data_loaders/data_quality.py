@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 import numpy as np
-from logging_config import logger
+from financial_prediction_system.logging_config import logger
 
 class DataQualityManager:
     def __init__(self, db: Session):
@@ -122,7 +122,7 @@ class DataQualityManager:
 
     def _check_missing_dates(self, loader_type: str, start_date: date, end_date: date) -> dict:
         """Check for missing dates in the data range"""
-        from database.models_and_schemas.models import StockPrice, TreasuryYield, IndexPrice
+        from financial_prediction_system.infrastructure.database.models_and_schemas.models import StockPrice, TreasuryYield, IndexPrice
         
         model_map = {
             "stock": StockPrice,
@@ -154,7 +154,7 @@ class DataQualityManager:
 
     def _check_outliers(self, loader_type: str, start_date: date, end_date: date) -> dict:
         """Check for statistical outliers in the data"""
-        from database.models_and_schemas.models import StockPrice, TreasuryYield, IndexPrice
+        from financial_prediction_system.infrastructure.database.models_and_schemas.models import StockPrice, TreasuryYield, IndexPrice
         
         model_map = {
             "stock": StockPrice,
@@ -196,7 +196,7 @@ class DataQualityManager:
 
     def _check_consistency(self, loader_type: str, start_date: date, end_date: date) -> dict:
         """Check for data consistency and integrity"""
-        from database.models_and_schemas.models import StockPrice, TreasuryYield, IndexPrice
+        from financial_prediction_system.infrastructure.database.models_and_schemas.models import StockPrice, TreasuryYield, IndexPrice
         
         model_map = {
             "stock": StockPrice,

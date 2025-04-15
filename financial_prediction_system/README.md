@@ -41,6 +41,27 @@ uvicorn financial_prediction_system.api.main:app --reload
 
 The API will be available at http://localhost:8000.
 
+## Logging
+
+The system uses a centralized logging configuration defined in `logging_config.py`. All logs are written to:
+
+1. Console output (INFO level and above)
+2. Log files in the `logs` directory (DEBUG level and above)
+
+Log files rotate daily with a 7-day retention period.
+
+To use the logger in your code:
+
+```python
+from financial_prediction_system.logging_config import logger
+
+# Log at different levels
+logger.debug("Detailed debug information")
+logger.info("General information")
+logger.warning("Warning message")
+logger.error("Error message", exc_info=True)  # With exception stacktrace
+```
+
 ## Project Structure
 
 The project follows a clean architecture approach with clear separation of concerns:
@@ -108,7 +129,8 @@ financial_prediction_system/
 ├── utils/  # Utility functions
 │   ├── preprocessing.py  # Data preprocessing
 │   ├── visualization.py  # Data visualization
-│   └── logging.py  # Logging configuration
+│   └── logging.py  # Logging helper functions
+├── logging_config.py  # Centralized logging configuration
 ├── pipelines/  # Training and prediction pipelines
 │   ├── training.py  # Model training pipeline
 │   ├── prediction.py  # Prediction pipeline

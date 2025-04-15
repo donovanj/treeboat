@@ -1,7 +1,7 @@
 from typing import List, Optional, Dict, Any
 from datetime import date, timedelta
 from sqlalchemy.orm import Session
-from logging_config import logger
+from financial_prediction_system.logging_config import logger
 from .loader_factory import DataLoaderFactory
 from .cache_factory import CacheFactory
 from .data_quality import DataQualityManager

@@ -2,7 +2,7 @@ from datetime import datetime, date, timedelta
 from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
-from database.models_and_schemas.models import Stock, StockPrice
+from financial_prediction_system.infrastructure.database.models_and_schemas.models import Stock, StockPrice
 from .base_loader import BaseDataLoader
 from .data_providers import AlpacaProvider
 from .cache_decorator import cacheable, invalidate_cache

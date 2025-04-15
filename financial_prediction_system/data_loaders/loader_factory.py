@@ -1,6 +1,6 @@
 from typing import Dict, Type, Optional
 from sqlalchemy.orm import Session
-from logging_config import logger
+from financial_prediction_system.logging_config import logger
 from .base_loader import BaseDataLoader
 from .stock_loader import StockDataLoader
 from .treasury_loader import TreasuryDataLoader

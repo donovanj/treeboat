@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import and_
 import requests
 from bs4 import BeautifulSoup
-from database.models_and_schemas.models import TreasuryYield
+from financial_prediction_system.infrastructure.database.models_and_schemas.models import TreasuryYield
 from .base_loader import BaseDataLoader
 import os
 from dotenv import load_dotenv

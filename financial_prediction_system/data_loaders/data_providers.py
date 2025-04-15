@@ -11,7 +11,7 @@ import os
 from dotenv import load_dotenv
 from ratelimit import limits, sleep_and_retry
 import time
-from logging_config import logger
+from financial_prediction_system.logging_config import logger
 
 load_dotenv()
 

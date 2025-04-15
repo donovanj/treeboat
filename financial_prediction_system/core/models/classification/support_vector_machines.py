@@ -107,7 +107,7 @@ class SVMModel(PredictionModel):
             is_torch = False
             
         # Generate probabilities
-        if hasattr(self.model, "predict_proba"):
+        if hasattr(self.model, "predict_proba") and callable(self.model.predict_proba):
             probabilities = self.model.predict_proba(features)
         else:
             raise ValueError("Model was not trained with probability=True")

@@ -11,6 +11,12 @@ setup(
         "sqlalchemy>=2.0.0",
         "psycopg2-binary>=2.9.0",
         "python-dotenv>=1.0.0",
+        "scikit-learn>=1.6.1",
+        "scipy>=1.15.2",
+        "numpy>=1.26.4",
+        "pandas>=2.2.2",
+        "joblib>=1.4.2",
+        "threadpoolctl>=3.6.0",
     ],
     extras_require={
         "dev": [

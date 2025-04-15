@@ -1,4 +1,4 @@
-from typing import Dict, Type, Any
+from typing import Dict, Type, Any, List
 
 from .base import PredictionModel
 
@@ -47,6 +47,31 @@ class ModelFactory:
             raise ValueError(f"Unsupported model type: {model_type}")
         
         return cls._models[model_type](**params)
+    
+    @classmethod
+    def create(cls, model_type: str, **params: Any) -> PredictionModel:
+        """Alias for create_model.
+        
+        Args:
+            model_type: The type of model to create
+            **params: Parameters to pass to the model constructor
+            
+        Returns:
+            An instance of the requested model
+            
+        Raises:
+            ValueError: If the model type is not registered
+        """
+        return cls.create_model(model_type, **params)
+    
+    @classmethod
+    def get_available_models(cls) -> List[str]:
+        """Get a list of all registered model types.
+        
+        Returns:
+            List of registered model type names
+        """
+        return list(cls._models.keys())
     
     @classmethod
     def create_target_builder(cls, builder_type: str, builder: Any, **params: Any) -> Any:

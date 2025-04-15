@@ -115,7 +115,7 @@ class VotingEnsemble(nn.Module):
             # For each model, add its weighted vote
             for sample_idx in range(batch_size):
                 class_idx = stacked_preds[model_idx, sample_idx].item()
-                votes[sample_idx, class_idx] += weight
+                votes[sample_idx, int(class_idx)] += weight
         
         # Return the class with the most votes for each sample
         return votes.argmax(dim=1)
@@ -137,12 +137,13 @@ class VotingEnsemble(nn.Module):
             if pred.size(-1) > 1:
                 # Multi-class: apply softmax
                 prob = torch.softmax(pred, dim=-1)
+                probs.append(prob)
             else:
-                # Binary: apply sigmoid and create [p, 1-p] probabilities
+                # Binary: apply sigmoid and create [1-p, p] probabilities
                 p = torch.sigmoid(pred)
+                # Reshape to [batch_size, 2]
                 prob = torch.cat([1 - p, p], dim=-1)
-            
-            probs.append(prob)
+                probs.append(prob)
         
         # Compute weighted average of probabilities
         weighted_probs = torch.zeros_like(probs[0])
@@ -150,13 +151,7 @@ class VotingEnsemble(nn.Module):
         for i, prob in enumerate(probs):
             weighted_probs += self.weights[i] * prob
         
-        # Return the class with highest probability
-        if weighted_probs.size(-1) > 1:
-            # For multi-class, return probabilities
-            return weighted_probs
-        else:
-            # For binary, return probability of positive class
-            return weighted_probs[:, 1:2]
+        return weighted_probs
     
     def _soft_voting_regression(self, predictions: List[torch.Tensor]) -> torch.Tensor:
         """
@@ -289,6 +284,14 @@ class VotingEnsemble(nn.Module):
             'val_loss': [[] for _ in range(len(self.models))]
         }
         
+        # Determine if we're doing multiclass classification
+        is_multiclass = False
+        for batch in train_loader:
+            _, targets = batch
+            if len(targets.shape) == 1 and targets.dtype == torch.int64:
+                is_multiclass = True
+            break
+        
         # Train each model independently
         for model_idx, (model, optimizer) in enumerate(zip(self.models, optimizers)):
             if verbose:
@@ -307,16 +310,25 @@ class VotingEnsemble(nn.Module):
                     
                     # Handle different output and target shapes
                     if self.task_type == 'classification':
-                        if target.dim() == 1 and output.shape[1] > 1:
-                            # Multi-class with class indices
+                        if is_multiclass and output.shape[1] > 1:
+                            # Multi-class with class indices (output: [batch_size, n_classes], target: [batch_size])
                             loss = criterion(output, target.long())
                         elif output.shape[1] == 1 and target.dim() == 1:
-                            # Binary with single output
+                            # Binary with single output (output: [batch_size, 1], target: [batch_size])
                             loss = criterion(output.squeeze(), target.float())
                         else:
                             # Shape should match
                             loss = criterion(output, target)
                     else:
+                        # For regression
+                        if output.shape != target.shape:
+                            # Ensure shapes match
+                            if output.dim() > target.dim():
+                                # If output has more dimensions, squeeze it
+                                output = output.squeeze()
+                            elif target.dim() > output.dim():
+                                # If target has more dimensions, squeeze it
+                                target = target.squeeze()
                         loss = criterion(output, target)
                     
                     loss.backward()
@@ -329,7 +341,7 @@ class VotingEnsemble(nn.Module):
                 
                 # Validation phase if validation set is provided
                 if validation_dataset is not None:
-                    val_loss = self._evaluate_model(model, val_loader, criterion)
+                    val_loss = self._evaluate_model(model, val_loader, criterion, is_multiclass)
                     history['val_loss'][model_idx].append(val_loss)
                     
                     if verbose and (epoch + 1) % 5 == 0:
@@ -346,7 +358,8 @@ class VotingEnsemble(nn.Module):
         self,
         model: nn.Module,
         dataloader: DataLoader,
-        criterion: nn.Module
+        criterion: nn.Module,
+        is_multiclass: bool = False
     ) -> float:
         """
         Evaluate a model on a dataset.
@@ -355,6 +368,7 @@ class VotingEnsemble(nn.Module):
             model: Model to evaluate
             dataloader: DataLoader for evaluation data
             criterion: Loss function
+            is_multiclass: Whether this is a multiclass classification task with class indices
             
         Returns:
             Average loss on the dataset
@@ -369,7 +383,7 @@ class VotingEnsemble(nn.Module):
                 
                 # Handle different output and target shapes
                 if self.task_type == 'classification':
-                    if target.dim() == 1 and output.shape[1] > 1:
+                    if is_multiclass and output.shape[1] > 1:
                         # Multi-class with class indices
                         loss = criterion(output, target.long())
                     elif output.shape[1] == 1 and target.dim() == 1:
@@ -379,6 +393,15 @@ class VotingEnsemble(nn.Module):
                         # Shape should match
                         loss = criterion(output, target)
                 else:
+                    # For regression
+                    if output.shape != target.shape:
+                        # Ensure shapes match
+                        if output.dim() > target.dim():
+                            # If output has more dimensions, squeeze it
+                            output = output.squeeze()
+                        elif target.dim() > output.dim():
+                            # If target has more dimensions, squeeze it
+                            target = target.squeeze()
                     loss = criterion(output, target)
                 
                 total_loss += loss.item()
@@ -514,3 +537,126 @@ class VotingEnsemble(nn.Module):
             model.load_state_dict(state_dict['models_state_dict'][i])
         
         return ensemble
+
+    def _soft_voting_multiclass(self, predictions: List[torch.Tensor]) -> torch.Tensor:
+        """
+        Perform soft voting for multi-class classification by averaging probabilities.
+        
+        Args:
+            predictions: List of model predictions (logits)
+            
+        Returns:
+            Average of class probabilities
+        """
+        # Apply softmax to convert logits to probabilities
+        probs = [torch.softmax(pred, dim=-1) for pred in predictions]
+        
+        # Apply weights to each model's probabilities
+        weighted_probs = torch.zeros_like(probs[0])
+        for i, prob in enumerate(probs):
+            weighted_probs += self.weights[i] * prob
+        
+        return weighted_probs
+    
+    def fit_multiclass(
+        self,
+        train_dataset: Dataset,
+        validation_dataset: Optional[Dataset] = None,
+        optimizers: Optional[List[torch.optim.Optimizer]] = None,
+        batch_size: int = 32,
+        num_workers: int = 4,
+        epochs: int = 10,
+        verbose: bool = True
+    ) -> Dict[str, List[float]]:
+        """
+        Special fit method for multiclass classification that handles CrossEntropyLoss correctly.
+        
+        Args:
+            train_dataset: Training dataset
+            validation_dataset: Optional validation dataset
+            optimizers: List of optimizers for each model (if None, defaults to Adam)
+            batch_size: Batch size for training
+            num_workers: Number of workers for data loading
+            epochs: Number of epochs to train
+            verbose: Whether to print training progress
+            
+        Returns:
+            Dictionary with training history
+        """
+        # Use CrossEntropyLoss which expects class indices (not one-hot encoded)
+        criterion = nn.CrossEntropyLoss()
+        
+        # Set default optimizers if not provided
+        if optimizers is None:
+            optimizers = [
+                torch.optim.Adam(model.parameters(), lr=0.001)
+                for model in self.models
+            ]
+        
+        # Create data loaders
+        train_loader = DataLoader(
+            train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers
+        )
+        
+        if validation_dataset is not None:
+            val_loader = DataLoader(
+                validation_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers
+            )
+        
+        # History to track training progress
+        history = {
+            'train_loss': [[] for _ in range(len(self.models))],
+            'val_loss': [[] for _ in range(len(self.models))]
+        }
+        
+        # Train each model independently
+        for model_idx, (model, optimizer) in enumerate(zip(self.models, optimizers)):
+            if verbose:
+                print(f"Training model {model_idx+1}/{len(self.models)}")
+            
+            for epoch in range(epochs):
+                # Training phase
+                model.train()
+                epoch_loss = 0.0
+                
+                for batch_idx, (data, target) in enumerate(train_loader):
+                    data, target = data.to(self.device), target.to(self.device)
+                    
+                    optimizer.zero_grad()
+                    output = model(data)
+                    
+                    # CrossEntropyLoss expects [batch_size, n_classes] logits and [batch_size] class indices
+                    loss = criterion(output, target.long())
+                    
+                    loss.backward()
+                    optimizer.step()
+                    
+                    epoch_loss += loss.item()
+                
+                avg_train_loss = epoch_loss / len(train_loader)
+                history['train_loss'][model_idx].append(avg_train_loss)
+                
+                # Validation phase if validation set is provided
+                if validation_dataset is not None:
+                    val_loss = 0.0
+                    model.eval()
+                    
+                    with torch.no_grad():
+                        for data, target in val_loader:
+                            data, target = data.to(self.device), target.to(self.device)
+                            output = model(data)
+                            loss = criterion(output, target.long())
+                            val_loss += loss.item()
+                    
+                    avg_val_loss = val_loss / len(val_loader)
+                    history['val_loss'][model_idx].append(avg_val_loss)
+                    
+                    if verbose and (epoch + 1) % 5 == 0:
+                        print(f"  Model {model_idx+1}, Epoch {epoch+1}/{epochs}: "
+                              f"train_loss={avg_train_loss:.4f}, "
+                              f"val_loss={avg_val_loss:.4f}")
+                elif verbose and (epoch + 1) % 5 == 0:
+                    print(f"  Model {model_idx+1}, Epoch {epoch+1}/{epochs}: "
+                          f"train_loss={avg_train_loss:.4f}")
+        
+        return history

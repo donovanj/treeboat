@@ -358,7 +358,7 @@ class AdaBoostEnsemble(nn.Module):
             'n_estimators': self.n_estimators,
             'learning_rate': self.learning_rate,
             'model_weights': self.model_weights,
-            'state_dict': self.state_dict()
+            'models_state_dict': [model.state_dict() for model in self.models]
         }
         torch.save(state_dict, path)
     
@@ -382,6 +382,13 @@ class AdaBoostEnsemble(nn.Module):
             learning_rate=state_dict['learning_rate'],
             device=device
         )
-        ensemble.load_state_dict(state_dict['state_dict'])
+        
+        # Create and load models
+        for model_state in state_dict['models_state_dict']:
+            model = base_model_factory().to(device)
+            model.load_state_dict(model_state)
+            ensemble.models.append(model)
+            
         ensemble.model_weights = state_dict['model_weights']
+        
         return ensemble

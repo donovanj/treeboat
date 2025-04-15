@@ -65,14 +65,24 @@ class ModelFeaturePipeline:
         
         # Add features based on configuration
         if self.config.get('use_technical_features', True):
-            window_sizes = self.config.get('window_sizes', [5, 10, 20])
-            self.feature_builder.add_technical_features(window_sizes=window_sizes)
+            self.feature_builder.add_feature_set('technical', 
+                                                window_sizes=self.config.get('window_sizes', [5, 10, 20]))
             
         if self.config.get('use_volume_features', True):
-            self.feature_builder.add_volume_features()
+            self.feature_builder.add_feature_set('volume')
             
         if self.config.get('use_date_features', True):
-            self.feature_builder.add_date_features()
+            self.feature_builder.add_feature_set('date')
+            
+        if self.config.get('use_price_action_features', False):
+            self.feature_builder.add_feature_set('price_action_ranges')
+            self.feature_builder.add_feature_set('price_action_gaps')
+            
+        if self.config.get('use_market_regime_features', False):
+            self.feature_builder.add_feature_set('market_regime')
+            
+        if self.config.get('use_sector_features', False):
+            self.feature_builder.add_feature_set('sector_behavior')
         
         # Apply dimensionality reduction if configured
         dim_reduction_method = self.config.get('dimensionality_reduction')
@@ -131,14 +141,24 @@ class ModelFeaturePipeline:
         
         # Apply the same transformations
         if self.config.get('use_technical_features', True):
-            window_sizes = self.config.get('window_sizes', [5, 10, 20])
-            new_builder.add_technical_features(window_sizes=window_sizes)
+            new_builder.add_feature_set('technical', 
+                                       window_sizes=self.config.get('window_sizes', [5, 10, 20]))
             
         if self.config.get('use_volume_features', True):
-            new_builder.add_volume_features()
+            new_builder.add_feature_set('volume')
             
         if self.config.get('use_date_features', True):
-            new_builder.add_date_features()
+            new_builder.add_feature_set('date')
+            
+        if self.config.get('use_price_action_features', False):
+            new_builder.add_feature_set('price_action_ranges')
+            new_builder.add_feature_set('price_action_gaps')
+            
+        if self.config.get('use_market_regime_features', False):
+            new_builder.add_feature_set('market_regime')
+            
+        if self.config.get('use_sector_features', False):
+            new_builder.add_feature_set('sector_behavior')
         
         # Apply same dimensionality reduction
         dim_reduction_method = self.config.get('dimensionality_reduction')
@@ -173,6 +193,55 @@ class ModelFeaturePipeline:
                 print(f"Warning: {len(missing_cols)} features are missing from the new data: {missing_cols[:5]}...")
         
         return features
+    
+    def prepare_sequence_data(self, features: pd.DataFrame, targets: Optional[pd.Series] = None, 
+                              sequence_length: int = 20) -> Tuple[np.ndarray, Optional[np.ndarray]]:
+        """
+        Prepare sequence data for time series models like LSTM or Transformer
+        
+        Parameters
+        ----------
+        features : pd.DataFrame
+            Feature data
+        targets : pd.Series, optional
+            Target data
+        sequence_length : int, default=20
+            Length of sequences to create
+            
+        Returns
+        -------
+        Tuple[np.ndarray, Optional[np.ndarray]]
+            Tuple of (feature_sequences, target_values) where target_values may be None
+        """
+        if features is None or len(features) < sequence_length:
+            raise ValueError(f"Not enough data to create sequences of length {sequence_length}")
+        
+        # Convert to numpy arrays
+        features_np = features.values
+        
+        # Create sequences
+        n_samples, n_features = features_np.shape
+        n_sequences = n_samples - sequence_length + 1
+        
+        # Initialize sequences array
+        sequences = np.zeros((n_sequences, sequence_length, n_features))
+        
+        # Fill sequences
+        for i in range(n_sequences):
+            sequences[i] = features_np[i:i + sequence_length]
+        
+        # Process targets if provided
+        target_values = None
+        if targets is not None:
+            # For each sequence, we use the target value at the end of the sequence
+            target_values = targets.iloc[sequence_length-1:].values
+            
+            # Ensure target_values has the right shape
+            if len(target_values) != n_sequences:
+                raise ValueError(f"Target values length {len(target_values)} does not match "
+                                 f"number of sequences {n_sequences}")
+        
+        return sequences, target_values
     
     def get_feature_importance(self, model=None) -> pd.DataFrame:
         """

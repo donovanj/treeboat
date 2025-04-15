@@ -356,13 +356,14 @@ class TransformerRegressor(PredictionModel):
         
         return features, None
     
-    def train(self, features: np.ndarray, targets: np.ndarray, validation_data: Optional[Tuple[np.ndarray, np.ndarray]] = None, **params):
+    def train(self, features: np.ndarray, targets: np.ndarray, validation_data: Optional[Tuple[np.ndarray, np.ndarray]] = None, callback=None, **params):
         """Train the transformer model.
         
         Args:
             features: Training features of shape (n_samples, seq_len, n_features)
             targets: Target values of shape (n_samples, output_size)
             validation_data: Optional tuple of (val_features, val_targets) for validation
+            callback: Optional callback function to report progress (epoch, loss)
             **params: Additional parameters to override default training settings
                 - batch_size: Size of training batches
                 - num_epochs: Number of training epochs
@@ -433,12 +434,17 @@ class TransformerRegressor(PredictionModel):
             self.train_losses.append(avg_train_loss)
             
             # Validation
+            val_loss = None
             if val_dataloader is not None:
                 val_loss = self._validate(val_dataloader)
                 self.val_losses.append(val_loss)
                 
                 # Update learning rate based on validation loss
                 self.scheduler.step(val_loss)
+            
+            # Call the callback if provided
+            if callback is not None:
+                callback(epoch, avg_train_loss if val_loss is None else val_loss)
         
         return {'train_losses': self.train_losses, 'val_losses': self.val_losses}
     

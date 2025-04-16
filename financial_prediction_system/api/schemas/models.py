@@ -2,8 +2,9 @@
 
 from pydantic import BaseModel, Field, validator
 from typing import List, Dict, Optional, Any, Union
-from datetime import datetime
+from datetime import datetime, date
 from enum import Enum
+import json
 
 from .base import BaseResponse, PaginatedResponse
 
@@ -104,6 +105,38 @@ class ModelFilterRequest(BaseModel):
     page: int = Field(1, description="Page number")
     page_size: int = Field(20, description="Page size")
 
+class ModelExplanationRequest(BaseModel):
+    """Request schema for model explanation."""
+    
+    sample_size: Optional[int] = Field(100, description="Number of samples to use for explanation")
+    include_background: Optional[bool] = Field(True, description="Whether to include background data for SHAP")
+    visualization_type: Optional[str] = Field("summary", description="Type of visualization to generate")
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "sample_size": 100,
+                "include_background": True,
+                "visualization_type": "summary"
+            }
+        }
+
+class ShapVisualization(BaseModel):
+    """Schema for SHAP visualization URLs."""
+    
+    summary_plot: Optional[str] = Field(None, description="URL to summary plot image")
+    waterfall_plot: Optional[str] = Field(None, description="URL to waterfall plot image")
+    feature_importance_json: Optional[str] = Field(None, description="URL to feature importance JSON")
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "summary_plot": "/static/explanations/1/summary_plot.png",
+                "waterfall_plot": "/static/explanations/1/waterfall_plot.png",
+                "feature_importance_json": "/static/explanations/1/feature_importance.json"
+            }
+        }
+
 # Response Models
 class ModelFeatureImportance(BaseModel):
     """Model for feature importance"""
@@ -156,3 +189,36 @@ class ModelTrainingResponse(BaseResponse):
     model_id: int = Field(..., description="Model ID")
     status: str = Field(..., description="Training status")
     metrics: Optional[Dict[str, Any]] = Field(None, description="Training metrics if available")
+
+class ModelExplanationResponse(BaseModel):
+    """Response schema for model explanation."""
+    
+    model_id: int = Field(..., description="ID of the explained model")
+    explanation: Dict[str, Any] = Field(..., description="SHAP explanation results")
+    visualizations: Optional[ShapVisualization] = Field(None, description="URLs to visualization files")
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "model_id": 1,
+                "explanation": {
+                    "shap_results": {
+                        "shap_values": [
+                            [0.01, -0.05, 0.1],
+                            [0.02, -0.03, 0.2]
+                        ],
+                        "expected_value": 0.5
+                    },
+                    "feature_importance": {
+                        "feature3": 0.12,
+                        "feature1": 0.05,
+                        "feature2": 0.03
+                    }
+                },
+                "visualizations": {
+                    "summary_plot": "/static/explanations/1/summary_plot.png",
+                    "waterfall_plot": "/static/explanations/1/waterfall_plot.png",
+                    "feature_importance_json": "/static/explanations/1/feature_importance.json"
+                }
+            }
+        }

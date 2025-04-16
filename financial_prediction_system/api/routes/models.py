@@ -1,16 +1,19 @@
 """API routes for model management"""
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Path
+from fastapi import APIRouter, Depends, HTTPException, Query, Path, BackgroundTasks
 from sqlalchemy.orm import Session
 from typing import List, Optional, Dict, Any
 from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
+import os
+import json
 
 from financial_prediction_system.api.dependencies import get_db
 from financial_prediction_system.api.schemas import (
     CreateModelRequest, CreateEnsembleRequest, ModelFilterRequest,
-    ModelResponse, ModelListResponse, EnsembleResponse, ModelTrainingResponse
+    ModelResponse, ModelListResponse, EnsembleResponse, ModelTrainingResponse,
+    ModelExplanationRequest, ModelExplanationResponse
 )
 from financial_prediction_system.infrastructure.database.model_store import ModelRepository
 from financial_prediction_system.core.models.factory import ModelFactory
@@ -19,6 +22,7 @@ from financial_prediction_system.core.features.feature_builder import FeatureBui
 from financial_prediction_system.core.targets.target_builder import TargetBuilder
 from financial_prediction_system.data_loaders.loader_factory import DataLoaderFactory
 from financial_prediction_system.core.evaluation.metrics import calculate_metrics
+from financial_prediction_system.core.evaluation.model_explainer import ModelExplainer
 from financial_prediction_system.data_loaders.data_providers import get_market_calendar_dates
 import QuantLib as ql
 
@@ -510,3 +514,135 @@ async def fill_data_gap(
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error filling data gap: {str(e)}")
+
+@router.post("/explain/{model_id}", response_model=ModelExplanationResponse)
+async def explain_model(
+    model_id: int = Path(..., ge=1),
+    request: ModelExplanationRequest = None,
+    background_tasks: BackgroundTasks = None,
+    db: Session = Depends(get_db)
+):
+    """Generate SHAP explanations for a trained model
+    
+    Args:
+        model_id: ID of the model to explain
+        request: Optional configuration for the explanation
+        
+    Returns:
+        Dictionary with explanation results and links to visualizations
+    """
+    repo = ModelRepository(db)
+    
+    try:
+        # Retrieve the model
+        model_record = repo.get_model(model_id)
+        if not model_record:
+            raise HTTPException(status_code=404, detail=f"Model with ID {model_id} not found")
+            
+        # Load the model
+        model_type = model_record.model_type
+        model = ModelFactory.create_model(model_type, **model_record.hyperparameters or {})
+        model.load(model_record.model_path)
+        
+        # Get sample data for explanation
+        sample_size = request.sample_size if request and request.sample_size else 100
+        loader_type = "stock"  # Default to stock for equity symbols
+        loader = DataLoaderFactory.get_loader(loader_type, db)
+        
+        # Get data for explanation (use test period from model record)
+        data = loader.load_data(
+            symbol=model_record.symbol,
+            start_date=model_record.test_start_date,
+            end_date=model_record.test_end_date
+        )
+        
+        # Prepare features
+        feature_builder = FeatureBuilder(data)
+        feature_sets = model_record.feature_sets
+        
+        # Load additional data if needed for specific feature sets
+        index_data = {}
+        treasury_data = pd.DataFrame()
+        
+        # Check if market data is needed
+        if any(fs in ["market_regime", "market_index_relationship", "sector_behavior"] for fs in feature_sets):
+            # Load index data with extended window for lookback
+            extended_start = model_record.test_start_date - timedelta(days=100)
+            index_data = DataLoaderFactory.get_index_data(db, extended_start, model_record.test_end_date)
+        
+        # Check if treasury data is needed
+        if any(fs in ["treasury_rate", "treasury_rate_equity_relationship"] for fs in feature_sets):
+            # Load treasury data with extended window
+            extended_start = model_record.test_start_date - timedelta(days=100)
+            treasury_loader = DataLoaderFactory.get_loader("treasury", db)
+            treasury_data = treasury_loader.load_data("", extended_start, model_record.test_end_date)
+        
+        # Add feature sets
+        for feature_set in feature_sets:
+            if feature_set in ["market_regime", "market_index_relationship", "sector_behavior"]:
+                feature_builder.add_feature_set(feature_set, index_data=index_data)
+            elif feature_set == "treasury_rate":
+                feature_builder.add_feature_set(feature_set, yields_data=treasury_data)
+            elif feature_set == "treasury_rate_equity_relationship":
+                feature_builder.add_feature_set(feature_set, yields_data=treasury_data, index_data=index_data)
+            else:
+                feature_builder.add_feature_set(feature_set)
+        
+        # Build features
+        features_df = feature_builder.build()
+        
+        # Sample features for explanation
+        if features_df.shape[0] > sample_size:
+            features_sample = features_df.sample(sample_size, random_state=42)
+        else:
+            features_sample = features_df
+        
+        # Generate SHAP explanation
+        explanation = model.explain(features_sample)
+        
+        # Generate visualization
+        visualizations = {}
+        
+        # If background tasks is available, generate plots asynchronously
+        if background_tasks:
+            # Create directory for visualizations
+            os.makedirs(f"static/explanations/{model_id}", exist_ok=True)
+            
+            # Function to generate and save plots
+            def generate_plots():
+                explainer = ModelExplainer(model, model_type, list(features_sample.columns))
+                
+                # Summary plot
+                summary_path = f"static/explanations/{model_id}/summary_plot.png"
+                explainer.save_summary_plot(features_sample, summary_path)
+                
+                # Waterfall plot for a sample instance
+                if features_sample.shape[0] > 0:
+                    waterfall_path = f"static/explanations/{model_id}/waterfall_plot.png"
+                    explainer.generate_waterfall_plot(features_sample, 0, waterfall_path)
+                
+                # Save feature importance as JSON
+                importance_path = f"static/explanations/{model_id}/feature_importance.json"
+                with open(importance_path, 'w') as f:
+                    json.dump(explanation.get("feature_importance", {}), f, indent=2)
+            
+            # Add task to background tasks
+            background_tasks.add_task(generate_plots)
+            
+            # Add paths to response
+            visualizations = {
+                "summary_plot": f"/static/explanations/{model_id}/summary_plot.png",
+                "waterfall_plot": f"/static/explanations/{model_id}/waterfall_plot.png",
+                "feature_importance_json": f"/static/explanations/{model_id}/feature_importance.json"
+            }
+        
+        # Create response
+        response = {
+            "model_id": model_id,
+            "explanation": explanation,
+            "visualizations": visualizations
+        }
+        
+        return response
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error generating explanation: {str(e)}")

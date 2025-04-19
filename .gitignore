@@ -20,3 +20,15 @@ __pycache__/
 node_modules
 financial_prediction_system/frontend/.vite
 .vite/
+*.log
+*.db
+financial_prediction_system/__pycache__
+*.db
+*.log
+*.csv
+*.json
+*.pkl
+*.pickle
+**__pycache__**
+logs/
+*.sql

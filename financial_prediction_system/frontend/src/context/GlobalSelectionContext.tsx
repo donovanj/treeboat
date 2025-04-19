@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface GlobalSelectionContextType {
   stock: string | null;
@@ -15,9 +15,36 @@ const DEFAULT_START = new Date(Date.now() - 180 * 24 * 60 * 60 * 1000).toISOStri
 const GlobalSelectionContext = createContext<GlobalSelectionContextType | undefined>(undefined);
 
 export const GlobalSelectionProvider = ({ children }: { children: ReactNode }) => {
-  const [stock, setStock] = useState<string | null>(null);
-  const [startDate, setStartDate] = useState<string>(DEFAULT_START);
-  const [endDate, setEndDate] = useState<string>(DEFAULT_END);
+  // Initialize state from localStorage or use defaults
+  const [stock, setStockInternal] = useState<string | null>(() => {
+    return localStorage.getItem('selectedStock') || null; // Default to null if not found
+  });
+  const [startDate, setStartDateInternal] = useState<string>(() => {
+    return localStorage.getItem('selectedStartDate') || DEFAULT_START;
+  });
+  const [endDate, setEndDateInternal] = useState<string>(() => {
+    return localStorage.getItem('selectedEndDate') || DEFAULT_END;
+  });
+
+  // Wrap setters to update both state and localStorage
+  const setStock = (s: string | null) => {
+    setStockInternal(s);
+    if (s) {
+      localStorage.setItem('selectedStock', s);
+    } else {
+      localStorage.removeItem('selectedStock');
+    }
+  };
+
+  const setStartDate = (d: string) => {
+    setStartDateInternal(d);
+    localStorage.setItem('selectedStartDate', d);
+  };
+
+  const setEndDate = (d: string) => {
+    setEndDateInternal(d);
+    localStorage.setItem('selectedEndDate', d);
+  };
 
   return (
     <GlobalSelectionContext.Provider value={{ stock, setStock, startDate, setStartDate, endDate, setEndDate }}>

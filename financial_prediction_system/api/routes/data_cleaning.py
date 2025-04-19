@@ -18,7 +18,11 @@ def get_stock_list():
         session.close()
 
 @router.get("/data-cleaning")
-def get_cleaning_eda(symbol: str = Query(None)):
+def get_cleaning_eda(
+    symbol: str = Query(None),
+    start: str = Query(None, description="Start date in YYYY-MM-DD"),
+    end: str = Query(None, description="End date in YYYY-MM-DD")
+):
     """
     Financial data cleaning and EDA for stocks and stock_prices tables.
     Returns summary, issues, and a sample Plotly candlestick chart JSON.
@@ -63,24 +67,56 @@ def get_cleaning_eda(symbol: str = Query(None)):
             sample_symbol = symbol
         else:
             sample_symbol = active_symbols[0] if active_symbols else None
+
+        # Determine date range
+        if not start or not end:
+            end_dt = datetime.datetime.now().date()
+            start_dt = end_dt - datetime.timedelta(days=365)
+            start = start or start_dt.isoformat()
+            end = end or end_dt.isoformat()
+        else:
+            # Ensure correct format if provided
+            try:
+                start_dt = datetime.datetime.strptime(start, '%Y-%m-%d').date()
+                end_dt = datetime.datetime.strptime(end, '%Y-%m-%d').date()
+            except ValueError:
+                 return {"success": False, "error": "Invalid date format. Please use YYYY-MM-DD."}
+
         plotly_fig = None
         price_issues = {}
+        describe_stats = None # Initialize describe_stats
+        ohlcv_fig = None
+        bands_fig = None
+        trendlines_fig = None
+        missing_heatmap_fig = None
+        box_violin_fig = None
+
         if sample_symbol:
-            prices_df = pd.read_sql("SELECT * FROM stock_prices WHERE symbol = %s ORDER BY date", session.bind, params=(sample_symbol,))
+            # Update SQL query to filter by date
+            sql_query = """
+                SELECT * FROM stock_prices
+                WHERE symbol = %(symbol)s AND date >= %(start)s AND date <= %(end)s
+                ORDER BY date
+            """
+            prices_df = pd.read_sql(sql_query, session.bind, params={"symbol": sample_symbol, "start": start, "end": end})
+
             if not prices_df.empty:
-                # Outliers (z-score)
+                # Convert date column
+                prices_df["date"] = pd.to_datetime(prices_df["date"])
+
+                # Outliers (z-score) - applied only to the selected date range
                 for col in ["open", "high", "low", "close", "volume"]:
                     arr = prices_df[col].astype(float)
                     z = np.abs((arr - arr.mean()) / (arr.std() if arr.std() > 0 else 1))
                     price_issues[f"{col}_outliers"] = int((z > 3).sum())
-                # Missing dates (using official market calendar)
-                prices_df["date"] = pd.to_datetime(prices_df["date"])
-                min_date = prices_df["date"].min().date()
-                max_date = prices_df["date"].max().date()
-                market_dates = get_market_calendar_dates(min_date, max_date)
+
+                # Missing dates (using official market calendar for the *requested* range)
+                # Use the provided start_dt and end_dt, not min/max from data
+                market_dates = get_market_calendar_dates(start_dt, end_dt)
                 present_dates = set(prices_df["date"].dt.date)
                 missing_dates = [str(d) for d in market_dates if d not in present_dates]
-                price_issues["missing_dates"] = missing_dates[:10]
+                price_issues["missing_dates"] = missing_dates[:10] # Limit for display
+
                 # Price consistency
                 inconsistent = prices_df[(prices_df["low"] > prices_df["open"]) |
                                          (prices_df["close"] > prices_df["high"]) |
@@ -100,28 +136,50 @@ def get_cleaning_eda(symbol: str = Query(None)):
                     yaxis=dict(title='Close'),
                     yaxis2=dict(title='Volume', overlaying='y', side='right', showgrid=False),
                     barmode='overlay',
-                    legend=dict(x=0, y=1.1, orientation='h')
+                    legend=dict(x=0, y=1.1, orientation='h'),
+                    template='plotly_dark'
                 )
                 # 2. Bands: High-Low, Bollinger Bands, ATR
                 high = prices_df['high']
                 low = prices_df['low']
                 close = prices_df['close']
-                rolling_mean = close.rolling(window=20).mean()
+                # Calculate moving averages
+                rolling_mean_10 = close.rolling(window=10).mean()
+                rolling_mean_20 = close.rolling(window=20).mean()
+                rolling_mean_50 = close.rolling(window=50).mean()
+                rolling_mean_200 = close.rolling(window=200).mean()
                 rolling_std = close.rolling(window=20).std()
-                upper_band = rolling_mean + 2 * rolling_std
-                lower_band = rolling_mean - 2 * rolling_std
+                upper_band = rolling_mean_20 + 2 * rolling_std
+                lower_band = rolling_mean_20 - 2 * rolling_std
                 tr = np.maximum(high - low, np.maximum(abs(high - close.shift()), abs(low - close.shift())))
                 atr = tr.rolling(window=14).mean()
                 bands_fig = go.Figure()
-                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=close, name='Close', line=dict(color='blue')))
-                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=high, name='High', line=dict(color='green', dash='dot')))
-                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=low, name='Low', line=dict(color='red', dash='dot')))
-                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=upper_band, name='Boll Upper', line=dict(color='gray', dash='dash')))
-                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=lower_band, name='Boll Lower', line=dict(color='gray', dash='dash')))
-                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=rolling_mean, name='MA20', line=dict(color='purple', dash='dot')))
-                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=close+atr, name='ATR+', line=dict(color='orange', dash='dot')))
-                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=close-atr, name='ATR-', line=dict(color='orange', dash='dot')))
-                bands_fig.update_layout(title=f"{sample_symbol} Bands & Ranges", xaxis_title="Date", yaxis_title="Price")
+                # Use Candlestick for price
+                bands_fig.add_trace(go.Candlestick(
+                    x=prices_df['date'],
+                    open=prices_df['open'],
+                    high=prices_df['high'],
+                    low=prices_df['low'],
+                    close=prices_df['close'],
+                    name=sample_symbol
+                ))
+                # Keep other traces as lines
+                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=upper_band, name='Boll Upper', line=dict(color='lightgrey', dash='dash')))
+                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=lower_band, name='Boll Lower', line=dict(color='lightgrey', dash='dash')))
+                # Add all moving averages
+                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=rolling_mean_10, name='MA10', line=dict(color='blue', dash='dot', width=1)))
+                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=rolling_mean_20, name='MA20', line=dict(color='green', dash='dot', width=1.5)))
+                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=rolling_mean_50, name='MA50', line=dict(color='yellow', dash='dot', width=1)))
+                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=rolling_mean_200, name='MA200', line=dict(color='red', dash='dot', width=1)))
+                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=close+atr, name='ATR+', line=dict(color='orange', dash='dot', width=1))) # Thinner line for ATR
+                bands_fig.add_trace(go.Scatter(x=prices_df['date'], y=close-atr, name='ATR-', line=dict(color='orange', dash='dot', width=1))) # Thinner line for ATR
+                bands_fig.update_layout(
+                    title=f"{sample_symbol} Bands & Ranges",
+                    xaxis_title="Date",
+                    yaxis_title="Price",
+                    xaxis_rangeslider_visible=False,
+                    template='plotly_dark'
+                )
                 # 3. Trendlines: Linear & Exponential
                 x = np.arange(len(prices_df))
                 y = close.values
@@ -130,10 +188,25 @@ def get_cleaning_eda(symbol: str = Query(None)):
                 exp_fit = np.polyfit(x, np.log(y + 1e-8), 1)
                 exp_trend = np.exp(exp_fit[1]) * np.exp(exp_fit[0] * x)
                 trendlines_fig = go.Figure()
-                trendlines_fig.add_trace(go.Scatter(x=prices_df['date'], y=y, name='Close', line=dict(color='blue')))
-                trendlines_fig.add_trace(go.Scatter(x=prices_df['date'], y=linear_trend, name='Linear Trend', line=dict(color='orange')))
-                trendlines_fig.add_trace(go.Scatter(x=prices_df['date'], y=exp_trend, name='Exp Trend', line=dict(color='green', dash='dot')))
-                trendlines_fig.update_layout(title=f"{sample_symbol} Trendlines", xaxis_title="Date", yaxis_title="Price")
+                # Use Candlestick for price
+                trendlines_fig.add_trace(go.Candlestick(
+                    x=prices_df['date'],
+                    open=prices_df['open'],
+                    high=prices_df['high'],
+                    low=prices_df['low'],
+                    close=prices_df['close'],
+                    name=sample_symbol
+                ))
+                # Keep trendlines as Scatter
+                trendlines_fig.add_trace(go.Scatter(x=prices_df['date'], y=linear_trend, name='Linear Trend', line=dict(color='orange', width=2)))
+                trendlines_fig.add_trace(go.Scatter(x=prices_df['date'], y=exp_trend, name='Exp Trend', line=dict(color='lime', dash='dot', width=2)))
+                trendlines_fig.update_layout(
+                    title=f"{sample_symbol} Trendlines",
+                    xaxis_title="Date",
+                    yaxis_title="Price",
+                    xaxis_rangeslider_visible=False,
+                    template='plotly_dark'
+                )
                 # 4. Descriptive stats
                 returns = close.pct_change().dropna()
                 describe_stats = {
@@ -144,8 +217,13 @@ def get_cleaning_eda(symbol: str = Query(None)):
                 # 5. Missingness heatmap
                 missingness = prices_df.isnull().astype(int)
                 if missingness.values.sum() > 0:
-                    missing_heatmap_fig = go.Figure(data=[go.Heatmap(z=missingness.values.T, x=prices_df['date'], y=missingness.columns, colorscale='Reds')])
-                    missing_heatmap_fig.update_layout(title="Missing Data Heatmap", xaxis_title="Date", yaxis_title="Field")
+                    missing_heatmap_fig = go.Figure(data=[go.Heatmap(z=missingness.values.T, x=prices_df['date'], y=missingness.columns, colorscale='Viridis')])
+                    missing_heatmap_fig.update_layout(
+                        title="Missing Data Heatmap",
+                        xaxis_title="Date",
+                        yaxis_title="Field",
+                        template='plotly_dark'
+                    )
                     missing_heatmap_fig = missing_heatmap_fig.to_plotly_json()
                 else:
                     missing_heatmap_fig = None
@@ -157,7 +235,10 @@ def get_cleaning_eda(symbol: str = Query(None)):
                 box_violin_fig.add_trace(go.Violin(y=prices_df['close'], name='Close', box_visible=True, meanline_visible=True))
                 box_violin_fig.add_trace(go.Violin(y=prices_df['volume'], name='Volume', box_visible=True, meanline_visible=True))
                 box_violin_fig.add_trace(go.Violin(y=returns, name='Returns', box_visible=True, meanline_visible=True))
-                box_violin_fig.update_layout(title=f"{sample_symbol} Box/Violin Plots")
+                box_violin_fig.update_layout(
+                    title=f"{sample_symbol} Box/Violin Plots",
+                    template='plotly_dark'
+                )
                 # Plotly candlestick chart (legacy)
                 fig = go.Figure(data=[go.Candlestick(
                     x=list(prices_df['date']),
@@ -170,7 +251,8 @@ def get_cleaning_eda(symbol: str = Query(None)):
                 fig.update_layout(
                     title=f"{sample_symbol} Price & Volume",
                     xaxis_title="Date",
-                    yaxis_title="Price"
+                    yaxis_title="Price",
+                    template='plotly_dark'
                 )
                 plotly_fig = fig.to_plotly_json()
                 # Convert all new figs to JSON
@@ -178,6 +260,8 @@ def get_cleaning_eda(symbol: str = Query(None)):
                 bands_fig = bands_fig.to_plotly_json()
                 trendlines_fig = trendlines_fig.to_plotly_json()
                 box_violin_fig = box_violin_fig.to_plotly_json()
+            else: # Handle case where no data is found for the range
+                price_issues["no_data_in_range"] = f"No price data found for {sample_symbol} between {start} and {end}"
         # --- RESPONSE ---
         import json
         from plotly.utils import PlotlyJSONEncoder

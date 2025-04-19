@@ -16,3 +16,5 @@ __pycache__/
 .pytest_cache/
 __init__.py
 __pycache__/
+node_modules
+.vite/deps

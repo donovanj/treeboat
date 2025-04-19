@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional, Set
+from typing import List, Dict, Any, Optional, Set, Tuple
 from datetime import date, datetime, timedelta
 import yfinance as yf
 import pandas as pd
@@ -14,17 +14,37 @@ import time
 from financial_prediction_system.logging_config import logger
 import QuantLib as ql
 from .rate_limiter import rate_limited, with_retry
+import threading
+from financial_prediction_system.config import get_alpaca_settings
 
 load_dotenv()
 
 class YahooFinanceProvider:
     """Data provider for Yahoo Finance"""
     
+    # These indices require the ^ prefix for Yahoo Finance
+    SPECIAL_INDICES = ['SPX', 'NDX', 'VIX', 'RUT', 'DJI', 'SOX', 'OSX']
+    
     @with_retry(max_retries=3, base_delay=2.0, exceptions=(Exception,))
     @rate_limited(name="yahoo_finance_api", tokens=1, tokens_per_second=2.0, max_tokens=3)
-    def _fetch_ticker_history(self, ticker, start_date, end_date):
-        """Rate-limited method to fetch ticker history from Yahoo Finance"""
-        return ticker.history(start=start_date, end=end_date, interval="1d")
+    def _fetch_ticker_history(self, ticker, start_date=None, end_date=None, period=None, interval="1d"):
+        """
+        Rate-limited method to fetch ticker history from Yahoo Finance
+        
+        Args:
+            ticker: Yahoo Finance ticker object
+            start_date: Start date for data fetching
+            end_date: End date for data fetching
+            period: Period string (e.g., '1d', '5d', '1mo') - used if start_date/end_date not provided
+            interval: Data interval (e.g., '1d', '1m')
+        
+        Returns:
+            DataFrame with historical data
+        """
+        if start_date and end_date:
+            return ticker.history(start=start_date, end=end_date, interval=interval, prepost=False, actions=False)
+        else:
+            return ticker.history(period=period, interval=interval, prepost=False, actions=False)
     
     def fetch_data(self, start_date: Optional[date] = None, end_date: Optional[date] = None, symbol: Optional[str] = None) -> List[Dict[str, Any]]:
         """Fetch data from Yahoo Finance"""
@@ -36,48 +56,263 @@ class YahooFinanceProvider:
             return []
             
         try:
-            ticker = yf.Ticker(symbol)
-            df = self._fetch_ticker_history(ticker, start_date, end_date)
+            # Handle index symbols that need the ^ prefix for Yahoo Finance
+            if symbol in self.SPECIAL_INDICES:
+                ticker_symbol = f"^{symbol}"
+                logger.debug(f"Using Yahoo Finance symbol {ticker_symbol} for {symbol}")
+            else:
+                ticker_symbol = symbol
+            
+            ticker = yf.Ticker(ticker_symbol)
+            
+            # Check if we're fetching today's data
+            today = datetime.now().date()
+            yesterday = today - timedelta(days=1)
+            
+            # If we're fetching recent data including today
+            if end_date >= today and (today - start_date).days <= 5:
+                logger.debug(f"Fetching recent data for {symbol} using explicit period")
+                
+                # Get historical data for past days
+                historical_end = min(yesterday, end_date)
+                historical_df = None
+                
+                if start_date <= historical_end:
+                    logger.debug(f"Fetching historical data for {symbol} from {start_date} to {historical_end}")
+                    historical_df = self._fetch_ticker_history(
+                        ticker, 
+                        start_date=start_date,
+                        end_date=historical_end + timedelta(days=1),  # Add a day to include the end date
+                        interval="1d"
+                    )
+                
+                # Get today's data if needed
+                if end_date >= today:
+                    logger.debug(f"Fetching today's data for {symbol}")
+                    # Get today's data with period='1d' which is more reliable for the current day
+                    today_df = self._fetch_ticker_history(ticker, period='1d', interval='1d')
+                    
+                    # Make sure we got data and handle timezone conversion
+                    if not today_df.empty:
+                        logger.debug(f"Received today's data for {symbol}: {len(today_df)} rows")
+                        # Combine historical and today's data
+                        if historical_df is not None and not historical_df.empty:
+                            df = pd.concat([historical_df, today_df], axis=0)
+                            # Remove duplicates, keeping the latest version (today's data)
+                            df = df.loc[~df.index.duplicated(keep='last')]
+                        else:
+                            df = today_df
+                    else:
+                        logger.warning(f"No today's data returned for {symbol}")
+                        df = historical_df if historical_df is not None else pd.DataFrame()
+                else:
+                    df = historical_df if historical_df is not None else pd.DataFrame()
+            else:
+                # For purely historical data, use the regular approach
+                logger.debug(f"Fetching historical data for {symbol} from {start_date} to {end_date}")
+                df = self._fetch_ticker_history(ticker, start_date=start_date, end_date=end_date + timedelta(days=1), interval="1d")
             
             if df.empty:
+                logger.warning(f"No data returned from Yahoo Finance for {symbol}")
                 return []
-                
+            
+            logger.debug(f"Processing Yahoo Finance data for {symbol}, got {len(df)} rows with columns: {df.columns.tolist()}")   
             records = []
             for index, row in df.iterrows():
-                record = {
-                    'symbol': symbol,
-                    'date': index.date(),
-                    'open': row['Open'],
-                    'high': row['High'],
-                    'low': row['Low'],
-                    'close': row['Close'],
-                    'volume': row['Volume']
-                }
-                records.append(record)
+                try:
+                    # Convert the DatetimeIndex to a date object
+                    record_date = index.date() if hasattr(index, 'date') else index
+                    
+                    record = {
+                        'symbol': symbol,  # Use the original symbol, not the Yahoo ticker symbol
+                        'date': record_date,
+                        'open': float(row['Open']) if not pd.isna(row['Open']) else None,
+                        'high': float(row['High']) if not pd.isna(row['High']) else None,
+                        'low': float(row['Low']) if not pd.isna(row['Low']) else None,
+                        'close': float(row['Close']) if not pd.isna(row['Close']) else None,
+                        'volume': int(row['Volume']) if not pd.isna(row['Volume']) else 0
+                    }
+                    records.append(record)
+                except Exception as e:
+                    logger.warning(f"Error processing row for {symbol} on {index}: {type(e).__name__}")
+                    continue
+                    
+            logger.debug(f"Processed {len(records)} records for {symbol}")
             return records
         except Exception as e:
-            logger.error(f"Error fetching data from Yahoo Finance for {symbol}: {str(e)}")
+            logger.error(f"Error fetching data from Yahoo Finance for {symbol}: {type(e).__name__}")
             return []
 
 class AlpacaProvider:
     """Data provider for Alpaca"""
     
     def __init__(self):
-        self.client = StockHistoricalDataClient(
-            api_key=os.getenv("ALPACA_KEY"),
-            secret_key=os.getenv("ALPACA_SECRET")
-        )
-        self.max_days_per_request = 1000  # Alpaca's limit
+        # Get settings from Pydantic model to avoid exposing in logs
+        try:
+            alpaca_settings = get_alpaca_settings()
+            api_key = alpaca_settings.ALPACA_KEY
+            secret_key = alpaca_settings.ALPACA_SECRET
+            
+            # Add debug logging to see what credentials we're getting
+            logger.warning(f"Alpaca API key exists: {api_key is not None}, Secret exists: {secret_key is not None}")
+            logger.warning(f"Alpaca API key length: {len(api_key) if api_key else 0}, Secret length: {len(secret_key) if secret_key else 0}")
+            
+            # Also check environment directly
+            env_key = os.environ.get('ALPACA_KEY')
+            env_secret = os.environ.get('ALPACA_SECRET')
+            logger.warning(f"Environment ALPACA_KEY exists: {env_key is not None}, ALPACA_SECRET exists: {env_secret is not None}")
+            
+            if not api_key or not secret_key:
+                logger.warning("Alpaca API credentials not found in settings")
+                raise ValueError("Missing Alpaca API credentials")
+                
+            self.client = StockHistoricalDataClient(
+                api_key=api_key,
+                secret_key=secret_key
+            )
+            self.api_key = api_key
+            self.secret_key = secret_key
+            self.max_days_per_request = 1000  # Alpaca's limit
+            self.base_url = "https://data.alpaca.markets/v2"
+            
+            # Dynamic rate limiting state
+            self.rate_limit = 200  # Default limit
+            self.rate_remaining = 200  # Default remaining
+            self.rate_reset_time = datetime.now().timestamp() + 60  # Default reset time (1 minute from now)
+            self.rate_lock = threading.Lock()  # For thread safety
+            
+            logger.info("Alpaca provider initialized successfully")
+        except Exception as e:
+            logger.error(f"Error initializing Alpaca provider: {type(e).__name__}")
+            # Re-raise but with a cleaner message that doesn't expose credentials
+            raise RuntimeError(f"Failed to initialize Alpaca provider: {type(e).__name__}")
+        
+    def _handle_rate_limiting(self, response: requests.Response) -> None:
+        """
+        Extract rate limit headers from response and adjust rate limiting accordingly.
+        
+        Args:
+            response: HTTP response from Alpaca API
+        """
+        try:
+            with self.rate_lock:
+                # Extract rate limit headers
+                if 'x-ratelimit-limit' in response.headers:
+                    self.rate_limit = int(response.headers['x-ratelimit-limit'])
+                    
+                if 'x-ratelimit-remaining' in response.headers:
+                    self.rate_remaining = int(response.headers['x-ratelimit-remaining'])
+                    
+                if 'x-ratelimit-reset' in response.headers:
+                    self.rate_reset_time = int(response.headers['x-ratelimit-reset'])
+                
+                # If we're running low on remaining requests, add a delay
+                if self.rate_remaining < 20:
+                    # Calculate time until reset
+                    now = datetime.now().timestamp()
+                    time_until_reset = max(0, self.rate_reset_time - now)
+                    
+                    # If reset is soon, wait a bit
+                    if time_until_reset < 10:
+                        logger.warning(f"Rate limit almost reached ({self.rate_remaining}/{self.rate_limit}), waiting for reset in {time_until_reset:.1f}s")
+                        time.sleep(time_until_reset + 1)  # Add 1 second buffer
+                    else:
+                        # Otherwise, slow down proportionally to how close we are to the limit
+                        delay = 1.0 - (self.rate_remaining / self.rate_limit)
+                        logger.info(f"Rate limit getting low ({self.rate_remaining}/{self.rate_limit}), adding delay of {delay:.2f}s")
+                        time.sleep(delay)
+                
+                logger.debug(f"Alpaca API rate limit: {self.rate_remaining}/{self.rate_limit}, reset at {datetime.fromtimestamp(self.rate_reset_time).strftime('%H:%M:%S')}")
+        except Exception as e:
+            logger.warning(f"Error handling rate limit headers: {type(e).__name__}")
         
     @with_retry(max_retries=3, base_delay=2.0, exceptions=(Exception,))
-    @rate_limited(name="alpaca_api", tokens=1, tokens_per_second=5.0, max_tokens=5)
     def _get_stock_bars(self, request):
         """
-        Rate-limited method to get stock bars from Alpaca.
-        Alpaca has a rate limit of 200 requests per minute (about 3.33 req/sec).
-        We use a more conservative 5 req/sec with max burst of 5 to stay comfortably under the limit.
+        Get stock bars from Alpaca using SDK.
+        We still use retry but rate limiting is now handled dynamically.
         """
         return self.client.get_stock_bars(request)
+    
+    @with_retry(max_retries=3, base_delay=2.0, exceptions=(Exception,))
+    def _get_latest_data(self, symbol: str) -> Optional[Dict[str, Any]]:
+        """
+        Get latest data with 15-minute delay for a symbol using direct REST API.
+        This is useful for getting today's data when the market is open.
+        
+        Args:
+            symbol: Stock symbol to get data for
+            
+        Returns:
+            Dictionary containing the latest bar data
+        """
+        url = f"{self.base_url}/stocks/bars/latest?symbols={symbol}&feed=delayed_sip"
+        
+        headers = {
+            "accept": "application/json",
+            "APCA-API-KEY-ID": self.api_key,
+            "APCA-API-SECRET-KEY": self.secret_key
+        }
+        
+        try:
+            response = requests.get(url, headers=headers)
+            # Process rate limit headers
+            self._handle_rate_limiting(response)
+            
+            response.raise_for_status()
+            data = response.json()
+            
+            if "bars" in data and symbol in data["bars"]:
+                return data["bars"][symbol]
+            else:
+                logger.warning(f"No latest data found for {symbol}")
+                return None
+        except Exception as e:
+            logger.error(f"Error fetching latest data for {symbol}: {type(e).__name__}")
+            return None
+    
+    @with_retry(max_retries=3, base_delay=2.0, exceptions=(Exception,))
+    def _get_daily_bars_directly(self, symbol: str, start_date: date, end_date: date) -> List[Dict[str, Any]]:
+        """
+        Get daily bars directly using REST API instead of the Alpaca SDK.
+        This is useful for getting same-day data with 15-minute delay.
+        
+        Args:
+            symbol: Stock symbol to get data for
+            start_date: Start date
+            end_date: End date
+            
+        Returns:
+            List of bar data
+        """
+        # Format dates as ISO strings
+        start_str = start_date.isoformat()
+        end_str = end_date.isoformat()
+        
+        url = f"{self.base_url}/stocks/bars?symbols={symbol}&timeframe=1D&start={start_str}&end={end_str}&limit=1000&adjustment=raw&feed=iex&sort=asc"
+        
+        headers = {
+            "accept": "application/json",
+            "APCA-API-KEY-ID": self.api_key,
+            "APCA-API-SECRET-KEY": self.secret_key
+        }
+        
+        try:
+            response = requests.get(url, headers=headers)
+            # Process rate limit headers
+            self._handle_rate_limiting(response)
+            
+            response.raise_for_status()
+            data = response.json()
+            
+            if "bars" in data and symbol in data["bars"]:
+                return data["bars"][symbol]
+            else:
+                logger.warning(f"No daily bars found for {symbol} between {start_date} and {end_date}")
+                return []
+        except Exception as e:
+            logger.error(f"Error fetching daily bars for {symbol}: {type(e).__name__}")
+            return []
         
     def fetch_data(self, start_date: Optional[date] = None, end_date: Optional[date] = None, symbol: Optional[str] = None) -> List[Dict[str, Any]]:
         """Fetch data from Alpaca"""
@@ -88,13 +323,64 @@ class AlpacaProvider:
         if not symbol:
             return []
             
-        total_days = (end_date - start_date).days
+        # Check if we're looking for recent data (including today)
+        today = datetime.now().date()
+        looking_for_today = end_date >= today
+        recent_data_window = 5  # Days
+        
         all_records = []
-
+        
+        # If we're looking for today's data or very recent data
+        if looking_for_today and (today - start_date).days <= recent_data_window:
+            logger.debug(f"Fetching recent data for {symbol} including today using direct API")
+            
+            # First try to get historical data for the complete range
+            bars = self._get_daily_bars_directly(symbol, start_date, end_date)
+            
+            # Process the bars data
+            for bar in bars:
+                # Converting ISO timestamp to date
+                timestamp = datetime.fromisoformat(bar["t"].replace("Z", "+00:00"))
+                record = {
+                    'symbol': symbol,
+                    'date': timestamp.date(),
+                    'open': bar["o"],
+                    'high': bar["h"],
+                    'low': bar["l"],
+                    'close': bar["c"],
+                    'volume': bar["v"]
+                }
+                all_records.append(record)
+            
+            # If we need today's data and it's not in our results yet, get the latest bar
+            today_data = [r for r in all_records if r['date'] == today]
+            if looking_for_today and not today_data:
+                latest_bar = self._get_latest_data(symbol)
+                if latest_bar:
+                    timestamp = datetime.fromisoformat(latest_bar["t"].replace("Z", "+00:00"))
+                    # Only add if it's actually from today
+                    if timestamp.date() == today:
+                        record = {
+                            'symbol': symbol,
+                            'date': timestamp.date(),
+                            'open': latest_bar["o"],
+                            'high': latest_bar["h"],
+                            'low': latest_bar["l"],
+                            'close': latest_bar["c"],
+                            'volume': latest_bar["v"]
+                        }
+                        all_records.append(record)
+                        logger.debug(f"Added latest data for {symbol} for today")
+            
+            return all_records
+            
+        # For historical data, use the existing method with SDK
+        total_days = (end_date - start_date).days + 1
+        
         for chunk_start in range(0, total_days, self.max_days_per_request):
             chunk_start_date = start_date + timedelta(days=chunk_start)
             chunk_end_date = min(
-                chunk_start_date + timedelta(days=self.max_days_per_request),
+                chunk_start_date + timedelta(days=self.max_days_per_request - 1),
                 end_date
             )
 
@@ -106,7 +392,7 @@ class AlpacaProvider:
                     end=chunk_end_date
                 )
                 
-                # Use the rate-limited method
+                # Use the retry-enabled method
                 bars = self._get_stock_bars(request)
                 
                 if bars and hasattr(bars, 'data') and symbol in bars.data:
@@ -122,7 +408,7 @@ class AlpacaProvider:
                         }
                         all_records.append(record)
             except Exception as e:
-                logger.error(f"Error loading chunk for {symbol}: {str(e)}")
+                logger.error(f"Error loading chunk for {symbol}: {type(e).__name__}")
                 continue
 
         return all_records

@@ -51,18 +51,24 @@ class RedisCache(CacheInterface):
             settings = get_settings()
             redis_config = settings.redis
             
+            # Don't pass along other settings that aren't related to Redis
             self.redis_client = redis.Redis(
                 host=redis_config.REDIS_HOST,
                 port=redis_config.REDIS_PORT,
                 db=redis_config.REDIS_DB,
+                password=redis_config.REDIS_PASSWORD,
                 decode_responses=True
             )
             # Verify connection
             self.redis_client.ping()
             logger.info(f"Connected to Redis at {redis_config.REDIS_HOST}:{redis_config.REDIS_PORT}")
         except Exception as e:
-            logger.error(f"Failed to connect to Redis: {str(e)}")
-            raise RuntimeError(f"Redis connection failed: {str(e)}")
+            # Clean the error message to avoid exposing sensitive information
+            error_msg = str(e)
+            # Don't log the full error which might contain credentials
+            logger.error(f"Failed to connect to Redis: {type(e).__name__}")
+            # Re-raise a more generic error without the details
+            raise RuntimeError(f"Redis connection failed: {type(e).__name__}")
     
     def get(self, key: str) -> Optional[Any]:
         """Get a value from Redis"""
@@ -73,7 +79,7 @@ class RedisCache(CacheInterface):
                 
             return json.loads(value)
         except Exception as e:
-            logger.error(f"Error retrieving from Redis: {str(e)}")
+            logger.error(f"Error retrieving from Redis: {type(e).__name__}")
             return None
     
     def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
@@ -86,7 +92,7 @@ class RedisCache(CacheInterface):
                 self.redis_client.set(key, serialized_value)
             return True
         except Exception as e:
-            logger.error(f"Error setting value in Redis: {str(e)}")
+            logger.error(f"Error setting value in Redis: {type(e).__name__}")
             return False
     
     def delete(self, key: str) -> bool:
@@ -95,7 +101,7 @@ class RedisCache(CacheInterface):
             self.redis_client.delete(key)
             return True
         except Exception as e:
-            logger.error(f"Error deleting from Redis: {str(e)}")
+            logger.error(f"Error deleting from Redis: {type(e).__name__}")
             return False
     
     def clear(self) -> bool:
@@ -105,7 +111,7 @@ class RedisCache(CacheInterface):
             logger.info("Redis cache cleared")
             return True
         except Exception as e:
-            logger.error(f"Error clearing Redis cache: {str(e)}")
+            logger.error(f"Error clearing Redis cache: {type(e).__name__}")
             return False
 
 class DataCache:

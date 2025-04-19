@@ -1,0 +1,1855 @@
+2025-04-18 23:31:23,030 - INFO - Starting stock splits adjustment process
+2025-04-18 23:31:23,038 - INFO - Fetched 3920 active symbols from database
+2025-04-18 23:31:24,897 - ERROR - Error fetching splits for TRMB: isinstance() arg 2 must be a type, a tuple of types, or a union
+2025-04-18 23:31:26,131 - ERROR - Error fetching splits for AZO: isinstance() arg 2 must be a type, a tuple of types, or a union
+2025-04-18 23:31:27,136 - ERROR - Error fetching splits for CQP: isinstance() arg 2 must be a type, a tuple of types, or a union
+2025-04-18 23:31:29,509 - ERROR - Error fetching splits for DH: isinstance() arg 2 must be a type, a tuple of types, or a union
+2025-04-18 23:31:30,516 - ERROR - Error fetching splits for DASH: isinstance() arg 2 must be a type, a tuple of types, or a union
+2025-04-18 23:31:31,545 - ERROR - Error fetching splits for CLDX: isinstance() arg 2 must be a type, a tuple of types, or a union
+2025-04-18 23:34:39,524 - ERROR - Error fetching splits for AVGO: isinstance() arg 2 must be a type, a tuple of types, or a union
+2025-04-18 23:36:25,749 - ERROR - Error fetching splits for AVGO: isinstance() arg 2 must be a type, a tuple of types, or a union
+2025-04-18 23:40:00,601 - ERROR - Error fetching splits for AVGO: cannot access local variable 'date' where it is not associated with a value
+2025-04-18 23:42:53,126 - ERROR - Error fetching splits for AVGO: cannot convert the series to <class 'float'>
+2025-04-18 23:45:29,240 - INFO - Found 1 splits for AVGO
+2025-04-18 23:51:05,544 - WARNING - Skipping NaN split ratio for AVGO on AVGO
+2025-04-18 23:51:05,544 - INFO - Found 0 splits for AVGO
+2025-04-18 23:54:11,175 - INFO - Found 1 splits for AVGO using history method
+2025-04-19 00:03:07,849 - INFO - Starting historical price adjustment for stock splits
+2025-04-19 00:03:07,857 - INFO - Fetched 3920 active symbols from database
+2025-04-19 00:03:07,857 - INFO - Processing 3920 symbols
+2025-04-19 00:03:29,029 - INFO - Found 1 splits for THTX
+2025-04-19 00:03:29,029 - INFO -   THTX: 2023-07-31 - 0.25:1 split
+2025-04-19 00:03:29,076 - INFO - Adjusted 899 historical price records for THTX 0.25:1 split on 2023-07-31
+2025-04-19 00:03:54,994 - INFO - Found 1 splits for MEIP
+2025-04-19 00:03:54,994 - INFO -   MEIP: 2023-04-17 - 0.05:1 split
+2025-04-19 00:03:55,034 - INFO - Adjusted 827 historical price records for MEIP 0.05:1 split on 2023-04-17
+2025-04-19 00:04:11,285 - INFO - Found 1 splits for RCON
+2025-04-19 00:04:11,285 - INFO -   RCON: 2024-05-01 - 0.05555555555555555:1 split
+2025-04-19 00:04:11,335 - INFO - Adjusted 1089 historical price records for RCON 0.05555555555555555:1 split on 2024-05-01
+2025-04-19 00:04:47,199 - INFO - Processed 50/3920 symbols...
+2025-04-19 00:04:48,838 - INFO - Found 1 splits for BFH
+2025-04-19 00:04:48,838 - INFO -   BFH: 2021-11-08 - 1.253:1 split
+2025-04-19 00:04:48,869 - INFO - Adjusted 467 historical price records for BFH 1.253:1 split on 2021-11-08
+2025-04-19 00:05:16,624 - INFO - Found 1 splits for HYZN
+2025-04-19 00:05:16,624 - INFO -   HYZN: 2024-09-11 - 0.02:1 split
+2025-04-19 00:05:16,675 - INFO - Adjusted 792 historical price records for HYZN 0.02:1 split on 2024-09-11
+2025-04-19 00:05:25,950 - INFO - Found 1 splits for CIM
+2025-04-19 00:05:25,951 - INFO -   CIM: 2024-05-22 - 0.3333333333333333:1 split
+2025-04-19 00:05:26,000 - INFO - Adjusted 1104 historical price records for CIM 0.3333333333333333:1 split on 2024-05-22
+2025-04-19 00:05:36,924 - INFO - Found 1 splits for TARA
+2025-04-19 00:05:36,924 - INFO -   TARA: 2020-01-10 - 0.025:1 split
+2025-04-19 00:05:36,944 - INFO - Adjusted 6 historical price records for TARA 0.025:1 split on 2020-01-10
+2025-04-19 00:05:53,932 - INFO - Found 2 splits for SCCO
+2025-04-19 00:05:53,932 - INFO -   SCCO: 2024-08-09 - 1.005:1 split
+2025-04-19 00:05:53,932 - INFO -   SCCO: 2024-11-06 - 1.006:1 split
+2025-04-19 00:05:53,981 - INFO - Adjusted 1158 historical price records for SCCO 1.005:1 split on 2024-08-09
+2025-04-19 00:05:54,028 - INFO - Adjusted 1220 historical price records for SCCO 1.006:1 split on 2024-11-06
+2025-04-19 00:06:01,141 - INFO - Found 1 splits for CLRB
+2025-04-19 00:06:01,142 - INFO -   CLRB: 2022-07-22 - 0.1:1 split
+2025-04-19 00:06:01,177 - INFO - Adjusted 643 historical price records for CLRB 0.1:1 split on 2022-07-22
+2025-04-19 00:06:21,754 - INFO - Found 2 splits for PROP
+2025-04-19 00:06:21,754 - INFO -   PROP: 2020-02-27 - 0.05:1 split
+2025-04-19 00:06:21,754 - INFO -   PROP: 2023-10-16 - 0.034:1 split
+2025-04-19 00:06:21,761 - INFO - No historical price records to adjust for PROP before 2020-02-27
+2025-04-19 00:06:21,785 - INFO - No historical price records to adjust for PROP before 2023-10-16
+2025-04-19 00:06:28,055 - INFO - Processed 100/3920 symbols...
+2025-04-19 00:06:30,010 - INFO - Found 1 splits for TT
+2025-04-19 00:06:30,011 - INFO -   TT: 2020-03-02 - 1.289:1 split
+2025-04-19 00:06:30,032 - INFO - Adjusted 40 historical price records for TT 1.289:1 split on 2020-03-02
+2025-04-19 00:06:39,413 - INFO - Found 1 splits for JSPR
+2025-04-19 00:06:39,413 - INFO -   JSPR: 2024-01-04 - 0.1:1 split
+2025-04-19 00:06:39,460 - INFO - Adjusted 1002 historical price records for JSPR 0.1:1 split on 2024-01-04
+2025-04-19 00:06:46,437 - INFO - Found 1 splits for UAN
+2025-04-19 00:06:46,437 - INFO -   UAN: 2020-11-24 - 0.1:1 split
+2025-04-19 00:06:46,463 - INFO - Adjusted 227 historical price records for UAN 0.1:1 split on 2020-11-24
+2025-04-19 00:06:48,085 - INFO - Found 2 splits for TSLA
+2025-04-19 00:06:48,085 - INFO -   TSLA: 2020-08-31 - 5.0:1 split
+2025-04-19 00:06:48,085 - INFO -   TSLA: 2022-08-25 - 3.0:1 split
+2025-04-19 00:06:48,110 - INFO - Adjusted 167 historical price records for TSLA 5.0:1 split on 2020-08-31
+2025-04-19 00:06:48,144 - INFO - Adjusted 667 historical price records for TSLA 3.0:1 split on 2022-08-25
+2025-04-19 00:07:18,554 - INFO - Found 1 splits for ZVRA
+2025-04-19 00:07:18,554 - INFO -   ZVRA: 2020-12-28 - 0.0625:1 split
+2025-04-19 00:07:18,566 - INFO - No historical price records to adjust for ZVRA before 2020-12-28
+2025-04-19 00:07:51,452 - INFO - Found 1 splits for MTH
+2025-04-19 00:07:51,452 - INFO -   MTH: 2025-01-03 - 2.0:1 split
+2025-04-19 00:07:51,506 - INFO - Adjusted 1259 historical price records for MTH 2.0:1 split on 2025-01-03
+2025-04-19 00:07:53,050 - INFO - Found 1 splits for EU
+2025-04-19 00:07:53,050 - INFO -   EU: 2022-09-14 - 0.3333333333333333:1 split
+2025-04-19 00:07:53,070 - INFO - No historical price records to adjust for EU before 2022-09-14
+2025-04-19 00:08:03,220 - INFO - Processed 150/3920 symbols...
+2025-04-19 00:08:12,320 - INFO - Found 1 splits for ORC
+2025-04-19 00:08:12,320 - INFO -   ORC: 2022-08-31 - 0.2:1 split
+2025-04-19 00:08:12,356 - INFO - Adjusted 671 historical price records for ORC 0.2:1 split on 2022-08-31
+2025-04-19 00:08:22,581 - INFO - Found 1 splits for GME
+2025-04-19 00:08:22,581 - INFO -   GME: 2022-07-22 - 4.0:1 split
+2025-04-19 00:08:22,618 - INFO - Adjusted 643 historical price records for GME 4.0:1 split on 2022-07-22
+2025-04-19 00:08:29,872 - INFO - Found 1 splits for TEN
+2025-04-19 00:08:29,872 - INFO -   TEN: 2020-07-01 - 0.2:1 split
+2025-04-19 00:08:29,903 - INFO - Adjusted 125 historical price records for TEN 0.2:1 split on 2020-07-01
+2025-04-19 00:08:46,476 - INFO - Found 3 splits for XXII
+2025-04-19 00:08:46,476 - INFO -   XXII: 2023-07-05 - 0.06666666666666667:1 split
+2025-04-19 00:08:46,476 - INFO -   XXII: 2024-04-02 - 0.0625:1 split
+2025-04-19 00:08:46,476 - INFO -   XXII: 2024-12-17 - 0.007407407407407408:1 split
+2025-04-19 00:08:46,520 - INFO - Adjusted 881 historical price records for XXII 0.06666666666666667:1 split on 2023-07-05
+2025-04-19 00:08:46,563 - INFO - Adjusted 1068 historical price records for XXII 0.0625:1 split on 2024-04-02
+2025-04-19 00:08:46,611 - INFO - Adjusted 1248 historical price records for XXII 0.007407407407407408:1 split on 2024-12-17
+2025-04-19 00:08:53,319 - INFO - Found 1 splits for FWONK
+2025-04-19 00:08:53,319 - INFO -   FWONK: 2023-07-20 - 1.017:1 split
+2025-04-19 00:08:53,361 - INFO - Adjusted 892 historical price records for FWONK 1.017:1 split on 2023-07-20
+2025-04-19 00:09:00,484 - INFO - Found 2 splits for AIV
+2025-04-19 00:09:00,484 - INFO -   AIV: 2020-12-01 - 0.807:1 split
+2025-04-19 00:09:00,484 - INFO -   AIV: 2020-12-15 - 9.295:1 split
+2025-04-19 00:09:00,511 - INFO - Adjusted 231 historical price records for AIV 0.807:1 split on 2020-12-01
+2025-04-19 00:09:00,534 - INFO - Adjusted 241 historical price records for AIV 9.295:1 split on 2020-12-15
+2025-04-19 00:09:07,906 - INFO - Found 1 splits for TWO
+2025-04-19 00:09:07,907 - INFO -   TWO: 2022-11-02 - 0.25:1 split
+2025-04-19 00:09:07,944 - INFO - Adjusted 715 historical price records for TWO 0.25:1 split on 2022-11-02
+2025-04-19 00:09:40,865 - INFO - Processed 200/3920 symbols...
+2025-04-19 00:09:53,799 - ERROR - $RVNC: possibly delisted; no timezone found
+2025-04-19 00:10:05,802 - INFO - Found 1 splits for IRD
+2025-04-19 00:10:05,803 - INFO -   IRD: 2020-11-06 - 0.25:1 split
+2025-04-19 00:10:05,829 - INFO - Adjusted 215 historical price records for IRD 0.25:1 split on 2020-11-06
+2025-04-19 00:10:11,907 - INFO - Found 1 splits for WDC
+2025-04-19 00:10:11,908 - INFO -   WDC: 2025-02-24 - 1.323:1 split
+2025-04-19 00:10:11,966 - INFO - Adjusted 1292 historical price records for WDC 1.323:1 split on 2025-02-24
+2025-04-19 00:10:25,777 - INFO - Found 1 splits for LODE
+2025-04-19 00:10:25,777 - INFO -   LODE: 2025-02-25 - 0.1:1 split
+2025-04-19 00:10:25,835 - INFO - Adjusted 1293 historical price records for LODE 0.1:1 split on 2025-02-25
+2025-04-19 00:10:27,778 - INFO - Found 1 splits for NRXP
+2025-04-19 00:10:27,778 - INFO -   NRXP: 2024-04-02 - 0.1:1 split
+2025-04-19 00:10:27,832 - INFO - Adjusted 1068 historical price records for NRXP 0.1:1 split on 2024-04-02
+2025-04-19 00:10:29,465 - INFO - Found 1 splits for REX
+2025-04-19 00:10:29,466 - INFO -   REX: 2022-08-08 - 3.0:1 split
+2025-04-19 00:10:29,510 - INFO - Adjusted 654 historical price records for REX 3.0:1 split on 2022-08-08
+2025-04-19 00:10:44,337 - INFO - Found 1 splits for PENG
+2025-04-19 00:10:44,337 - INFO -   PENG: 2022-02-02 - 2.0:1 split
+2025-04-19 00:10:44,371 - INFO - Adjusted 526 historical price records for PENG 2.0:1 split on 2022-02-02
+2025-04-19 00:10:47,060 - INFO - Found 3 splits for GE
+2025-04-19 00:10:47,060 - INFO -   GE: 2021-08-02 - 0.125:1 split
+2025-04-19 00:10:47,060 - INFO -   GE: 2023-01-04 - 1.281:1 split
+2025-04-19 00:10:47,060 - INFO -   GE: 2024-04-02 - 1.253:1 split
+2025-04-19 00:10:47,089 - INFO - Adjusted 398 historical price records for GE 0.125:1 split on 2021-08-02
+2025-04-19 00:10:47,125 - INFO - Adjusted 757 historical price records for GE 1.281:1 split on 2023-01-04
+2025-04-19 00:10:47,167 - INFO - Adjusted 1068 historical price records for GE 1.253:1 split on 2024-04-02
+2025-04-19 00:10:50,988 - INFO - Found 2 splits for KNTK
+2025-04-19 00:10:50,988 - INFO -   KNTK: 2020-07-01 - 0.05:1 split
+2025-04-19 00:10:50,988 - INFO -   KNTK: 2022-06-09 - 2.0:1 split
+2025-04-19 00:10:51,012 - INFO - Adjusted 125 historical price records for KNTK 0.05:1 split on 2020-07-01
+2025-04-19 00:10:51,046 - INFO - Adjusted 614 historical price records for KNTK 2.0:1 split on 2022-06-09
+2025-04-19 00:10:52,750 - INFO - Found 1 splits for MAGN
+2025-04-19 00:10:52,750 - INFO -   MAGN: 2024-11-04 - 0.07692307692307693:1 split
+2025-04-19 00:10:52,805 - INFO - Adjusted 1218 historical price records for MAGN 0.07692307692307693:1 split on 2024-11-04
+2025-04-19 00:10:54,837 - INFO - Found 1 splits for RTX
+2025-04-19 00:10:54,837 - INFO -   RTX: 2020-04-03 - 1.589:1 split
+2025-04-19 00:10:54,859 - INFO - Adjusted 64 historical price records for RTX 1.589:1 split on 2020-04-03
+2025-04-19 00:11:20,373 - INFO - Processed 250/3920 symbols...
+2025-04-19 00:11:24,838 - INFO - Found 1 splits for OCFT
+2025-04-19 00:11:24,838 - INFO -   OCFT: 2022-12-12 - 0.1:1 split
+2025-04-19 00:11:24,877 - INFO - Adjusted 742 historical price records for OCFT 0.1:1 split on 2022-12-12
+2025-04-19 00:11:50,631 - INFO - Found 1 splits for BYRN
+2025-04-19 00:11:50,631 - INFO -   BYRN: 2021-04-27 - 0.1:1 split
+2025-04-19 00:11:50,645 - INFO - No historical price records to adjust for BYRN before 2021-04-27
+2025-04-19 00:12:37,111 - INFO - Found 1 splits for HWKN
+2025-04-19 00:12:37,111 - INFO -   HWKN: 2021-03-02 - 2.0:1 split
+2025-04-19 00:12:37,138 - INFO - Adjusted 292 historical price records for HWKN 2.0:1 split on 2021-03-02
+2025-04-19 00:12:44,012 - INFO - Found 1 splits for AVGO
+2025-04-19 00:12:44,012 - INFO -   AVGO: 2024-07-15 - 10.0:1 split
+2025-04-19 00:12:44,061 - INFO - Adjusted 1139 historical price records for AVGO 10.0:1 split on 2024-07-15
+2025-04-19 00:13:01,128 - INFO - Processed 300/3920 symbols...
+2025-04-19 00:13:06,369 - INFO - Found 1 splits for ZEPP
+2025-04-19 00:13:06,369 - INFO -   ZEPP: 2024-09-16 - 0.25:1 split
+2025-04-19 00:13:06,420 - INFO - Adjusted 1183 historical price records for ZEPP 0.25:1 split on 2024-09-16
+2025-04-19 00:13:12,208 - INFO - Found 1 splits for CRESY
+2025-04-19 00:13:12,208 - INFO -   CRESY: 2023-05-10 - 1.022:1 split
+2025-04-19 00:13:12,250 - INFO - Adjusted 844 historical price records for CRESY 1.022:1 split on 2023-05-10
+2025-04-19 00:13:19,858 - INFO - Found 2 splits for ANET
+2025-04-19 00:13:19,858 - INFO -   ANET: 2021-11-18 - 4.0:1 split
+2025-04-19 00:13:19,858 - INFO -   ANET: 2024-12-04 - 4.0:1 split
+2025-04-19 00:13:19,890 - INFO - Adjusted 475 historical price records for ANET 4.0:1 split on 2021-11-18
+2025-04-19 00:13:19,940 - INFO - Adjusted 1239 historical price records for ANET 4.0:1 split on 2024-12-04
+2025-04-19 00:13:30,446 - INFO - Found 1 splits for ML
+2025-04-19 00:13:30,446 - INFO -   ML: 2023-04-25 - 0.03333333333333333:1 split
+2025-04-19 00:13:30,486 - INFO - Adjusted 677 historical price records for ML 0.03333333333333333:1 split on 2023-04-25
+2025-04-19 00:13:32,340 - INFO - Found 1 splits for AMRK
+2025-04-19 00:13:32,340 - INFO -   AMRK: 2022-06-07 - 2.0:1 split
+2025-04-19 00:13:32,375 - INFO - Adjusted 612 historical price records for AMRK 2.0:1 split on 2022-06-07
+2025-04-19 00:13:45,919 - INFO - Found 1 splits for GROV
+2025-04-19 00:13:45,919 - INFO -   GROV: 2023-06-06 - 0.2:1 split
+2025-04-19 00:13:45,959 - INFO - Adjusted 519 historical price records for GROV 0.2:1 split on 2023-06-06
+2025-04-19 00:13:56,534 - INFO - Found 1 splits for SITC
+2025-04-19 00:13:56,534 - INFO -   SITC: 2024-08-19 - 0.25:1 split
+2025-04-19 00:13:56,584 - INFO - Adjusted 1164 historical price records for SITC 0.25:1 split on 2024-08-19
+2025-04-19 00:14:06,068 - INFO - Found 1 splits for SEM
+2025-04-19 00:14:06,068 - INFO -   SEM: 2024-11-26 - 1.856:1 split
+2025-04-19 00:14:06,120 - INFO - Adjusted 1234 historical price records for SEM 1.856:1 split on 2024-11-26
+2025-04-19 00:14:07,965 - INFO - Found 1 splits for CTXR
+2025-04-19 00:14:07,966 - INFO -   CTXR: 2024-11-26 - 0.04:1 split
+2025-04-19 00:14:08,017 - INFO - Adjusted 1234 historical price records for CTXR 0.04:1 split on 2024-11-26
+2025-04-19 00:14:24,439 - INFO - Found 1 splits for RCEL
+2025-04-19 00:14:24,439 - INFO -   RCEL: 2020-06-30 - 0.2:1 split
+2025-04-19 00:14:24,462 - INFO - Adjusted 124 historical price records for RCEL 0.2:1 split on 2020-06-30
+2025-04-19 00:14:42,892 - INFO - Processed 350/3920 symbols...
+2025-04-19 00:14:57,656 - INFO - Found 1 splits for SGI
+2025-04-19 00:14:57,656 - INFO -   SGI: 2020-11-24 - 4.0:1 split
+2025-04-19 00:14:57,683 - INFO - Adjusted 227 historical price records for SGI 4.0:1 split on 2020-11-24
+2025-04-19 00:15:18,265 - INFO - Found 2 splits for ODV
+2025-04-19 00:15:18,265 - INFO -   ODV: 2020-12-02 - 0.016666666666666666:1 split
+2025-04-19 00:15:18,265 - INFO -   ODV: 2022-05-04 - 0.3333333333333333:1 split
+2025-04-19 00:15:18,277 - INFO - No historical price records to adjust for ODV before 2020-12-02
+2025-04-19 00:15:18,293 - INFO - No historical price records to adjust for ODV before 2022-05-04
+2025-04-19 00:15:26,414 - INFO - Found 2 splits for VANI
+2025-04-19 00:15:26,414 - INFO -   VANI: 2020-01-06 - 0.125:1 split
+2025-04-19 00:15:26,414 - INFO -   VANI: 2022-08-19 - 0.3333333333333333:1 split
+2025-04-19 00:15:26,434 - INFO - Adjusted 2 historical price records for VANI 0.125:1 split on 2020-01-06
+2025-04-19 00:15:26,469 - INFO - Adjusted 663 historical price records for VANI 0.3333333333333333:1 split on 2022-08-19
+2025-04-19 00:15:57,809 - INFO - Found 1 splits for BCLI
+2025-04-19 00:15:57,810 - INFO -   BCLI: 2024-10-01 - 0.06666666666666667:1 split
+2025-04-19 00:15:57,866 - INFO - Adjusted 1194 historical price records for BCLI 0.06666666666666667:1 split on 2024-10-01
+2025-04-19 00:16:08,610 - INFO - Found 1 splits for J
+2025-04-19 00:16:08,610 - INFO -   J: 2024-09-30 - 1.197:1 split
+2025-04-19 00:16:08,662 - INFO - Adjusted 1193 historical price records for J 1.197:1 split on 2024-09-30
+2025-04-19 00:16:20,179 - INFO - Processed 400/3920 symbols...
+2025-04-19 00:16:24,006 - INFO - Found 1 splits for GRRR
+2025-04-19 00:16:24,006 - INFO -   GRRR: 2024-04-15 - 0.1:1 split
+2025-04-19 00:16:24,055 - INFO - Adjusted 440 historical price records for GRRR 0.1:1 split on 2024-04-15
+2025-04-19 00:16:49,875 - INFO - Found 1 splits for FTK
+2025-04-19 00:16:49,875 - INFO -   FTK: 2023-09-26 - 0.16666666666666666:1 split
+2025-04-19 00:16:49,920 - INFO - Adjusted 939 historical price records for FTK 0.16666666666666666:1 split on 2023-09-26
+2025-04-19 00:16:53,808 - INFO - Found 1 splits for LILAK
+2025-04-19 00:16:53,808 - INFO -   LILAK: 2020-09-11 - 1.062:1 split
+2025-04-19 00:16:53,832 - INFO - Adjusted 175 historical price records for LILAK 1.062:1 split on 2020-09-11
+2025-04-19 00:17:20,582 - INFO - Found 2 splits for GHI
+2025-04-19 00:17:20,582 - INFO -   GHI: 2022-04-04 - 0.3333333333333333:1 split
+2025-04-19 00:17:20,583 - INFO -   GHI: 2024-03-27 - 1.004:1 split
+2025-04-19 00:17:20,617 - INFO - Adjusted 568 historical price records for GHI 0.3333333333333333:1 split on 2022-04-04
+2025-04-19 00:17:20,660 - INFO - Adjusted 1065 historical price records for GHI 1.004:1 split on 2024-03-27
+2025-04-19 00:17:24,127 - INFO - Found 1 splits for CMCM
+2025-04-19 00:17:24,127 - INFO -   CMCM: 2022-09-02 - 0.2:1 split
+2025-04-19 00:17:24,163 - INFO - Adjusted 673 historical price records for CMCM 0.2:1 split on 2022-09-02
+2025-04-19 00:18:03,193 - INFO - Processed 450/3920 symbols...
+2025-04-19 00:18:15,613 - INFO - Found 1 splits for BRBS
+2025-04-19 00:18:15,613 - INFO -   BRBS: 2021-05-03 - 1.5:1 split
+2025-04-19 00:18:15,641 - INFO - Adjusted 335 historical price records for BRBS 1.5:1 split on 2021-05-03
+2025-04-19 00:18:23,934 - INFO - Found 1 splits for CTEV
+2025-04-19 00:18:23,934 - INFO -   CTEV: 2024-09-23 - 0.025:1 split
+2025-04-19 00:18:23,984 - INFO - Adjusted 1124 historical price records for CTEV 0.025:1 split on 2024-09-23
+2025-04-19 00:18:38,825 - INFO - Found 2 splits for CMCT
+2025-04-19 00:18:38,825 - INFO -   CMCT: 2024-09-25 - 1.02:1 split
+2025-04-19 00:18:38,825 - INFO -   CMCT: 2025-04-15 - 0.04:1 split
+2025-04-19 00:18:38,877 - INFO - Adjusted 1190 historical price records for CMCT 1.02:1 split on 2024-09-25
+2025-04-19 00:18:38,929 - INFO - Adjusted 1328 historical price records for CMCT 0.04:1 split on 2025-04-15
+2025-04-19 00:19:17,467 - INFO - Found 1 splits for GLBS
+2025-04-19 00:19:17,467 - INFO -   GLBS: 2020-10-21 - 0.01:1 split
+2025-04-19 00:19:17,492 - INFO - Adjusted 203 historical price records for GLBS 0.01:1 split on 2020-10-21
+2025-04-19 00:19:38,978 - INFO - Processed 500/3920 symbols...
+2025-04-19 00:19:45,071 - INFO - Found 1 splits for SKE
+2025-04-19 00:19:45,071 - INFO -   SKE: 2021-06-10 - 0.25:1 split
+2025-04-19 00:19:45,086 - INFO - No historical price records to adjust for SKE before 2021-06-10
+2025-04-19 00:19:49,804 - INFO - Found 1 splits for HUT
+2025-04-19 00:19:49,804 - INFO -   HUT: 2023-12-04 - 0.2:1 split
+2025-04-19 00:19:49,846 - INFO - Adjusted 622 historical price records for HUT 0.2:1 split on 2023-12-04
+2025-04-19 00:19:52,259 - INFO - Found 1 splits for TOON
+2025-04-19 00:19:52,259 - INFO -   TOON: 2023-02-13 - 0.1:1 split
+2025-04-19 00:19:52,299 - INFO - Adjusted 784 historical price records for TOON 0.1:1 split on 2023-02-13
+2025-04-19 00:19:56,224 - INFO - Found 1 splits for LRCX
+2025-04-19 00:19:56,224 - INFO -   LRCX: 2024-10-03 - 10.0:1 split
+2025-04-19 00:19:56,279 - INFO - Adjusted 1196 historical price records for LRCX 10.0:1 split on 2024-10-03
+2025-04-19 00:20:31,743 - INFO - Found 1 splits for COGT
+2025-04-19 00:20:31,743 - INFO -   COGT: 2020-11-09 - 0.25:1 split
+2025-04-19 00:20:31,769 - INFO - Adjusted 216 historical price records for COGT 0.25:1 split on 2020-11-09
+2025-04-19 00:21:11,281 - INFO - Found 1 splits for SMSI
+2025-04-19 00:21:11,281 - INFO -   SMSI: 2024-04-11 - 0.125:1 split
+2025-04-19 00:21:11,328 - INFO - Adjusted 1075 historical price records for SMSI 0.125:1 split on 2024-04-11
+2025-04-19 00:21:23,582 - INFO - Processed 550/3920 symbols...
+2025-04-19 00:21:38,591 - INFO - Found 2 splits for CTRM
+2025-04-19 00:21:38,591 - INFO -   CTRM: 2021-05-28 - 0.1:1 split
+2025-04-19 00:21:38,591 - INFO -   CTRM: 2024-03-27 - 0.1:1 split
+2025-04-19 00:21:38,620 - INFO - Adjusted 354 historical price records for CTRM 0.1:1 split on 2021-05-28
+2025-04-19 00:21:38,665 - INFO - Adjusted 1065 historical price records for CTRM 0.1:1 split on 2024-03-27
+2025-04-19 00:22:26,713 - INFO - Found 1 splits for IZEA
+2025-04-19 00:22:26,713 - INFO -   IZEA: 2023-06-16 - 0.25:1 split
+2025-04-19 00:22:26,755 - INFO - Adjusted 870 historical price records for IZEA 0.25:1 split on 2023-06-16
+2025-04-19 00:22:34,371 - INFO - Found 1 splits for MMM
+2025-04-19 00:22:34,371 - INFO -   MMM: 2024-04-01 - 1.196:1 split
+2025-04-19 00:22:34,419 - INFO - Adjusted 1067 historical price records for MMM 1.196:1 split on 2024-04-01
+2025-04-19 00:22:46,601 - INFO - Found 2 splits for SLG
+2025-04-19 00:22:46,601 - INFO -   SLG: 2021-01-21 - 0.971:1 split
+2025-04-19 00:22:46,601 - INFO -   SLG: 2022-01-24 - 0.97:1 split
+2025-04-19 00:22:46,628 - INFO - Adjusted 265 historical price records for SLG 0.971:1 split on 2021-01-21
+2025-04-19 00:22:46,658 - INFO - Adjusted 519 historical price records for SLG 0.97:1 split on 2022-01-24
+2025-04-19 00:23:05,413 - INFO - Processed 600/3920 symbols...
+2025-04-19 00:23:10,316 - INFO - Found 1 splits for SONY
+2025-04-19 00:23:10,316 - INFO -   SONY: 2024-10-09 - 5.0:1 split
+2025-04-19 00:23:10,367 - INFO - Adjusted 1200 historical price records for SONY 5.0:1 split on 2024-10-09
+2025-04-19 00:23:33,061 - INFO - Found 1 splits for EVTV
+2025-04-19 00:23:33,061 - INFO -   EVTV: 2022-06-27 - 0.05:1 split
+2025-04-19 00:23:33,081 - INFO - No historical price records to adjust for EVTV before 2022-06-27
+2025-04-19 00:23:41,129 - INFO - Found 1 splits for BDX
+2025-04-19 00:23:41,129 - INFO -   BDX: 2022-04-01 - 1.025:1 split
+2025-04-19 00:23:41,163 - INFO - Adjusted 567 historical price records for BDX 1.025:1 split on 2022-04-01
+2025-04-19 00:24:11,687 - INFO - Found 1 splits for DM
+2025-04-19 00:24:11,687 - INFO -   DM: 2024-06-11 - 0.1:1 split
+2025-04-19 00:24:11,735 - INFO - Adjusted 1117 historical price records for DM 0.1:1 split on 2024-06-11
+2025-04-19 00:24:15,401 - INFO - Found 1 splits for QNTM
+2025-04-19 00:24:15,401 - INFO -   QNTM: 2024-08-15 - 0.015384615384615385:1 split
+2025-04-19 00:24:15,450 - INFO - Adjusted 1157 historical price records for QNTM 0.015384615384615385:1 split on 2024-08-15
+2025-04-19 00:24:20,510 - INFO - Found 2 splits for NGNE
+2025-04-19 00:24:20,510 - INFO -   NGNE: 2023-09-25 - 0.2:1 split
+2025-04-19 00:24:20,510 - INFO -   NGNE: 2023-12-19 - 0.25:1 split
+2025-04-19 00:24:20,552 - INFO - Adjusted 938 historical price records for NGNE 0.2:1 split on 2023-09-25
+2025-04-19 00:24:20,592 - INFO - Adjusted 998 historical price records for NGNE 0.25:1 split on 2023-12-19
+2025-04-19 00:24:31,711 - INFO - Found 2 splits for CYBN
+2025-04-19 00:24:31,711 - INFO -   CYBN: 2020-11-10 - 0.149:1 split
+2025-04-19 00:24:31,711 - INFO -   CYBN: 2024-09-19 - 0.02631578947368421:1 split
+2025-04-19 00:24:31,724 - INFO - No historical price records to adjust for CYBN before 2020-11-10
+2025-04-19 00:24:31,769 - INFO - Adjusted 785 historical price records for CYBN 0.02631578947368421:1 split on 2024-09-19
+2025-04-19 00:24:32,955 - INFO - Found 1 splits for MKTW
+2025-04-19 00:24:32,955 - INFO -   MKTW: 2025-04-03 - 0.05:1 split
+2025-04-19 00:24:33,010 - INFO - Adjusted 929 historical price records for MKTW 0.05:1 split on 2025-04-03
+2025-04-19 00:24:36,592 - INFO - Found 1 splits for TRI
+2025-04-19 00:24:36,592 - INFO -   TRI: 2023-06-23 - 0.963:1 split
+2025-04-19 00:24:36,634 - INFO - Adjusted 874 historical price records for TRI 0.963:1 split on 2023-06-23
+2025-04-19 00:24:43,833 - INFO - Processed 650/3920 symbols...
+2025-04-19 00:24:45,539 - INFO - Found 1 splits for OTLY
+2025-04-19 00:24:45,539 - INFO -   OTLY: 2025-02-18 - 0.05:1 split
+2025-04-19 00:24:45,592 - INFO - Adjusted 940 historical price records for OTLY 0.05:1 split on 2025-02-18
+2025-04-19 00:24:47,677 - INFO - Found 2 splits for BNGO
+2025-04-19 00:24:47,677 - INFO -   BNGO: 2023-08-07 - 0.1:1 split
+2025-04-19 00:24:47,677 - INFO -   BNGO: 2025-01-27 - 0.016666666666666666:1 split
+2025-04-19 00:24:47,719 - INFO - Adjusted 904 historical price records for BNGO 0.1:1 split on 2023-08-07
+2025-04-19 00:24:47,769 - INFO - Adjusted 1273 historical price records for BNGO 0.016666666666666666:1 split on 2025-01-27
+2025-04-19 00:24:51,391 - INFO - Found 1 splits for PUK
+2025-04-19 00:24:51,391 - INFO -   PUK: 2021-09-20 - 1.031:1 split
+2025-04-19 00:24:51,422 - INFO - Adjusted 432 historical price records for PUK 1.031:1 split on 2021-09-20
+2025-04-19 00:24:53,570 - INFO - Found 1 splits for CM
+2025-04-19 00:24:53,570 - INFO -   CM: 2022-05-16 - 2.0:1 split
+2025-04-19 00:24:53,605 - INFO - Adjusted 597 historical price records for CM 2.0:1 split on 2022-05-16
+2025-04-19 00:25:10,134 - INFO - Found 1 splits for SWBI
+2025-04-19 00:25:10,134 - INFO -   SWBI: 2020-08-25 - 1.301:1 split
+2025-04-19 00:25:10,158 - INFO - Adjusted 163 historical price records for SWBI 1.301:1 split on 2020-08-25
+2025-04-19 00:25:12,346 - INFO - Found 1 splits for AFCG
+2025-04-19 00:25:12,346 - INFO -   AFCG: 2024-07-10 - 1.461:1 split
+2025-04-19 00:25:12,395 - INFO - Adjusted 831 historical price records for AFCG 1.461:1 split on 2024-07-10
+2025-04-19 00:25:15,840 - INFO - Found 1 splits for IVR
+2025-04-19 00:25:15,840 - INFO -   IVR: 2022-06-06 - 0.1:1 split
+2025-04-19 00:25:15,877 - INFO - Adjusted 611 historical price records for IVR 0.1:1 split on 2022-06-06
+2025-04-19 00:25:50,702 - INFO - Found 1 splits for FTV
+2025-04-19 00:25:50,702 - INFO -   FTV: 2020-10-09 - 1.195:1 split
+2025-04-19 00:25:50,727 - INFO - Adjusted 195 historical price records for FTV 1.195:1 split on 2020-10-09
+2025-04-19 00:25:59,285 - INFO - Found 1 splits for BTCM
+2025-04-19 00:25:59,286 - INFO -   BTCM: 2022-12-23 - 0.1:1 split
+2025-04-19 00:25:59,326 - INFO - Adjusted 751 historical price records for BTCM 0.1:1 split on 2022-12-23
+2025-04-19 00:26:30,292 - INFO - Processed 700/3920 symbols...
+2025-04-19 00:26:32,789 - INFO - Found 1 splits for CDTX
+2025-04-19 00:26:32,789 - INFO -   CDTX: 2024-04-24 - 0.05:1 split
+2025-04-19 00:26:32,839 - INFO - Adjusted 1084 historical price records for CDTX 0.05:1 split on 2024-04-24
+2025-04-19 00:26:45,145 - INFO - Found 1 splits for BCSF
+2025-04-19 00:26:45,145 - INFO -   BCSF: 2020-05-12 - 1.019:1 split
+2025-04-19 00:26:45,168 - INFO - Adjusted 90 historical price records for BCSF 1.019:1 split on 2020-05-12
+2025-04-19 00:27:02,415 - INFO - Found 1 splits for HITI
+2025-04-19 00:27:02,415 - INFO -   HITI: 2021-05-13 - 0.06666666666666667:1 split
+2025-04-19 00:27:02,429 - INFO - No historical price records to adjust for HITI before 2021-05-13
+2025-04-19 00:27:17,748 - INFO - Found 1 splits for SPRU
+2025-04-19 00:27:17,748 - INFO -   SPRU: 2023-10-09 - 0.125:1 split
+2025-04-19 00:27:17,794 - INFO - Adjusted 948 historical price records for SPRU 0.125:1 split on 2023-10-09
+2025-04-19 00:27:18,972 - INFO - Found 1 splits for FBIN
+2025-04-19 00:27:18,972 - INFO -   FBIN: 2022-12-15 - 1.17:1 split
+2025-04-19 00:27:19,011 - INFO - Adjusted 745 historical price records for FBIN 1.17:1 split on 2022-12-15
+2025-04-19 00:27:22,895 - INFO - Found 2 splits for UAVS
+2025-04-19 00:27:22,895 - INFO -   UAVS: 2024-02-09 - 0.05:1 split
+2025-04-19 00:27:22,895 - INFO -   UAVS: 2024-10-15 - 0.02:1 split
+2025-04-19 00:27:22,941 - INFO - Adjusted 1033 historical price records for UAVS 0.05:1 split on 2024-02-09
+2025-04-19 00:27:22,990 - INFO - Adjusted 1204 historical price records for UAVS 0.02:1 split on 2024-10-15
+2025-04-19 00:28:07,806 - INFO - Processed 750/3920 symbols...
+2025-04-19 00:28:11,522 - INFO - Found 1 splits for TPL
+2025-04-19 00:28:11,522 - INFO -   TPL: 2024-03-27 - 3.0:1 split
+2025-04-19 00:28:11,570 - INFO - Adjusted 1065 historical price records for TPL 3.0:1 split on 2024-03-27
+2025-04-19 00:28:14,256 - INFO - Found 2 splits for RUSHA
+2025-04-19 00:28:14,256 - INFO -   RUSHA: 2020-10-13 - 1.5:1 split
+2025-04-19 00:28:14,256 - INFO -   RUSHA: 2023-08-29 - 1.5:1 split
+2025-04-19 00:28:14,281 - INFO - Adjusted 197 historical price records for RUSHA 1.5:1 split on 2020-10-13
+2025-04-19 00:28:14,321 - INFO - Adjusted 920 historical price records for RUSHA 1.5:1 split on 2023-08-29
+2025-04-19 00:28:24,291 - INFO - Found 1 splits for LOGC
+2025-04-19 00:28:24,291 - INFO -   LOGC: 2023-04-12 - 0.03333333333333333:1 split
+2025-04-19 00:28:24,330 - INFO - Adjusted 582 historical price records for LOGC 0.03333333333333333:1 split on 2023-04-12
+2025-04-19 00:28:30,096 - INFO - Found 1 splits for DELL
+2025-04-19 00:28:30,096 - INFO -   DELL: 2021-11-02 - 1.973:1 split
+2025-04-19 00:28:30,128 - INFO - Adjusted 463 historical price records for DELL 1.973:1 split on 2021-11-02
+2025-04-19 00:28:43,486 - INFO - Found 1 splits for DFLI
+2025-04-19 00:28:43,486 - INFO -   DFLI: 2024-11-22 - 0.1111111111111111:1 split
+2025-04-19 00:28:43,534 - INFO - Adjusted 818 historical price records for DFLI 0.1111111111111111:1 split on 2024-11-22
+2025-04-19 00:29:11,658 - INFO - Found 2 splits for WRB
+2025-04-19 00:29:11,658 - INFO -   WRB: 2022-03-24 - 1.5:1 split
+2025-04-19 00:29:11,658 - INFO -   WRB: 2024-07-11 - 1.5:1 split
+2025-04-19 00:29:11,697 - INFO - Adjusted 561 historical price records for WRB 1.5:1 split on 2022-03-24
+2025-04-19 00:29:11,743 - INFO - Adjusted 1137 historical price records for WRB 1.5:1 split on 2024-07-11
+2025-04-19 00:29:41,152 - INFO - Found 1 splits for JAKK
+2025-04-19 00:29:41,152 - INFO -   JAKK: 2020-07-10 - 0.1:1 split
+2025-04-19 00:29:41,176 - INFO - Adjusted 131 historical price records for JAKK 0.1:1 split on 2020-07-10
+2025-04-19 00:29:44,382 - INFO - Processed 800/3920 symbols...
+2025-04-19 00:29:59,157 - INFO - Found 1 splits for SKM
+2025-04-19 00:29:59,157 - INFO -   SKM: 2021-11-30 - 0.607:1 split
+2025-04-19 00:29:59,190 - INFO - Adjusted 482 historical price records for SKM 0.607:1 split on 2021-11-30
+2025-04-19 00:30:01,389 - INFO - Found 1 splits for SHOP
+2025-04-19 00:30:01,389 - INFO -   SHOP: 2022-06-29 - 10.0:1 split
+2025-04-19 00:30:01,425 - INFO - Adjusted 627 historical price records for SHOP 10.0:1 split on 2022-06-29
+2025-04-19 00:30:08,717 - INFO - Found 2 splits for WKHS
+2025-04-19 00:30:08,717 - INFO -   WKHS: 2024-06-17 - 0.05:1 split
+2025-04-19 00:30:08,717 - INFO -   WKHS: 2025-03-17 - 0.08:1 split
+2025-04-19 00:30:08,767 - INFO - Adjusted 1121 historical price records for WKHS 0.05:1 split on 2024-06-17
+2025-04-19 00:30:08,818 - INFO - Adjusted 1307 historical price records for WKHS 0.08:1 split on 2025-03-17
+2025-04-19 00:30:18,106 - INFO - Found 1 splits for PDYN
+2025-04-19 00:30:18,106 - INFO -   PDYN: 2023-07-06 - 0.16666666666666666:1 split
+2025-04-19 00:30:18,146 - INFO - Adjusted 586 historical price records for PDYN 0.16666666666666666:1 split on 2023-07-06
+2025-04-19 00:30:20,781 - INFO - Found 1 splits for O
+2025-04-19 00:30:20,781 - INFO -   O: 2021-11-15 - 1.032:1 split
+2025-04-19 00:30:20,813 - INFO - Adjusted 472 historical price records for O 1.032:1 split on 2021-11-15
+2025-04-19 00:30:46,080 - INFO - Found 1 splits for FWONA
+2025-04-19 00:30:46,080 - INFO -   FWONA: 2023-07-20 - 1.018:1 split
+2025-04-19 00:30:46,130 - INFO - Adjusted 892 historical price records for FWONA 1.018:1 split on 2023-07-20
+2025-04-19 00:30:59,111 - INFO - Found 1 splits for AEVA
+2025-04-19 00:30:59,111 - INFO -   AEVA: 2024-03-19 - 0.2:1 split
+2025-04-19 00:30:59,157 - INFO - Adjusted 1021 historical price records for AEVA 0.2:1 split on 2024-03-19
+2025-04-19 00:31:07,679 - INFO - Found 1 splits for FBIO
+2025-04-19 00:31:07,680 - INFO -   FBIO: 2023-10-10 - 0.06666666666666667:1 split
+2025-04-19 00:31:07,724 - INFO - Adjusted 949 historical price records for FBIO 0.06666666666666667:1 split on 2023-10-10
+2025-04-19 00:31:20,110 - INFO - Processed 850/3920 symbols...
+2025-04-19 00:31:21,330 - INFO - Found 1 splits for NOG
+2025-04-19 00:31:21,330 - INFO -   NOG: 2020-09-21 - 0.1:1 split
+2025-04-19 00:31:21,355 - INFO - Adjusted 181 historical price records for NOG 0.1:1 split on 2020-09-21
+2025-04-19 00:31:41,516 - INFO - Found 2 splits for MLGO
+2025-04-19 00:31:41,516 - INFO -   MLGO: 2024-03-22 - 0.1:1 split
+2025-04-19 00:31:41,516 - INFO -   MLGO: 2024-12-13 - 0.05:1 split
+2025-04-19 00:31:41,561 - INFO - Adjusted 740 historical price records for MLGO 0.1:1 split on 2024-03-22
+2025-04-19 00:31:41,607 - INFO - Adjusted 924 historical price records for MLGO 0.05:1 split on 2024-12-13
+2025-04-19 00:31:45,023 - INFO - Found 1 splits for HUBG
+2025-04-19 00:31:45,023 - INFO -   HUBG: 2024-01-29 - 2.0:1 split
+2025-04-19 00:31:45,069 - INFO - Adjusted 1024 historical price records for HUBG 2.0:1 split on 2024-01-29
+2025-04-19 00:31:59,418 - INFO - Found 1 splits for UHAL
+2025-04-19 00:31:59,418 - INFO -   UHAL: 2022-11-10 - 10.0:1 split
+2025-04-19 00:31:59,456 - INFO - Adjusted 721 historical price records for UHAL 10.0:1 split on 2022-11-10
+2025-04-19 00:32:03,165 - INFO - Found 1 splits for CRBP
+2025-04-19 00:32:03,165 - INFO -   CRBP: 2023-02-14 - 0.03333333333333333:1 split
+2025-04-19 00:32:03,205 - INFO - Adjusted 785 historical price records for CRBP 0.03333333333333333:1 split on 2023-02-14
+2025-04-19 00:32:27,294 - INFO - Found 1 splits for CVEO
+2025-04-19 00:32:27,294 - INFO -   CVEO: 2020-11-20 - 0.08333333333333333:1 split
+2025-04-19 00:32:27,320 - INFO - Adjusted 225 historical price records for CVEO 0.08333333333333333:1 split on 2020-11-20
+2025-04-19 00:32:31,575 - INFO - Found 2 splits for XPO
+2025-04-19 00:32:31,575 - INFO -   XPO: 2021-08-02 - 1.718:1 split
+2025-04-19 00:32:31,575 - INFO -   XPO: 2022-11-01 - 1.683:1 split
+2025-04-19 00:32:31,605 - INFO - Adjusted 398 historical price records for XPO 1.718:1 split on 2021-08-02
+2025-04-19 00:32:31,641 - INFO - Adjusted 714 historical price records for XPO 1.683:1 split on 2022-11-01
+2025-04-19 00:32:57,927 - INFO - Processed 900/3920 symbols...
+2025-04-19 00:33:05,109 - INFO - Found 1 splits for ENSV
+2025-04-19 00:33:05,109 - INFO -   ENSV: 2020-11-23 - 0.06666666666666667:1 split
+2025-04-19 00:33:05,135 - INFO - Adjusted 226 historical price records for ENSV 0.06666666666666667:1 split on 2020-11-23
+2025-04-19 00:33:08,893 - INFO - Found 1 splits for TRIB
+2025-04-19 00:33:08,893 - INFO -   TRIB: 2024-02-23 - 0.2:1 split
+2025-04-19 00:33:08,940 - INFO - Adjusted 1042 historical price records for TRIB 0.2:1 split on 2024-02-23
+2025-04-19 00:33:41,851 - INFO - Found 1 splits for ORKA
+2025-04-19 00:33:41,851 - INFO -   ORKA: 2024-09-03 - 0.08333333333333333:1 split
+2025-04-19 00:33:41,903 - INFO - Adjusted 1174 historical price records for ORKA 0.08333333333333333:1 split on 2024-09-03
+2025-04-19 00:33:53,231 - INFO - Found 1 splits for WIT
+2025-04-19 00:33:53,231 - INFO -   WIT: 2024-12-11 - 2.0:1 split
+2025-04-19 00:33:53,283 - INFO - Adjusted 1244 historical price records for WIT 2.0:1 split on 2024-12-11
+2025-04-19 00:33:56,471 - INFO - Found 1 splits for PMCB
+2025-04-19 00:33:56,471 - INFO -   PMCB: 2021-07-12 - 0.0006451612903225806:1 split
+2025-04-19 00:33:56,485 - INFO - No historical price records to adjust for PMCB before 2021-07-12
+2025-04-19 00:34:30,724 - INFO - Found 1 splits for RMBL
+2025-04-19 00:34:30,724 - INFO -   RMBL: 2020-05-20 - 0.05:1 split
+2025-04-19 00:34:30,746 - INFO - Adjusted 96 historical price records for RMBL 0.05:1 split on 2020-05-20
+2025-04-19 00:34:38,558 - INFO - Processed 950/3920 symbols...
+2025-04-19 00:34:50,657 - INFO - Found 1 splits for EYEN
+2025-04-19 00:34:50,658 - INFO -   EYEN: 2025-02-03 - 0.0125:1 split
+2025-04-19 00:34:50,712 - INFO - Adjusted 1278 historical price records for EYEN 0.0125:1 split on 2025-02-03
+2025-04-19 00:35:05,647 - INFO - Found 1 splits for NVEE
+2025-04-19 00:35:05,647 - INFO -   NVEE: 2024-10-11 - 4.0:1 split
+2025-04-19 00:35:05,701 - INFO - Adjusted 1202 historical price records for NVEE 4.0:1 split on 2024-10-11
+2025-04-19 00:35:12,976 - INFO - Found 1 splits for DHR
+2025-04-19 00:35:12,976 - INFO -   DHR: 2023-10-02 - 1.128:1 split
+2025-04-19 00:35:13,020 - INFO - Adjusted 943 historical price records for DHR 1.128:1 split on 2023-10-02
+2025-04-19 00:35:16,466 - INFO - Found 1 splits for DTE
+2025-04-19 00:35:16,466 - INFO -   DTE: 2021-07-01 - 1.175:1 split
+2025-04-19 00:35:16,496 - INFO - Adjusted 377 historical price records for DTE 1.175:1 split on 2021-07-01
+2025-04-19 00:35:25,809 - INFO - Found 1 splits for DECK
+2025-04-19 00:35:25,809 - INFO -   DECK: 2024-09-17 - 6.0:1 split
+2025-04-19 00:35:25,861 - INFO - Adjusted 1184 historical price records for DECK 6.0:1 split on 2024-09-17
+2025-04-19 00:35:27,730 - INFO - Found 1 splits for GNS
+2025-04-19 00:35:27,730 - INFO -   GNS: 2024-08-16 - 0.1:1 split
+2025-04-19 00:35:27,774 - INFO - Adjusted 589 historical price records for GNS 0.1:1 split on 2024-08-16
+2025-04-19 00:35:34,383 - INFO - Found 1 splits for IVT
+2025-04-19 00:35:34,383 - INFO -   IVT: 2021-08-06 - 0.1:1 split
+2025-04-19 00:35:34,397 - INFO - No historical price records to adjust for IVT before 2021-08-06
+2025-04-19 00:35:51,842 - INFO - Found 1 splits for OPAD
+2025-04-19 00:35:51,842 - INFO -   OPAD: 2023-06-13 - 0.06666666666666667:1 split
+2025-04-19 00:35:51,883 - INFO - Adjusted 628 historical price records for OPAD 0.06666666666666667:1 split on 2023-06-13
+2025-04-19 00:36:10,046 - INFO - Processed 1000/3920 symbols...
+2025-04-19 00:36:39,406 - INFO - Found 2 splits for APH
+2025-04-19 00:36:39,406 - INFO -   APH: 2021-03-05 - 2.0:1 split
+2025-04-19 00:36:39,406 - INFO -   APH: 2024-06-12 - 2.0:1 split
+2025-04-19 00:36:39,434 - INFO - Adjusted 295 historical price records for APH 2.0:1 split on 2021-03-05
+2025-04-19 00:36:39,479 - INFO - Adjusted 1118 historical price records for APH 2.0:1 split on 2024-06-12
+2025-04-19 00:36:40,974 - INFO - Found 1 splits for FRSX
+2025-04-19 00:36:40,974 - INFO -   FRSX: 2023-04-21 - 0.16666666666666666:1 split
+2025-04-19 00:36:41,014 - INFO - Adjusted 831 historical price records for FRSX 0.16666666666666666:1 split on 2023-04-21
+2025-04-19 00:36:54,693 - INFO - Found 1 splits for CLAR
+2025-04-19 00:36:54,693 - INFO -   CLAR: 2020-08-07 - 1.002:1 split
+2025-04-19 00:36:54,717 - INFO - Adjusted 151 historical price records for CLAR 1.002:1 split on 2020-08-07
+2025-04-19 00:37:00,302 - INFO - Found 3 splits for EDU
+2025-04-19 00:37:00,302 - INFO -   EDU: 2021-03-12 - 10.0:1 split
+2025-04-19 00:37:00,302 - INFO -   EDU: 2022-04-07 - 0.1:1 split
+2025-04-19 00:37:00,302 - INFO -   EDU: 2022-04-08 - 0.1:1 split
+2025-04-19 00:37:00,329 - INFO - Adjusted 300 historical price records for EDU 10.0:1 split on 2021-03-12
+2025-04-19 00:37:00,361 - INFO - Adjusted 571 historical price records for EDU 0.1:1 split on 2022-04-07
+2025-04-19 00:37:00,390 - INFO - Adjusted 572 historical price records for EDU 0.1:1 split on 2022-04-08
+2025-04-19 00:37:03,748 - INFO - Found 1 splits for NECB
+2025-04-19 00:37:03,748 - INFO -   NECB: 2021-07-13 - 1.34:1 split
+2025-04-19 00:37:03,763 - INFO - No historical price records to adjust for NECB before 2021-07-13
+2025-04-19 00:37:12,205 - INFO - Found 1 splits for UBX
+2025-04-19 00:37:12,205 - INFO -   UBX: 2022-10-20 - 0.1:1 split
+2025-04-19 00:37:12,243 - INFO - Adjusted 706 historical price records for UBX 0.1:1 split on 2022-10-20
+2025-04-19 00:37:18,891 - INFO - Found 1 splits for NEE
+2025-04-19 00:37:18,891 - INFO -   NEE: 2020-10-27 - 4.0:1 split
+2025-04-19 00:37:18,916 - INFO - Adjusted 207 historical price records for NEE 4.0:1 split on 2020-10-27
+2025-04-19 00:37:50,042 - INFO - Processed 1050/3920 symbols...
+2025-04-19 00:38:01,136 - INFO - Found 1 splits for SMC
+2025-04-19 00:38:01,136 - INFO -   SMC: 2020-11-10 - 0.06666666666666667:1 split
+2025-04-19 00:38:01,162 - INFO - Adjusted 217 historical price records for SMC 0.06666666666666667:1 split on 2020-11-10
+2025-04-19 00:38:10,123 - INFO - Found 1 splits for TURN
+2025-04-19 00:38:10,123 - INFO -   TURN: 2021-01-04 - 0.3333333333333333:1 split
+2025-04-19 00:38:10,150 - INFO - Adjusted 253 historical price records for TURN 0.3333333333333333:1 split on 2021-01-04
+2025-04-19 00:38:51,801 - INFO - Found 1 splits for RIGL
+2025-04-19 00:38:51,801 - INFO -   RIGL: 2024-06-27 - 0.1:1 split
+2025-04-19 00:38:51,851 - INFO - Adjusted 1128 historical price records for RIGL 0.1:1 split on 2024-06-27
+2025-04-19 00:39:01,748 - INFO - Found 1 splits for CIG
+2025-04-19 00:39:01,748 - INFO -   CIG: 2024-05-24 - 1.3:1 split
+2025-04-19 00:39:01,795 - INFO - Adjusted 1106 historical price records for CIG 1.3:1 split on 2024-05-24
+2025-04-19 00:39:07,888 - INFO - Found 1 splits for WHWK
+2025-04-19 00:39:07,888 - INFO -   WHWK: 2021-08-27 - 0.06666666666666667:1 split
+2025-04-19 00:39:07,917 - INFO - Adjusted 417 historical price records for WHWK 0.06666666666666667:1 split on 2021-08-27
+2025-04-19 00:39:19,741 - INFO - Found 1 splits for IDR
+2025-04-19 00:39:19,741 - INFO -   IDR: 2021-12-06 - 0.07142857142857142:1 split
+2025-04-19 00:39:19,758 - INFO - No historical price records to adjust for IDR before 2021-12-06
+2025-04-19 00:39:28,625 - INFO - Processed 1100/3920 symbols...
+2025-04-19 00:40:11,163 - INFO - Found 1 splits for MAXN
+2025-04-19 00:40:11,163 - INFO -   MAXN: 2024-10-09 - 0.01:1 split
+2025-04-19 00:40:11,214 - INFO - Adjusted 1036 historical price records for MAXN 0.01:1 split on 2024-10-09
+2025-04-19 00:40:12,907 - INFO - Found 1 splits for USLM
+2025-04-19 00:40:12,907 - INFO -   USLM: 2024-07-15 - 5.0:1 split
+2025-04-19 00:40:12,954 - INFO - Adjusted 1139 historical price records for USLM 5.0:1 split on 2024-07-15
+2025-04-19 00:40:24,801 - INFO - Found 1 splits for LFMD
+2025-04-19 00:40:24,801 - INFO -   LFMD: 2020-10-14 - 0.2:1 split
+2025-04-19 00:40:24,812 - INFO - No historical price records to adjust for LFMD before 2020-10-14
+2025-04-19 00:41:03,912 - INFO - Processed 1150/3920 symbols...
+2025-04-19 00:41:06,192 - INFO - Found 1 splits for BRAG
+2025-04-19 00:41:06,192 - INFO -   BRAG: 2021-05-05 - 0.1:1 split
+2025-04-19 00:41:06,205 - INFO - No historical price records to adjust for BRAG before 2021-05-05
+2025-04-19 00:41:08,228 - INFO - Found 1 splits for TSCO
+2025-04-19 00:41:08,228 - INFO -   TSCO: 2024-12-20 - 5.0:1 split
+2025-04-19 00:41:08,281 - INFO - Adjusted 1251 historical price records for TSCO 5.0:1 split on 2024-12-20
+2025-04-19 00:41:16,507 - INFO - Found 1 splits for MKC
+2025-04-19 00:41:16,507 - INFO -   MKC: 2020-12-01 - 2.0:1 split
+2025-04-19 00:41:16,533 - INFO - Adjusted 231 historical price records for MKC 2.0:1 split on 2020-12-01
+2025-04-19 00:41:51,716 - INFO - Found 3 splits for FFAI
+2025-04-19 00:41:51,717 - INFO -   FFAI: 2023-08-28 - 0.0125:1 split
+2025-04-19 00:41:51,717 - INFO -   FFAI: 2024-03-01 - 0.3333333333333333:1 split
+2025-04-19 00:41:51,717 - INFO -   FFAI: 2024-08-19 - 0.025:1 split
+2025-04-19 00:41:51,758 - INFO - Adjusted 750 historical price records for FFAI 0.0125:1 split on 2023-08-28
+2025-04-19 00:41:51,799 - INFO - Adjusted 878 historical price records for FFAI 0.3333333333333333:1 split on 2024-03-01
+2025-04-19 00:41:51,841 - INFO - Adjusted 995 historical price records for FFAI 0.025:1 split on 2024-08-19
+2025-04-19 00:42:05,719 - INFO - Found 1 splits for DXCM
+2025-04-19 00:42:05,719 - INFO -   DXCM: 2022-06-13 - 4.0:1 split
+2025-04-19 00:42:05,754 - INFO - Adjusted 616 historical price records for DXCM 4.0:1 split on 2022-06-13
+2025-04-19 00:42:07,160 - INFO - Found 1 splits for DOUG
+2025-04-19 00:42:07,160 - INFO -   DOUG: 2023-06-21 - 1.05:1 split
+2025-04-19 00:42:07,197 - INFO - Adjusted 369 historical price records for DOUG 1.05:1 split on 2023-06-21
+2025-04-19 00:42:20,064 - INFO - Found 2 splits for XYLO
+2025-04-19 00:42:20,064 - INFO -   XYLO: 2022-11-14 - 0.06666666666666667:1 split
+2025-04-19 00:42:20,064 - INFO -   XYLO: 2024-08-05 - 0.375:1 split
+2025-04-19 00:42:20,108 - INFO - Adjusted 723 historical price records for XYLO 0.06666666666666667:1 split on 2022-11-14
+2025-04-19 00:42:20,150 - INFO - Adjusted 1154 historical price records for XYLO 0.375:1 split on 2024-08-05
+2025-04-19 00:42:40,272 - INFO - Processed 1200/3920 symbols...
+2025-04-19 00:43:57,014 - INFO - Found 1 splits for SRE
+2025-04-19 00:43:57,014 - INFO -   SRE: 2023-08-22 - 2.0:1 split
+2025-04-19 00:43:57,057 - INFO - Adjusted 915 historical price records for SRE 2.0:1 split on 2023-08-22
+2025-04-19 00:44:18,130 - INFO - Processed 1250/3920 symbols...
+2025-04-19 00:44:53,685 - INFO - Found 1 splits for CMG
+2025-04-19 00:44:53,685 - INFO -   CMG: 2024-06-26 - 50.0:1 split
+2025-04-19 00:44:53,736 - INFO - Adjusted 1127 historical price records for CMG 50.0:1 split on 2024-06-26
+2025-04-19 00:44:56,035 - INFO - Found 1 splits for PLUS
+2025-04-19 00:44:56,035 - INFO -   PLUS: 2021-12-14 - 2.0:1 split
+2025-04-19 00:44:56,068 - INFO - Adjusted 492 historical price records for PLUS 2.0:1 split on 2021-12-14
+2025-04-19 00:45:06,553 - INFO - Found 1 splits for MCHP
+2025-04-19 00:45:06,553 - INFO -   MCHP: 2021-10-13 - 2.0:1 split
+2025-04-19 00:45:06,587 - INFO - Adjusted 449 historical price records for MCHP 2.0:1 split on 2021-10-13
+2025-04-19 00:45:09,303 - INFO - Found 1 splits for BKSY
+2025-04-19 00:45:09,303 - INFO -   BKSY: 2024-09-09 - 0.125:1 split
+2025-04-19 00:45:09,355 - INFO - Adjusted 1178 historical price records for BKSY 0.125:1 split on 2024-09-09
+2025-04-19 00:45:12,489 - INFO - Found 2 splits for BEST
+2025-04-19 00:45:12,489 - INFO -   BEST: 2022-05-20 - 0.2:1 split
+2025-04-19 00:45:12,489 - INFO -   BEST: 2023-04-04 - 0.25:1 split
+2025-04-19 00:45:12,524 - INFO - Adjusted 601 historical price records for BEST 0.2:1 split on 2022-05-20
+2025-04-19 00:45:12,561 - INFO - Adjusted 819 historical price records for BEST 0.25:1 split on 2023-04-04
+2025-04-19 00:45:29,301 - INFO - Found 1 splits for ACMR
+2025-04-19 00:45:29,301 - INFO -   ACMR: 2022-03-24 - 3.0:1 split
+2025-04-19 00:45:29,334 - INFO - Adjusted 561 historical price records for ACMR 3.0:1 split on 2022-03-24
+2025-04-19 00:45:55,502 - INFO - Processed 1300/3920 symbols...
+2025-04-19 00:46:03,942 - INFO - Found 1 splits for FNF
+2025-04-19 00:46:03,942 - INFO -   FNF: 2022-12-01 - 1.04:1 split
+2025-04-19 00:46:03,986 - INFO - Adjusted 735 historical price records for FNF 1.04:1 split on 2022-12-01
+2025-04-19 00:46:11,275 - INFO - Found 1 splits for CNVS
+2025-04-19 00:46:11,275 - INFO -   CNVS: 2023-06-09 - 0.05:1 split
+2025-04-19 00:46:11,319 - INFO - Adjusted 865 historical price records for CNVS 0.05:1 split on 2023-06-09
+2025-04-19 00:46:45,407 - INFO - Found 1 splits for APLD
+2025-04-19 00:46:45,407 - INFO -   APLD: 2022-04-13 - 0.16666666666666666:1 split
+2025-04-19 00:46:45,424 - INFO - No historical price records to adjust for APLD before 2022-04-13
+2025-04-19 00:47:37,351 - INFO - Processed 1350/3920 symbols...
+2025-04-19 00:47:46,639 - INFO - Found 1 splits for OM
+2025-04-19 00:47:46,639 - INFO -   OM: 2025-03-20 - 0.06666666666666667:1 split
+2025-04-19 00:47:46,696 - INFO - Adjusted 1133 historical price records for OM 0.06666666666666667:1 split on 2025-03-20
+2025-04-19 00:47:55,318 - INFO - Found 1 splits for IPA
+2025-04-19 00:47:55,318 - INFO -   IPA: 2020-11-23 - 0.2:1 split
+2025-04-19 00:47:55,329 - INFO - No historical price records to adjust for IPA before 2020-11-23
+2025-04-19 00:48:03,062 - INFO - Found 1 splits for PRG
+2025-04-19 00:48:03,063 - INFO -   PRG: 2020-12-01 - 1.179:1 split
+2025-04-19 00:48:03,074 - INFO - No historical price records to adjust for PRG before 2020-12-01
+2025-04-19 00:48:07,552 - INFO - Found 2 splits for TRAW
+2025-04-19 00:48:07,552 - INFO -   TRAW: 2021-05-21 - 0.06666666666666667:1 split
+2025-04-19 00:48:07,552 - INFO -   TRAW: 2024-09-23 - 0.04:1 split
+2025-04-19 00:48:07,581 - INFO - Adjusted 349 historical price records for TRAW 0.06666666666666667:1 split on 2021-05-21
+2025-04-19 00:48:07,630 - INFO - Adjusted 1188 historical price records for TRAW 0.04:1 split on 2024-09-23
+2025-04-19 00:48:50,284 - INFO - Found 1 splits for EMKR
+2025-04-19 00:48:50,284 - INFO -   EMKR: 2024-04-02 - 0.1:1 split
+2025-04-19 00:48:50,331 - INFO - Adjusted 1068 historical price records for EMKR 0.1:1 split on 2024-04-02
+2025-04-19 00:49:07,279 - INFO - Found 1 splits for LXU
+2025-04-19 00:49:07,279 - INFO -   LXU: 2021-10-12 - 1.3:1 split
+2025-04-19 00:49:07,310 - INFO - Adjusted 448 historical price records for LXU 1.3:1 split on 2021-10-12
+2025-04-19 00:49:18,028 - INFO - Processed 1400/3920 symbols...
+2025-04-19 00:49:29,418 - INFO - Found 1 splits for SPHR
+2025-04-19 00:49:29,418 - INFO -   SPHR: 2023-04-21 - 2.165:1 split
+2025-04-19 00:49:29,441 - INFO - No historical price records to adjust for SPHR before 2023-04-21
+2025-04-19 00:49:37,534 - INFO - Found 1 splits for BTCY
+2025-04-19 00:49:37,534 - INFO -   BTCY: 2023-07-03 - 0.16666666666666666:1 split
+2025-04-19 00:49:37,574 - INFO - Adjusted 464 historical price records for BTCY 0.16666666666666666:1 split on 2023-07-03
+2025-04-19 00:49:52,254 - INFO - Found 1 splits for ACET
+2025-04-19 00:49:52,254 - INFO -   ACET: 2020-09-16 - 0.14285714285714285:1 split
+2025-04-19 00:49:52,279 - INFO - Adjusted 178 historical price records for ACET 0.14285714285714285:1 split on 2020-09-16
+2025-04-19 00:49:56,986 - INFO - Found 1 splits for SIFY
+2025-04-19 00:49:56,986 - INFO -   SIFY: 2024-10-04 - 0.16666666666666666:1 split
+2025-04-19 00:49:57,041 - INFO - Adjusted 1197 historical price records for SIFY 0.16666666666666666:1 split on 2024-10-04
+2025-04-19 00:50:58,925 - INFO - Processed 1450/3920 symbols...
+2025-04-19 00:51:21,102 - INFO - Found 2 splits for PPBT
+2025-04-19 00:51:21,102 - INFO -   PPBT: 2020-08-21 - 0.1:1 split
+2025-04-19 00:51:21,102 - INFO -   PPBT: 2024-09-17 - 0.05:1 split
+2025-04-19 00:51:21,127 - INFO - Adjusted 161 historical price records for PPBT 0.1:1 split on 2020-08-21
+2025-04-19 00:51:21,177 - INFO - Adjusted 1184 historical price records for PPBT 0.05:1 split on 2024-09-17
+2025-04-19 00:51:23,565 - INFO - Found 2 splits for GGB
+2025-04-19 00:51:23,565 - INFO -   GGB: 2023-03-22 - 1.05:1 split
+2025-04-19 00:51:23,565 - INFO -   GGB: 2024-04-18 - 1.2:1 split
+2025-04-19 00:51:23,605 - INFO - Adjusted 810 historical price records for GGB 1.05:1 split on 2023-03-22
+2025-04-19 00:51:23,647 - INFO - Adjusted 1080 historical price records for GGB 1.2:1 split on 2024-04-18
+2025-04-19 00:51:35,084 - INFO - Found 1 splits for BZFD
+2025-04-19 00:51:35,084 - INFO -   BZFD: 2024-05-06 - 0.25:1 split
+2025-04-19 00:51:35,128 - INFO - Adjusted 797 historical price records for BZFD 0.25:1 split on 2024-05-06
+2025-04-19 00:51:41,074 - INFO - Found 1 splits for RJF
+2025-04-19 00:51:41,074 - INFO -   RJF: 2021-09-22 - 1.5:1 split
+2025-04-19 00:51:41,104 - INFO - Adjusted 434 historical price records for RJF 1.5:1 split on 2021-09-22
+2025-04-19 00:51:57,277 - INFO - Found 1 splits for UP
+2025-04-19 00:51:57,277 - INFO -   UP: 2023-06-08 - 0.1:1 split
+2025-04-19 00:51:57,316 - INFO - Adjusted 644 historical price records for UP 0.1:1 split on 2023-06-08
+2025-04-19 00:52:03,112 - INFO - Found 1 splits for RMTI
+2025-04-19 00:52:03,112 - INFO -   RMTI: 2022-05-13 - 0.09090909090909091:1 split
+2025-04-19 00:52:03,148 - INFO - Adjusted 596 historical price records for RMTI 0.09090909090909091:1 split on 2022-05-13
+2025-04-19 00:52:13,766 - INFO - Found 1 splits for DRRX
+2025-04-19 00:52:13,766 - INFO -   DRRX: 2022-12-06 - 0.1:1 split
+2025-04-19 00:52:13,805 - INFO - Adjusted 738 historical price records for DRRX 0.1:1 split on 2022-12-06
+2025-04-19 00:52:26,314 - INFO - Found 2 splits for ACB
+2025-04-19 00:52:26,314 - INFO -   ACB: 2020-05-11 - 0.08333333333333333:1 split
+2025-04-19 00:52:26,314 - INFO -   ACB: 2024-02-20 - 0.1:1 split
+2025-04-19 00:52:26,336 - INFO - Adjusted 89 historical price records for ACB 0.08333333333333333:1 split on 2020-05-11
+2025-04-19 00:52:26,381 - INFO - Adjusted 1039 historical price records for ACB 0.1:1 split on 2024-02-20
+2025-04-19 00:52:44,069 - INFO - Processed 1500/3920 symbols...
+2025-04-19 00:52:47,658 - INFO - Found 1 splits for REPX
+2025-04-19 00:52:47,658 - INFO -   REPX: 2021-03-01 - 0.08333333333333333:1 split
+2025-04-19 00:52:47,686 - INFO - Adjusted 291 historical price records for REPX 0.08333333333333333:1 split on 2021-03-01
+2025-04-19 00:52:52,805 - INFO - Found 1 splits for RNAC
+2025-04-19 00:52:52,805 - INFO -   RNAC: 2024-04-05 - 0.03333333333333333:1 split
+2025-04-19 00:52:52,853 - INFO - Adjusted 1071 historical price records for RNAC 0.03333333333333333:1 split on 2024-04-05
+2025-04-19 00:52:55,144 - INFO - Found 1 splits for TU
+2025-04-19 00:52:55,144 - INFO -   TU: 2020-03-18 - 2.0:1 split
+2025-04-19 00:52:55,166 - INFO - Adjusted 52 historical price records for TU 2.0:1 split on 2020-03-18
+2025-04-19 00:52:59,665 - INFO - Found 1 splits for OVV
+2025-04-19 00:52:59,665 - INFO -   OVV: 2020-01-27 - 0.2:1 split
+2025-04-19 00:52:59,685 - INFO - Adjusted 16 historical price records for OVV 0.2:1 split on 2020-01-27
+2025-04-19 00:53:27,110 - INFO - Found 1 splits for SCYX
+2025-04-19 00:53:27,110 - INFO -   SCYX: 2020-07-17 - 0.1:1 split
+2025-04-19 00:53:27,133 - INFO - Adjusted 136 historical price records for SCYX 0.1:1 split on 2020-07-17
+2025-04-19 00:53:50,087 - INFO - Found 1 splits for YSG
+2025-04-19 00:53:50,087 - INFO -   YSG: 2024-03-18 - 0.2:1 split
+2025-04-19 00:53:50,132 - INFO - Adjusted 834 historical price records for YSG 0.2:1 split on 2024-03-18
+2025-04-19 00:53:58,708 - INFO - Found 1 splits for QXO
+2025-04-19 00:53:58,709 - INFO -   QXO: 2024-06-06 - 0.125:1 split
+2025-04-19 00:53:58,759 - INFO - Adjusted 1114 historical price records for QXO 0.125:1 split on 2024-06-06
+2025-04-19 00:54:00,311 - INFO - Found 1 splits for ROL
+2025-04-19 00:54:00,311 - INFO -   ROL: 2020-12-11 - 1.5:1 split
+2025-04-19 00:54:00,337 - INFO - Adjusted 239 historical price records for ROL 1.5:1 split on 2020-12-11
+2025-04-19 00:54:20,729 - INFO - Found 1 splits for VTGN
+2025-04-19 00:54:20,730 - INFO -   VTGN: 2023-06-07 - 0.03333333333333333:1 split
+2025-04-19 00:54:20,772 - INFO - Adjusted 863 historical price records for VTGN 0.03333333333333333:1 split on 2023-06-07
+2025-04-19 00:54:25,199 - INFO - Processed 1550/3920 symbols...
+2025-04-19 00:54:37,741 - INFO - Found 1 splits for ETR
+2025-04-19 00:54:37,741 - INFO -   ETR: 2024-12-13 - 2.0:1 split
+2025-04-19 00:54:37,796 - INFO - Adjusted 1246 historical price records for ETR 2.0:1 split on 2024-12-13
+2025-04-19 00:55:09,568 - INFO - Found 1 splits for MLI
+2025-04-19 00:55:09,569 - INFO -   MLI: 2023-10-23 - 2.0:1 split
+2025-04-19 00:55:09,613 - INFO - Adjusted 958 historical price records for MLI 2.0:1 split on 2023-10-23
+2025-04-19 00:55:21,756 - INFO - Found 1 splits for SKYE
+2025-04-19 00:55:21,756 - INFO -   SKYE: 2023-09-08 - 0.004:1 split
+2025-04-19 00:55:21,781 - INFO - No historical price records to adjust for SKYE before 2023-09-08
+2025-04-19 00:55:29,390 - INFO - Found 1 splits for ITP
+2025-04-19 00:55:29,390 - INFO -   ITP: 2022-07-08 - 0.1:1 split
+2025-04-19 00:55:29,425 - INFO - Adjusted 633 historical price records for ITP 0.1:1 split on 2022-07-08
+2025-04-19 00:55:38,342 - INFO - Found 1 splits for TRVG
+2025-04-19 00:55:38,342 - INFO -   TRVG: 2023-11-17 - 0.2:1 split
+2025-04-19 00:55:38,388 - INFO - Adjusted 977 historical price records for TRVG 0.2:1 split on 2023-11-17
+2025-04-19 00:55:43,935 - INFO - Found 1 splits for MRTN
+2025-04-19 00:55:43,935 - INFO -   MRTN: 2020-08-14 - 1.5:1 split
+2025-04-19 00:55:43,959 - INFO - Adjusted 156 historical price records for MRTN 1.5:1 split on 2020-08-14
+2025-04-19 00:56:03,166 - INFO - Processed 1600/3920 symbols...
+2025-04-19 00:56:09,315 - INFO - Found 1 splits for WPC
+2025-04-19 00:56:09,315 - INFO -   WPC: 2023-11-02 - 1.021:1 split
+2025-04-19 00:56:09,360 - INFO - Adjusted 966 historical price records for WPC 1.021:1 split on 2023-11-02
+2025-04-19 00:56:30,196 - INFO - Found 1 splits for NLY
+2025-04-19 00:56:30,196 - INFO -   NLY: 2022-09-26 - 0.25:1 split
+2025-04-19 00:56:30,234 - INFO - Adjusted 688 historical price records for NLY 0.25:1 split on 2022-09-26
+2025-04-19 00:57:18,010 - INFO - Found 1 splits for AROW
+2025-04-19 00:57:18,010 - INFO -   AROW: 2022-09-16 - 1.03:1 split
+2025-04-19 00:57:18,047 - INFO - Adjusted 682 historical price records for AROW 1.03:1 split on 2022-09-16
+2025-04-19 00:57:21,860 - INFO - Found 1 splits for MEHCQ
+2025-04-19 00:57:21,861 - INFO -   MEHCQ: 2024-10-16 - 0.05:1 split
+2025-04-19 00:57:21,890 - INFO - No historical price records to adjust for MEHCQ before 2024-10-16
+2025-04-19 00:57:43,765 - INFO - Processed 1650/3920 symbols...
+2025-04-19 00:57:49,765 - INFO - Found 1 splits for NBR
+2025-04-19 00:57:49,765 - INFO -   NBR: 2020-04-23 - 0.02:1 split
+2025-04-19 00:57:49,788 - INFO - Adjusted 77 historical price records for NBR 0.02:1 split on 2020-04-23
+2025-04-19 00:57:58,647 - INFO - Found 1 splits for ATXS
+2025-04-19 00:57:58,647 - INFO -   ATXS: 2021-08-20 - 0.16666666666666666:1 split
+2025-04-19 00:57:58,678 - INFO - Adjusted 412 historical price records for ATXS 0.16666666666666666:1 split on 2021-08-20
+2025-04-19 00:58:41,460 - INFO - Found 1 splits for MKFG
+2025-04-19 00:58:41,460 - INFO -   MKFG: 2024-09-19 - 0.1:1 split
+2025-04-19 00:58:41,508 - INFO - Adjusted 992 historical price records for MKFG 0.1:1 split on 2024-09-19
+2025-04-19 00:58:55,611 - INFO - Found 1 splits for AREN
+2025-04-19 00:58:55,611 - INFO -   AREN: 2022-02-09 - 0.045454545454545456:1 split
+2025-04-19 00:58:55,628 - INFO - No historical price records to adjust for AREN before 2022-02-09
+2025-04-19 00:58:58,097 - INFO - Found 1 splits for FTI
+2025-04-19 00:58:58,098 - INFO -   FTI: 2021-02-16 - 1.344:1 split
+2025-04-19 00:58:58,125 - INFO - Adjusted 282 historical price records for FTI 1.344:1 split on 2021-02-16
+2025-04-19 00:59:15,029 - INFO - Processed 1700/3920 symbols...
+2025-04-19 00:59:17,082 - INFO - Found 1 splits for BBU
+2025-04-19 00:59:17,082 - INFO -   BBU: 2022-03-15 - 1.558:1 split
+2025-04-19 00:59:17,117 - INFO - Adjusted 554 historical price records for BBU 1.558:1 split on 2022-03-15
+2025-04-19 00:59:18,681 - INFO - Found 1 splits for OUT
+2025-04-19 00:59:18,682 - INFO -   OUT: 2025-01-17 - 0.976:1 split
+2025-04-19 00:59:18,736 - INFO - Adjusted 1268 historical price records for OUT 0.976:1 split on 2025-01-17
+2025-04-19 00:59:21,669 - INFO - Found 1 splits for DBRG
+2025-04-19 00:59:21,669 - INFO -   DBRG: 2022-08-23 - 0.25:1 split
+2025-04-19 00:59:21,706 - INFO - Adjusted 665 historical price records for DBRG 0.25:1 split on 2022-08-23
+2025-04-19 00:59:32,396 - INFO - Found 1 splits for REE
+2025-04-19 00:59:32,396 - INFO -   REE: 2023-10-18 - 0.03333333333333333:1 split
+2025-04-19 00:59:32,439 - INFO - Adjusted 955 historical price records for REE 0.03333333333333333:1 split on 2023-10-18
+2025-04-19 00:59:34,237 - INFO - Found 2 splits for PANW
+2025-04-19 00:59:34,237 - INFO -   PANW: 2022-09-14 - 3.0:1 split
+2025-04-19 00:59:34,237 - INFO -   PANW: 2024-12-16 - 2.0:1 split
+2025-04-19 00:59:34,273 - INFO - Adjusted 680 historical price records for PANW 3.0:1 split on 2022-09-14
+2025-04-19 00:59:34,324 - INFO - Adjusted 1247 historical price records for PANW 2.0:1 split on 2024-12-16
+2025-04-19 00:59:59,167 - INFO - Found 1 splits for NMG
+2025-04-19 00:59:59,167 - INFO -   NMG: 2021-03-31 - 0.1:1 split
+2025-04-19 00:59:59,180 - INFO - No historical price records to adjust for NMG before 2021-03-31
+2025-04-19 01:00:05,214 - INFO - Found 1 splits for OPCH
+2025-04-19 01:00:05,214 - INFO -   OPCH: 2020-02-03 - 0.25:1 split
+2025-04-19 01:00:05,235 - INFO - Adjusted 21 historical price records for OPCH 0.25:1 split on 2020-02-03
+2025-04-19 01:00:09,215 - INFO - Found 2 splits for SHIP
+2025-04-19 01:00:09,216 - INFO -   SHIP: 2020-06-30 - 0.0625:1 split
+2025-04-19 01:00:09,216 - INFO -   SHIP: 2023-02-16 - 0.1:1 split
+2025-04-19 01:00:09,240 - INFO - Adjusted 124 historical price records for SHIP 0.0625:1 split on 2020-06-30
+2025-04-19 01:00:09,279 - INFO - Adjusted 787 historical price records for SHIP 0.1:1 split on 2023-02-16
+2025-04-19 01:00:30,337 - INFO - Found 1 splits for EYPT
+2025-04-19 01:00:30,337 - INFO -   EYPT: 2020-12-09 - 0.1:1 split
+2025-04-19 01:00:30,363 - INFO - Adjusted 237 historical price records for EYPT 0.1:1 split on 2020-12-09
+2025-04-19 01:00:32,925 - INFO - Found 1 splits for NVNO
+2025-04-19 01:00:32,925 - INFO -   NVNO: 2020-11-30 - 0.04:1 split
+2025-04-19 01:00:32,952 - INFO - Adjusted 230 historical price records for NVNO 0.04:1 split on 2020-11-30
+2025-04-19 01:00:51,299 - INFO - Processed 1750/3920 symbols...
+2025-04-19 01:01:05,213 - INFO - Found 1 splits for NDAQ
+2025-04-19 01:01:05,213 - INFO -   NDAQ: 2022-08-29 - 3.0:1 split
+2025-04-19 01:01:05,250 - INFO - Adjusted 669 historical price records for NDAQ 3.0:1 split on 2022-08-29
+2025-04-19 01:01:25,919 - INFO - Found 1 splits for AMC
+2025-04-19 01:01:25,919 - INFO -   AMC: 2023-08-24 - 0.1:1 split
+2025-04-19 01:01:25,963 - INFO - Adjusted 917 historical price records for AMC 0.1:1 split on 2023-08-24
+2025-04-19 01:01:28,525 - INFO - Found 1 splits for CP
+2025-04-19 01:01:28,525 - INFO -   CP: 2021-05-14 - 5.0:1 split
+2025-04-19 01:01:28,561 - INFO - Adjusted 344 historical price records for CP 5.0:1 split on 2021-05-14
+2025-04-19 01:01:34,954 - INFO - Found 1 splits for CSGP
+2025-04-19 01:01:34,954 - INFO -   CSGP: 2021-06-28 - 10.0:1 split
+2025-04-19 01:01:34,983 - INFO - Adjusted 374 historical price records for CSGP 10.0:1 split on 2021-06-28
+2025-04-19 01:01:38,842 - INFO - Found 1 splits for T
+2025-04-19 01:01:38,842 - INFO -   T: 2022-04-11 - 1.324:1 split
+2025-04-19 01:01:38,877 - INFO - Adjusted 573 historical price records for T 1.324:1 split on 2022-04-11
+2025-04-19 01:01:45,153 - INFO - Found 1 splits for AAPL
+2025-04-19 01:01:45,154 - INFO -   AAPL: 2020-08-31 - 4.0:1 split
+2025-04-19 01:01:45,178 - INFO - Adjusted 167 historical price records for AAPL 4.0:1 split on 2020-08-31
+2025-04-19 01:01:56,917 - INFO - Found 1 splits for ORGS
+2025-04-19 01:01:56,917 - INFO -   ORGS: 2024-09-25 - 0.1:1 split
+2025-04-19 01:01:56,970 - INFO - Adjusted 1190 historical price records for ORGS 0.1:1 split on 2024-09-25
+2025-04-19 01:02:12,440 - INFO - Found 1 splits for TTEK
+2025-04-19 01:02:12,440 - INFO -   TTEK: 2024-09-09 - 5.0:1 split
+2025-04-19 01:02:12,491 - INFO - Adjusted 1178 historical price records for TTEK 5.0:1 split on 2024-09-09
+2025-04-19 01:02:28,248 - INFO - Found 2 splits for KZIA
+2025-04-19 01:02:28,248 - INFO -   KZIA: 2024-10-28 - 0.1:1 split
+2025-04-19 01:02:28,248 - INFO -   KZIA: 2025-04-17 - 0.2:1 split
+2025-04-19 01:02:28,300 - INFO - Adjusted 1213 historical price records for KZIA 0.1:1 split on 2024-10-28
+2025-04-19 01:02:28,352 - INFO - Adjusted 1328 historical price records for KZIA 0.2:1 split on 2025-04-17
+2025-04-19 01:02:32,474 - INFO - Processed 1800/3920 symbols...
+2025-04-19 01:02:41,314 - INFO - Found 1 splits for BIRD
+2025-04-19 01:02:41,314 - INFO -   BIRD: 2024-09-05 - 0.05:1 split
+2025-04-19 01:02:41,358 - INFO - Adjusted 712 historical price records for BIRD 0.05:1 split on 2024-09-05
+2025-04-19 01:02:50,138 - INFO - Found 1 splits for PATK
+2025-04-19 01:02:50,138 - INFO -   PATK: 2024-12-16 - 1.5:1 split
+2025-04-19 01:02:50,189 - INFO - Adjusted 1247 historical price records for PATK 1.5:1 split on 2024-12-16
+2025-04-19 01:03:12,913 - INFO - Found 1 splits for BNED
+2025-04-19 01:03:12,913 - INFO -   BNED: 2024-06-12 - 0.01:1 split
+2025-04-19 01:03:12,961 - INFO - Adjusted 1118 historical price records for BNED 0.01:1 split on 2024-06-12
+2025-04-19 01:03:16,603 - INFO - Found 1 splits for BBSI
+2025-04-19 01:03:16,603 - INFO -   BBSI: 2024-06-24 - 4.0:1 split
+2025-04-19 01:03:16,650 - INFO - Adjusted 1125 historical price records for BBSI 4.0:1 split on 2024-06-24
+2025-04-19 01:03:18,614 - INFO - Found 2 splits for TRVN
+2025-04-19 01:03:18,614 - INFO -   TRVN: 2022-11-10 - 0.04:1 split
+2025-04-19 01:03:18,614 - INFO -   TRVN: 2024-08-13 - 0.04:1 split
+2025-04-19 01:03:18,659 - INFO - Adjusted 721 historical price records for TRVN 0.04:1 split on 2022-11-10
+2025-04-19 01:03:18,701 - INFO - Adjusted 1160 historical price records for TRVN 0.04:1 split on 2024-08-13
+2025-04-19 01:03:20,070 - INFO - Found 1 splits for CENTA
+2025-04-19 01:03:20,070 - INFO -   CENTA: 2024-02-09 - 1.25:1 split
+2025-04-19 01:03:20,115 - INFO - Adjusted 1033 historical price records for CENTA 1.25:1 split on 2024-02-09
+2025-04-19 01:04:01,253 - INFO - Found 3 splits for IAC
+2025-04-19 01:04:01,253 - INFO -   IAC: 2020-07-01 - 3.054:1 split
+2025-04-19 01:04:01,253 - INFO -   IAC: 2021-05-25 - 1.503:1 split
+2025-04-19 01:04:01,253 - INFO -   IAC: 2025-04-01 - 1.219:1 split
+2025-04-19 01:04:01,277 - INFO - Adjusted 125 historical price records for IAC 3.054:1 split on 2020-07-01
+2025-04-19 01:04:01,303 - INFO - Adjusted 351 historical price records for IAC 1.503:1 split on 2021-05-25
+2025-04-19 01:04:01,353 - INFO - Adjusted 1318 historical price records for IAC 1.219:1 split on 2025-04-01
+2025-04-19 01:04:08,076 - INFO - Processed 1850/3920 symbols...
+2025-04-19 01:04:19,972 - INFO - Found 1 splits for SLDB
+2025-04-19 01:04:19,972 - INFO -   SLDB: 2022-10-28 - 0.06666666666666667:1 split
+2025-04-19 01:04:20,011 - INFO - Adjusted 712 historical price records for SLDB 0.06666666666666667:1 split on 2022-10-28
+2025-04-19 01:04:31,058 - INFO - Found 1 splits for NA
+2025-04-19 01:04:31,058 - INFO -   NA: 2024-11-04 - 0.1:1 split
+2025-04-19 01:04:31,102 - INFO - Adjusted 583 historical price records for NA 0.1:1 split on 2024-11-04
+2025-04-19 01:04:41,410 - INFO - Found 1 splits for FLEX
+2025-04-19 01:04:41,410 - INFO -   FLEX: 2024-01-03 - 1.327:1 split
+2025-04-19 01:04:41,456 - INFO - Adjusted 1007 historical price records for FLEX 1.327:1 split on 2024-01-03
+2025-04-19 01:04:51,483 - INFO - Found 1 splits for SII
+2025-04-19 01:04:51,483 - INFO -   SII: 2020-05-28 - 0.1:1 split
+2025-04-19 01:04:51,492 - INFO - No historical price records to adjust for SII before 2020-05-28
+2025-04-19 01:05:18,783 - INFO - Found 1 splits for NSPR
+2025-04-19 01:05:18,783 - INFO -   NSPR: 2021-04-27 - 0.06666666666666667:1 split
+2025-04-19 01:05:18,815 - INFO - Adjusted 331 historical price records for NSPR 0.06666666666666667:1 split on 2021-04-27
+2025-04-19 01:05:29,363 - INFO - Found 1 splits for RGLS
+2025-04-19 01:05:29,363 - INFO -   RGLS: 2022-06-29 - 0.1:1 split
+2025-04-19 01:05:29,401 - INFO - Adjusted 627 historical price records for RGLS 0.1:1 split on 2022-06-29
+2025-04-19 01:05:41,264 - INFO - Found 2 splits for WKSP
+2025-04-19 01:05:41,264 - INFO -   WKSP: 2021-08-04 - 0.05:1 split
+2025-04-19 01:05:41,264 - INFO -   WKSP: 2025-03-18 - 0.1:1 split
+2025-04-19 01:05:41,279 - INFO - No historical price records to adjust for WKSP before 2021-08-04
+2025-04-19 01:05:41,330 - INFO - Adjusted 908 historical price records for WKSP 0.1:1 split on 2025-03-18
+2025-04-19 01:05:49,185 - INFO - Processed 1900/3920 symbols...
+2025-04-19 01:05:50,908 - INFO - Found 1 splits for BERY
+2025-04-19 01:05:50,909 - INFO -   BERY: 2024-11-05 - 1.089:1 split
+2025-04-19 01:05:50,961 - INFO - Adjusted 1219 historical price records for BERY 1.089:1 split on 2024-11-05
+2025-04-19 01:06:08,985 - INFO - Found 1 splits for MFA
+2025-04-19 01:06:08,985 - INFO -   MFA: 2022-04-05 - 0.25:1 split
+2025-04-19 01:06:09,020 - INFO - Adjusted 569 historical price records for MFA 0.25:1 split on 2022-04-05
+2025-04-19 01:06:42,317 - INFO - Found 1 splits for PCAR
+2025-04-19 01:06:42,318 - INFO -   PCAR: 2023-02-08 - 1.5:1 split
+2025-04-19 01:06:42,357 - INFO - Adjusted 781 historical price records for PCAR 1.5:1 split on 2023-02-08
+2025-04-19 01:06:48,173 - INFO - Found 1 splits for CATX
+2025-04-19 01:06:48,173 - INFO -   CATX: 2024-06-17 - 0.1:1 split
+2025-04-19 01:06:48,221 - INFO - Adjusted 1121 historical price records for CATX 0.1:1 split on 2024-06-17
+2025-04-19 01:06:51,578 - INFO - Found 1 splits for PGY
+2025-04-19 01:06:51,578 - INFO -   PGY: 2024-03-08 - 0.08333333333333333:1 split
+2025-04-19 01:06:51,622 - INFO - Adjusted 725 historical price records for PGY 0.08333333333333333:1 split on 2024-03-08
+2025-04-19 01:06:54,056 - INFO - Found 3 splits for CBSH
+2025-04-19 01:06:54,056 - INFO -   CBSH: 2020-12-01 - 1.05:1 split
+2025-04-19 01:06:54,056 - INFO -   CBSH: 2021-12-01 - 1.05:1 split
+2025-04-19 01:06:54,056 - INFO -   CBSH: 2024-12-03 - 1.05:1 split
+2025-04-19 01:06:54,083 - INFO - Adjusted 231 historical price records for CBSH 1.05:1 split on 2020-12-01
+2025-04-19 01:06:54,114 - INFO - Adjusted 483 historical price records for CBSH 1.05:1 split on 2021-12-01
+2025-04-19 01:06:54,161 - INFO - Adjusted 1238 historical price records for CBSH 1.05:1 split on 2024-12-03
+2025-04-19 01:07:03,139 - INFO - Found 1 splits for TECH
+2025-04-19 01:07:03,139 - INFO -   TECH: 2022-11-30 - 4.0:1 split
+2025-04-19 01:07:03,177 - INFO - Adjusted 734 historical price records for TECH 4.0:1 split on 2022-11-30
+2025-04-19 01:07:16,317 - INFO - Found 2 splits for ODFL
+2025-04-19 01:07:16,317 - INFO -   ODFL: 2020-03-25 - 1.5:1 split
+2025-04-19 01:07:16,317 - INFO -   ODFL: 2024-03-28 - 2.0:1 split
+2025-04-19 01:07:16,339 - INFO - Adjusted 57 historical price records for ODFL 1.5:1 split on 2020-03-25
+2025-04-19 01:07:16,382 - INFO - Adjusted 1066 historical price records for ODFL 2.0:1 split on 2024-03-28
+2025-04-19 01:07:28,109 - INFO - Found 2 splits for ITUB
+2025-04-19 01:07:28,109 - INFO -   ITUB: 2021-10-04 - 1.213:1 split
+2025-04-19 01:07:28,109 - INFO -   ITUB: 2025-03-19 - 1.1:1 split
+2025-04-19 01:07:28,141 - INFO - Adjusted 442 historical price records for ITUB 1.213:1 split on 2021-10-04
+2025-04-19 01:07:28,192 - INFO - Adjusted 1309 historical price records for ITUB 1.1:1 split on 2025-03-19
+2025-04-19 01:07:32,572 - INFO - Processed 1950/3920 symbols...
+2025-04-19 01:07:36,152 - INFO - Found 1 splits for ANGI
+2025-04-19 01:07:36,152 - INFO -   ANGI: 2025-03-24 - 0.1:1 split
+2025-04-19 01:07:36,206 - INFO - Adjusted 1312 historical price records for ANGI 0.1:1 split on 2025-03-24
+2025-04-19 01:07:54,962 - INFO - Found 1 splits for POWI
+2025-04-19 01:07:54,962 - INFO -   POWI: 2020-08-19 - 2.0:1 split
+2025-04-19 01:07:54,986 - INFO - Adjusted 159 historical price records for POWI 2.0:1 split on 2020-08-19
+2025-04-19 01:08:03,377 - INFO - Found 1 splits for WGS
+2025-04-19 01:08:03,378 - INFO -   WGS: 2023-05-04 - 0.030303030303030304:1 split
+2025-04-19 01:08:03,417 - INFO - Adjusted 627 historical price records for WGS 0.030303030303030304:1 split on 2023-05-04
+2025-04-19 01:08:13,566 - INFO - Found 1 splits for VRDN
+2025-04-19 01:08:13,566 - INFO -   VRDN: 2020-11-13 - 0.06666666666666667:1 split
+2025-04-19 01:08:13,592 - INFO - Adjusted 220 historical price records for VRDN 0.06666666666666667:1 split on 2020-11-13
+2025-04-19 01:09:07,761 - INFO - Processed 2000/3920 symbols...
+2025-04-19 01:09:09,246 - INFO - Found 1 splits for KZR
+2025-04-19 01:09:09,246 - INFO -   KZR: 2024-10-30 - 0.1:1 split
+2025-04-19 01:09:09,298 - INFO - Adjusted 1215 historical price records for KZR 0.1:1 split on 2024-10-30
+2025-04-19 01:09:16,944 - INFO - Found 1 splits for GURE
+2025-04-19 01:09:16,944 - INFO -   GURE: 2020-01-28 - 0.2:1 split
+2025-04-19 01:09:16,964 - INFO - Adjusted 17 historical price records for GURE 0.2:1 split on 2020-01-28
+2025-04-19 01:09:33,340 - INFO - Found 2 splits for SAFE
+2025-04-19 01:09:33,340 - INFO -   SAFE: 2022-11-30 - 1.284:1 split
+2025-04-19 01:09:33,340 - INFO -   SAFE: 2023-03-31 - 0.16:1 split
+2025-04-19 01:09:33,378 - INFO - Adjusted 734 historical price records for SAFE 1.284:1 split on 2022-11-30
+2025-04-19 01:09:33,414 - INFO - Adjusted 817 historical price records for SAFE 0.16:1 split on 2023-03-31
+2025-04-19 01:09:46,672 - INFO - Found 2 splits for CBUS
+2025-04-19 01:09:46,672 - INFO -   CBUS: 2023-04-25 - 0.1:1 split
+2025-04-19 01:09:46,672 - INFO -   CBUS: 2023-06-01 - 0.2:1 split
+2025-04-19 01:09:46,711 - INFO - Adjusted 833 historical price records for CBUS 0.1:1 split on 2023-04-25
+2025-04-19 01:09:46,748 - INFO - Adjusted 859 historical price records for CBUS 0.2:1 split on 2023-06-01
+2025-04-19 01:09:50,277 - INFO - Found 1 splits for WYY
+2025-04-19 01:09:50,277 - INFO -   WYY: 2020-11-09 - 0.1:1 split
+2025-04-19 01:09:50,303 - INFO - Adjusted 216 historical price records for WYY 0.1:1 split on 2020-11-09
+2025-04-19 01:10:00,515 - INFO - Found 1 splits for WMT
+2025-04-19 01:10:00,515 - INFO -   WMT: 2024-02-26 - 3.0:1 split
+2025-04-19 01:10:00,571 - INFO - Adjusted 1043 historical price records for WMT 3.0:1 split on 2024-02-26
+2025-04-19 01:10:08,603 - INFO - Found 3 splits for GENE
+2025-04-19 01:10:08,603 - INFO -   GENE: 2023-12-04 - 0.2:1 split
+2025-04-19 01:10:08,603 - INFO -   GENE: 2023-12-11 - 0.2:1 split
+2025-04-19 01:10:08,603 - INFO -   GENE: 2023-12-14 - 0.2:1 split
+2025-04-19 01:10:08,648 - INFO - Adjusted 987 historical price records for GENE 0.2:1 split on 2023-12-04
+2025-04-19 01:10:08,689 - INFO - Adjusted 992 historical price records for GENE 0.2:1 split on 2023-12-11
+2025-04-19 01:10:08,728 - INFO - Adjusted 995 historical price records for GENE 0.2:1 split on 2023-12-14
+2025-04-19 01:10:26,554 - INFO - Found 1 splits for MITT
+2025-04-19 01:10:26,554 - INFO -   MITT: 2021-07-23 - 0.3333333333333333:1 split
+2025-04-19 01:10:26,584 - INFO - Adjusted 392 historical price records for MITT 0.3333333333333333:1 split on 2021-07-23
+2025-04-19 01:10:28,329 - INFO - Found 1 splits for GLTO
+2025-04-19 01:10:28,329 - INFO -   GLTO: 2024-08-30 - 0.04:1 split
+2025-04-19 01:10:28,376 - INFO - Adjusted 964 historical price records for GLTO 0.04:1 split on 2024-08-30
+2025-04-19 01:10:34,699 - INFO - Found 1 splits for PTMN
+2025-04-19 01:10:34,699 - INFO -   PTMN: 2021-08-26 - 0.1:1 split
+2025-04-19 01:10:34,729 - INFO - Adjusted 416 historical price records for PTMN 0.1:1 split on 2021-08-26
+2025-04-19 01:10:49,179 - INFO - Processed 2050/3920 symbols...
+2025-04-19 01:10:58,053 - INFO - Found 1 splits for LU
+2025-04-19 01:10:58,053 - INFO -   LU: 2023-12-15 - 0.25:1 split
+2025-04-19 01:10:58,098 - INFO - Adjusted 786 historical price records for LU 0.25:1 split on 2023-12-15
+2025-04-19 01:11:05,595 - INFO - Found 2 splits for CNQ
+2025-04-19 01:11:05,595 - INFO -   CNQ: 2022-08-22 - 1.021:1 split
+2025-04-19 01:11:05,595 - INFO -   CNQ: 2024-06-11 - 2.0:1 split
+2025-04-19 01:11:05,632 - INFO - Adjusted 664 historical price records for CNQ 1.021:1 split on 2022-08-22
+2025-04-19 01:11:05,676 - INFO - Adjusted 1117 historical price records for CNQ 2.0:1 split on 2024-06-11
+2025-04-19 01:11:18,047 - INFO - Found 1 splits for ZBH
+2025-04-19 01:11:18,047 - INFO -   ZBH: 2022-03-01 - 1.03:1 split
+2025-04-19 01:11:18,080 - INFO - Adjusted 544 historical price records for ZBH 1.03:1 split on 2022-03-01
+2025-04-19 01:11:28,338 - INFO - Found 1 splits for VYX
+2025-04-19 01:11:28,338 - INFO -   VYX: 2023-10-17 - 1.63:1 split
+2025-04-19 01:11:28,382 - INFO - Adjusted 954 historical price records for VYX 1.63:1 split on 2023-10-17
+2025-04-19 01:11:32,309 - INFO - Found 1 splits for DWTX
+2025-04-19 01:11:32,309 - INFO -   DWTX: 2024-10-09 - 0.04:1 split
+2025-04-19 01:11:32,358 - INFO - Adjusted 957 historical price records for DWTX 0.04:1 split on 2024-10-09
+2025-04-19 01:11:35,992 - INFO - Found 1 splits for K
+2025-04-19 01:11:35,992 - INFO -   K: 2023-10-02 - 1.065:1 split
+2025-04-19 01:11:36,036 - INFO - Adjusted 943 historical price records for K 1.065:1 split on 2023-10-02
+2025-04-19 01:11:51,584 - INFO - Found 1 splits for SHW
+2025-04-19 01:11:51,584 - INFO -   SHW: 2021-04-01 - 3.0:1 split
+2025-04-19 01:11:51,612 - INFO - Adjusted 314 historical price records for SHW 3.0:1 split on 2021-04-01
+2025-04-19 01:12:15,568 - INFO - Found 1 splits for FIZZ
+2025-04-19 01:12:15,568 - INFO -   FIZZ: 2021-02-22 - 2.0:1 split
+2025-04-19 01:12:15,595 - INFO - Adjusted 286 historical price records for FIZZ 2.0:1 split on 2021-02-22
+2025-04-19 01:12:27,797 - INFO - Processed 2100/3920 symbols...
+2025-04-19 01:12:30,933 - INFO - Found 1 splits for HYFM
+2025-04-19 01:12:30,933 - INFO -   HYFM: 2025-02-13 - 0.1:1 split
+2025-04-19 01:12:30,988 - INFO - Adjusted 1048 historical price records for HYFM 0.1:1 split on 2025-02-13
+2025-04-19 01:12:51,989 - INFO - Found 1 splits for HIVE
+2025-04-19 01:12:51,989 - INFO -   HIVE: 2022-05-24 - 0.2:1 split
+2025-04-19 01:12:52,021 - INFO - Adjusted 226 historical price records for HIVE 0.2:1 split on 2022-05-24
+2025-04-19 01:13:23,022 - INFO - Found 1 splits for CELH
+2025-04-19 01:13:23,022 - INFO -   CELH: 2023-11-15 - 3.0:1 split
+2025-04-19 01:13:23,067 - INFO - Adjusted 975 historical price records for CELH 3.0:1 split on 2023-11-15
+2025-04-19 01:13:34,109 - INFO - Found 1 splits for MOGO
+2025-04-19 01:13:34,109 - INFO -   MOGO: 2023-08-14 - 0.3333333333333333:1 split
+2025-04-19 01:13:34,152 - INFO - Adjusted 909 historical price records for MOGO 0.3333333333333333:1 split on 2023-08-14
+2025-04-19 01:13:39,897 - INFO - Found 1 splits for HIPO
+2025-04-19 01:13:39,897 - INFO -   HIPO: 2022-09-30 - 0.04:1 split
+2025-04-19 01:13:39,932 - INFO - Adjusted 434 historical price records for HIPO 0.04:1 split on 2022-09-30
+2025-04-19 01:13:53,769 - INFO - Found 1 splits for LFWD
+2025-04-19 01:13:53,769 - INFO -   LFWD: 2024-03-15 - 0.14285714285714285:1 split
+2025-04-19 01:13:53,817 - INFO - Adjusted 1057 historical price records for LFWD 0.14285714285714285:1 split on 2024-03-15
+2025-04-19 01:14:02,337 - INFO - Found 1 splits for UPXI
+2025-04-19 01:14:02,337 - INFO -   UPXI: 2024-10-03 - 0.05:1 split
+2025-04-19 01:14:02,384 - INFO - Adjusted 824 historical price records for UPXI 0.05:1 split on 2024-10-03
+2025-04-19 01:14:06,908 - INFO - Processed 2150/3920 symbols...
+2025-04-19 01:14:16,367 - INFO - Found 1 splits for MNMD
+2025-04-19 01:14:16,367 - INFO -   MNMD: 2022-08-29 - 0.06666666666666667:1 split
+2025-04-19 01:14:16,401 - INFO - Adjusted 338 historical price records for MNMD 0.06666666666666667:1 split on 2022-08-29
+2025-04-19 01:14:20,215 - INFO - Found 1 splits for PKBK
+2025-04-19 01:14:20,215 - INFO -   PKBK: 2020-02-14 - 1.1:1 split
+2025-04-19 01:14:20,237 - INFO - Adjusted 30 historical price records for PKBK 1.1:1 split on 2020-02-14
+2025-04-19 01:14:25,714 - INFO - Found 1 splits for FTFT
+2025-04-19 01:14:25,715 - INFO -   FTFT: 2025-04-04 - 0.1:1 split
+2025-04-19 01:14:25,772 - INFO - Adjusted 1321 historical price records for FTFT 0.1:1 split on 2025-04-04
+2025-04-19 01:14:34,024 - INFO - Found 1 splits for FLG
+2025-04-19 01:14:34,024 - INFO -   FLG: 2024-07-12 - 0.3333333333333333:1 split
+2025-04-19 01:14:34,073 - INFO - Adjusted 1138 historical price records for FLG 0.3333333333333333:1 split on 2024-07-12
+2025-04-19 01:14:40,840 - INFO - Found 1 splits for IRON
+2025-04-19 01:14:40,840 - INFO -   IRON: 2022-12-30 - 0.03333333333333333:1 split
+2025-04-19 01:14:40,877 - INFO - Adjusted 601 historical price records for IRON 0.03333333333333333:1 split on 2022-12-30
+2025-04-19 01:15:07,674 - INFO - Found 1 splits for BORR
+2025-04-19 01:15:07,674 - INFO -   BORR: 2021-12-14 - 0.5:1 split
+2025-04-19 01:15:07,706 - INFO - Adjusted 492 historical price records for BORR 0.5:1 split on 2021-12-14
+2025-04-19 01:15:10,193 - INFO - Found 2 splits for AZ
+2025-04-19 01:15:10,193 - INFO -   AZ: 2021-08-20 - 0.3333333333333333:1 split
+2025-04-19 01:15:10,193 - INFO -   AZ: 2024-10-08 - 0.4:1 split
+2025-04-19 01:15:10,208 - INFO - No historical price records to adjust for AZ before 2021-08-20
+2025-04-19 01:15:10,251 - INFO - Adjusted 692 historical price records for AZ 0.4:1 split on 2024-10-08
+2025-04-19 01:15:13,276 - INFO - Found 1 splits for PHUN
+2025-04-19 01:15:13,276 - INFO -   PHUN: 2024-02-27 - 0.02:1 split
+2025-04-19 01:15:13,324 - INFO - Adjusted 1044 historical price records for PHUN 0.02:1 split on 2024-02-27
+2025-04-19 01:15:17,097 - INFO - Found 1 splits for ALNT
+2025-04-19 01:15:17,098 - INFO -   ALNT: 2021-05-03 - 1.5:1 split
+2025-04-19 01:15:17,126 - INFO - Adjusted 335 historical price records for ALNT 1.5:1 split on 2021-05-03
+2025-04-19 01:15:21,837 - INFO - Found 1 splits for NEOG
+2025-04-19 01:15:21,837 - INFO -   NEOG: 2021-06-07 - 2.0:1 split
+2025-04-19 01:15:21,866 - INFO - Adjusted 359 historical price records for NEOG 2.0:1 split on 2021-06-07
+2025-04-19 01:15:29,446 - INFO - Found 1 splits for TRML
+2025-04-19 01:15:29,446 - INFO -   TRML: 2023-10-20 - 0.1:1 split
+2025-04-19 01:15:29,488 - INFO - Adjusted 618 historical price records for TRML 0.1:1 split on 2023-10-20
+2025-04-19 01:15:35,408 - INFO - Found 2 splits for REAX
+2025-04-19 01:15:35,408 - INFO -   REAX: 2021-06-01 - 0.25:1 split
+2025-04-19 01:15:35,408 - INFO -   REAX: 2021-07-23 - 4.0:1 split
+2025-04-19 01:15:35,422 - INFO - No historical price records to adjust for REAX before 2021-06-01
+2025-04-19 01:15:35,447 - INFO - Adjusted 27 historical price records for REAX 4.0:1 split on 2021-07-23
+2025-04-19 01:15:41,983 - INFO - Processed 2200/3920 symbols...
+2025-04-19 01:15:59,312 - INFO - Found 1 splits for HUSA
+2025-04-19 01:15:59,313 - INFO -   HUSA: 2020-08-03 - 0.08:1 split
+2025-04-19 01:15:59,337 - INFO - Adjusted 147 historical price records for HUSA 0.08:1 split on 2020-08-03
+2025-04-19 01:16:28,130 - INFO - Found 5 splits for TR
+2025-04-19 01:16:28,131 - INFO -   TR: 2021-03-04 - 1.03:1 split
+2025-04-19 01:16:28,131 - INFO -   TR: 2022-03-04 - 1.03:1 split
+2025-04-19 01:16:28,131 - INFO -   TR: 2023-03-03 - 1.03:1 split
+2025-04-19 01:16:28,131 - INFO -   TR: 2024-03-05 - 1.03:1 split
+2025-04-19 01:16:28,131 - INFO -   TR: 2025-03-05 - 1.03:1 split
+2025-04-19 01:16:28,158 - INFO - Adjusted 294 historical price records for TR 1.03:1 split on 2021-03-04
+2025-04-19 01:16:28,190 - INFO - Adjusted 547 historical price records for TR 1.03:1 split on 2022-03-04
+2025-04-19 01:16:28,226 - INFO - Adjusted 797 historical price records for TR 1.03:1 split on 2023-03-03
+2025-04-19 01:16:28,268 - INFO - Adjusted 1049 historical price records for TR 1.03:1 split on 2024-03-05
+2025-04-19 01:16:28,318 - INFO - Adjusted 1299 historical price records for TR 1.03:1 split on 2025-03-05
+2025-04-19 01:16:35,697 - INFO - Found 1 splits for KLXE
+2025-04-19 01:16:35,697 - INFO -   KLXE: 2020-07-28 - 0.2:1 split
+2025-04-19 01:16:35,721 - INFO - Adjusted 143 historical price records for KLXE 0.2:1 split on 2020-07-28
+2025-04-19 01:16:54,141 - INFO - Found 1 splits for TTD
+2025-04-19 01:16:54,141 - INFO -   TTD: 2021-06-17 - 10.0:1 split
+2025-04-19 01:16:54,171 - INFO - Adjusted 367 historical price records for TTD 10.0:1 split on 2021-06-17
+2025-04-19 01:17:00,217 - INFO - Found 1 splits for DSGR
+2025-04-19 01:17:00,217 - INFO -   DSGR: 2023-09-01 - 2.0:1 split
+2025-04-19 01:17:00,260 - INFO - Adjusted 923 historical price records for DSGR 2.0:1 split on 2023-09-01
+2025-04-19 01:17:21,653 - INFO - Processed 2250/3920 symbols...
+2025-04-19 01:17:37,055 - INFO - Found 1 splits for CEIN
+2025-04-19 01:17:37,055 - INFO -   CEIN: 2022-12-21 - 0.02:1 split
+2025-04-19 01:17:37,076 - INFO - No historical price records to adjust for CEIN before 2022-12-21
+2025-04-19 01:17:51,243 - INFO - Found 1 splits for CASI
+2025-04-19 01:17:51,243 - INFO -   CASI: 2022-06-02 - 0.1:1 split
+2025-04-19 01:17:51,278 - INFO - Adjusted 609 historical price records for CASI 0.1:1 split on 2022-06-02
+2025-04-19 01:17:57,573 - INFO - Found 1 splits for MSTR
+2025-04-19 01:17:57,573 - INFO -   MSTR: 2024-08-08 - 10.0:1 split
+2025-04-19 01:17:57,621 - INFO - Adjusted 1157 historical price records for MSTR 10.0:1 split on 2024-08-08
+2025-04-19 01:18:18,512 - INFO - Found 1 splits for MNST
+2025-04-19 01:18:18,512 - INFO -   MNST: 2023-03-28 - 2.0:1 split
+2025-04-19 01:18:18,552 - INFO - Adjusted 814 historical price records for MNST 2.0:1 split on 2023-03-28
+2025-04-19 01:18:25,313 - INFO - Found 1 splits for FCEL
+2025-04-19 01:18:25,313 - INFO -   FCEL: 2024-11-11 - 0.03333333333333333:1 split
+2025-04-19 01:18:25,366 - INFO - Adjusted 1223 historical price records for FCEL 0.03333333333333333:1 split on 2024-11-11
+2025-04-19 01:18:27,875 - INFO - Found 1 splits for SOGP
+2025-04-19 01:18:27,875 - INFO -   SOGP: 2023-09-20 - 0.1:1 split
+2025-04-19 01:18:27,919 - INFO - Adjusted 924 historical price records for SOGP 0.1:1 split on 2023-09-20
+2025-04-19 01:18:35,031 - INFO - Found 1 splits for TRST
+2025-04-19 01:18:35,031 - INFO -   TRST: 2021-05-28 - 0.2:1 split
+2025-04-19 01:18:35,059 - INFO - Adjusted 354 historical price records for TRST 0.2:1 split on 2021-05-28
+2025-04-19 01:18:40,965 - INFO - Found 2 splits for NVDA
+2025-04-19 01:18:40,965 - INFO -   NVDA: 2021-07-20 - 4.0:1 split
+2025-04-19 01:18:40,965 - INFO -   NVDA: 2024-06-10 - 10.0:1 split
+2025-04-19 01:18:40,995 - INFO - Adjusted 389 historical price records for NVDA 4.0:1 split on 2021-07-20
+2025-04-19 01:18:41,039 - INFO - Adjusted 1116 historical price records for NVDA 10.0:1 split on 2024-06-10
+2025-04-19 01:18:53,161 - INFO - Found 1 splits for BEPC
+2025-04-19 01:18:53,161 - INFO -   BEPC: 2020-12-14 - 1.5:1 split
+2025-04-19 01:18:53,186 - INFO - Adjusted 95 historical price records for BEPC 1.5:1 split on 2020-12-14
+2025-04-19 01:19:00,760 - INFO - Processed 2300/3920 symbols...
+2025-04-19 01:19:02,462 - INFO - Found 2 splits for GSK
+2025-04-19 01:19:02,462 - INFO -   GSK: 2022-07-19 - 0.8:1 split
+2025-04-19 01:19:02,462 - INFO -   GSK: 2022-07-22 - 1.226:1 split
+2025-04-19 01:19:02,497 - INFO - Adjusted 640 historical price records for GSK 0.8:1 split on 2022-07-19
+2025-04-19 01:19:02,530 - INFO - Adjusted 643 historical price records for GSK 1.226:1 split on 2022-07-22
+2025-04-19 01:19:20,229 - INFO - Found 1 splits for ABEO
+2025-04-19 01:19:20,229 - INFO -   ABEO: 2022-07-05 - 0.04:1 split
+2025-04-19 01:19:20,264 - INFO - Adjusted 630 historical price records for ABEO 0.04:1 split on 2022-07-05
+2025-04-19 01:19:37,714 - INFO - Found 1 splits for PRAX
+2025-04-19 01:19:37,714 - INFO -   PRAX: 2023-11-29 - 0.06666666666666667:1 split
+2025-04-19 01:19:37,759 - INFO - Adjusted 784 historical price records for PRAX 0.06666666666666667:1 split on 2023-11-29
+2025-04-19 01:19:41,272 - INFO - Found 2 splits for CTO
+2025-04-19 01:19:41,272 - INFO -   CTO: 2020-11-18 - 1.228:1 split
+2025-04-19 01:19:41,272 - INFO -   CTO: 2022-07-01 - 3.0:1 split
+2025-04-19 01:19:41,299 - INFO - Adjusted 223 historical price records for CTO 1.228:1 split on 2020-11-18
+2025-04-19 01:19:41,331 - INFO - Adjusted 629 historical price records for CTO 3.0:1 split on 2022-07-01
+2025-04-19 01:19:45,236 - INFO - Found 1 splits for KLRS
+2025-04-19 01:19:45,236 - INFO -   KLRS: 2025-01-16 - 0.043478260869565216:1 split
+2025-04-19 01:19:45,289 - INFO - Adjusted 1122 historical price records for KLRS 0.043478260869565216:1 split on 2025-01-16
+2025-04-19 01:19:52,868 - INFO - Found 2 splits for NEGG
+2025-04-19 01:19:52,869 - INFO -   NEGG: 2020-10-26 - 0.125:1 split
+2025-04-19 01:19:52,869 - INFO -   NEGG: 2025-04-07 - 0.05:1 split
+2025-04-19 01:19:52,894 - INFO - Adjusted 206 historical price records for NEGG 0.125:1 split on 2020-10-26
+2025-04-19 01:19:52,947 - INFO - Adjusted 1322 historical price records for NEGG 0.05:1 split on 2025-04-07
+2025-04-19 01:20:05,414 - INFO - Found 1 splits for AMZN
+2025-04-19 01:20:05,414 - INFO -   AMZN: 2022-06-06 - 20.0:1 split
+2025-04-19 01:20:05,451 - INFO - Adjusted 611 historical price records for AMZN 20.0:1 split on 2022-06-06
+2025-04-19 01:20:10,979 - INFO - Found 1 splits for WOR
+2025-04-19 01:20:10,979 - INFO -   WOR: 2023-12-01 - 1.622:1 split
+2025-04-19 01:20:11,025 - INFO - Adjusted 986 historical price records for WOR 1.622:1 split on 2023-12-01
+2025-04-19 01:20:42,246 - INFO - Processed 2350/3920 symbols...
+2025-04-19 01:20:51,863 - INFO - Found 1 splits for ALTM
+2025-04-19 01:20:51,863 - INFO -   ALTM: 2024-01-04 - 2.406:1 split
+2025-04-19 01:20:51,907 - INFO - Adjusted 1008 historical price records for ALTM 2.406:1 split on 2024-01-04
+2025-04-19 01:21:22,715 - INFO - Found 1 splits for GMGI
+2025-04-19 01:21:22,715 - INFO -   GMGI: 2020-06-26 - 0.006666666666666667:1 split
+2025-04-19 01:21:22,724 - INFO - No historical price records to adjust for GMGI before 2020-06-26
+2025-04-19 01:21:45,635 - INFO - Found 1 splits for RDY
+2025-04-19 01:21:45,635 - INFO -   RDY: 2024-11-05 - 5.0:1 split
+2025-04-19 01:21:45,687 - INFO - Adjusted 1219 historical price records for RDY 5.0:1 split on 2024-11-05
+2025-04-19 01:21:52,433 - INFO - Found 2 splits for TPST
+2025-04-19 01:21:52,433 - INFO -   TPST: 2021-06-28 - 0.06666666666666667:1 split
+2025-04-19 01:21:52,433 - INFO -   TPST: 2025-04-09 - 0.07692307692307693:1 split
+2025-04-19 01:21:52,462 - INFO - Adjusted 374 historical price records for TPST 0.06666666666666667:1 split on 2021-06-28
+2025-04-19 01:21:52,516 - INFO - Adjusted 1324 historical price records for TPST 0.07692307692307693:1 split on 2025-04-09
+2025-04-19 01:22:10,874 - INFO - Found 1 splits for KPTI
+2025-04-19 01:22:10,874 - INFO -   KPTI: 2025-02-26 - 0.06666666666666667:1 split
+2025-04-19 01:22:10,929 - INFO - Adjusted 1294 historical price records for KPTI 0.06666666666666667:1 split on 2025-02-26
+2025-04-19 01:22:25,445 - INFO - Processed 2400/3920 symbols...
+2025-04-19 01:22:44,052 - INFO - Found 1 splits for CMPO
+2025-04-19 01:22:44,052 - INFO -   CMPO: 2025-02-28 - 1.204:1 split
+2025-04-19 01:22:44,106 - INFO - Adjusted 1072 historical price records for CMPO 1.204:1 split on 2025-02-28
+2025-04-19 01:22:51,682 - INFO - Found 1 splits for ISRG
+2025-04-19 01:22:51,682 - INFO -   ISRG: 2021-10-05 - 3.0:1 split
+2025-04-19 01:22:51,714 - INFO - Adjusted 443 historical price records for ISRG 3.0:1 split on 2021-10-05
+2025-04-19 01:22:56,165 - INFO - Found 1 splits for OGI
+2025-04-19 01:22:56,165 - INFO -   OGI: 2023-07-07 - 0.25:1 split
+2025-04-19 01:22:56,208 - INFO - Adjusted 883 historical price records for OGI 0.25:1 split on 2023-07-07
+2025-04-19 01:23:19,772 - INFO - Found 1 splits for ALGS
+2025-04-19 01:23:19,772 - INFO -   ALGS: 2024-08-19 - 0.04:1 split
+2025-04-19 01:23:19,820 - INFO - Adjusted 964 historical price records for ALGS 0.04:1 split on 2024-08-19
+2025-04-19 01:23:30,716 - INFO - Found 1 splits for EVTL
+2025-04-19 01:23:30,717 - INFO -   EVTL: 2024-09-23 - 0.1:1 split
+2025-04-19 01:23:30,765 - INFO - Adjusted 977 historical price records for EVTL 0.1:1 split on 2024-09-23
+2025-04-19 01:23:43,080 - INFO - Found 2 splits for BN
+2025-04-19 01:23:43,080 - INFO -   BN: 2020-04-02 - 1.5:1 split
+2025-04-19 01:23:43,080 - INFO -   BN: 2022-12-12 - 1.237:1 split
+2025-04-19 01:23:43,089 - INFO - No historical price records to adjust for BN before 2020-04-02
+2025-04-19 01:23:43,109 - INFO - No historical price records to adjust for BN before 2022-12-12
+2025-04-19 01:23:47,635 - INFO - Found 1 splits for SIRI
+2025-04-19 01:23:47,635 - INFO -   SIRI: 2024-09-10 - 0.1:1 split
+2025-04-19 01:23:47,685 - INFO - Adjusted 1179 historical price records for SIRI 0.1:1 split on 2024-09-10
+2025-04-19 01:23:59,947 - INFO - Found 1 splits for CGC
+2025-04-19 01:23:59,947 - INFO -   CGC: 2023-12-20 - 0.1:1 split
+2025-04-19 01:23:59,991 - INFO - Adjusted 999 historical price records for CGC 0.1:1 split on 2023-12-20
+2025-04-19 01:24:08,354 - INFO - Processed 2450/3920 symbols...
+2025-04-19 01:24:13,068 - INFO - Found 1 splits for FRGE
+2025-04-19 01:24:13,068 - INFO -   FRGE: 2025-04-15 - 0.06666666666666667:1 split
+2025-04-19 01:24:13,122 - INFO - Adjusted 1056 historical price records for FRGE 0.06666666666666667:1 split on 2025-04-15
+2025-04-19 01:24:51,281 - INFO - Found 1 splits for ARR
+2025-04-19 01:24:51,281 - INFO -   ARR: 2023-10-02 - 0.2:1 split
+2025-04-19 01:24:51,323 - INFO - Adjusted 943 historical price records for ARR 0.2:1 split on 2023-10-02
+2025-04-19 01:25:22,128 - INFO - Found 1 splits for FTCI
+2025-04-19 01:25:22,128 - INFO -   FTCI: 2024-12-02 - 0.1:1 split
+2025-04-19 01:25:22,178 - INFO - Adjusted 905 historical price records for FTCI 0.1:1 split on 2024-12-02
+2025-04-19 01:25:36,574 - INFO - Found 1 splits for SYRE
+2025-04-19 01:25:36,574 - INFO -   SYRE: 2023-09-08 - 0.04:1 split
+2025-04-19 01:25:36,618 - INFO - Adjusted 927 historical price records for SYRE 0.04:1 split on 2023-09-08
+2025-04-19 01:25:38,936 - INFO - Found 1 splits for ARMK
+2025-04-19 01:25:38,936 - INFO -   ARMK: 2023-10-02 - 1.385:1 split
+2025-04-19 01:25:38,980 - INFO - Adjusted 943 historical price records for ARMK 1.385:1 split on 2023-10-02
+2025-04-19 01:25:41,853 - INFO - Found 1 splits for PDS
+2025-04-19 01:25:41,853 - INFO -   PDS: 2020-11-12 - 0.05:1 split
+2025-04-19 01:25:41,879 - INFO - Adjusted 219 historical price records for PDS 0.05:1 split on 2020-11-12
+2025-04-19 01:25:49,122 - INFO - Processed 2500/3920 symbols...
+2025-04-19 01:25:54,719 - INFO - Found 1 splits for VEON
+2025-04-19 01:25:54,719 - INFO -   VEON: 2023-03-08 - 0.04:1 split
+2025-04-19 01:25:54,760 - INFO - Adjusted 800 historical price records for VEON 0.04:1 split on 2023-03-08
+2025-04-19 01:26:07,484 - INFO - Found 1 splits for STKH
+2025-04-19 01:26:07,484 - INFO -   STKH: 2024-04-04 - 0.1:1 split
+2025-04-19 01:26:07,529 - INFO - Adjusted 770 historical price records for STKH 0.1:1 split on 2024-04-04
+2025-04-19 01:26:30,017 - INFO - Found 1 splits for BLRX
+2025-04-19 01:26:30,017 - INFO -   BLRX: 2025-01-30 - 0.025:1 split
+2025-04-19 01:26:30,070 - INFO - Adjusted 1276 historical price records for BLRX 0.025:1 split on 2025-01-30
+2025-04-19 01:26:48,660 - INFO - Found 2 splits for SNEX
+2025-04-19 01:26:48,660 - INFO -   SNEX: 2023-11-27 - 1.5:1 split
+2025-04-19 01:26:48,660 - INFO -   SNEX: 2025-03-24 - 1.5:1 split
+2025-04-19 01:26:48,704 - INFO - Adjusted 982 historical price records for SNEX 1.5:1 split on 2023-11-27
+2025-04-19 01:26:48,754 - INFO - Adjusted 1312 historical price records for SNEX 1.5:1 split on 2025-03-24
+2025-04-19 01:27:04,604 - INFO - Found 1 splits for LH
+2025-04-19 01:27:04,604 - INFO -   LH: 2023-07-03 - 1.164:1 split
+2025-04-19 01:27:04,645 - INFO - Adjusted 880 historical price records for LH 1.164:1 split on 2023-07-03
+2025-04-19 01:27:30,427 - INFO - Processed 2550/3920 symbols...
+2025-04-19 01:27:54,830 - INFO - Found 1 splits for INO
+2025-04-19 01:27:54,830 - INFO -   INO: 2024-01-25 - 0.08333333333333333:1 split
+2025-04-19 01:27:54,876 - INFO - Adjusted 1022 historical price records for INO 0.08333333333333333:1 split on 2024-01-25
+2025-04-19 01:28:10,839 - INFO - Found 1 splits for LPTX
+2025-04-19 01:28:10,839 - INFO -   LPTX: 2023-06-21 - 0.1:1 split
+2025-04-19 01:28:10,882 - INFO - Adjusted 872 historical price records for LPTX 0.1:1 split on 2023-06-21
+2025-04-19 01:28:18,009 - INFO - Found 1 splits for ATER
+2025-04-19 01:28:18,009 - INFO -   ATER: 2024-03-22 - 0.08333333333333333:1 split
+2025-04-19 01:28:18,056 - INFO - Adjusted 1062 historical price records for ATER 0.08333333333333333:1 split on 2024-03-22
+2025-04-19 01:28:50,042 - INFO - Found 1 splits for EXC
+2025-04-19 01:28:50,042 - INFO -   EXC: 2022-02-02 - 1.402:1 split
+2025-04-19 01:28:50,076 - INFO - Adjusted 526 historical price records for EXC 1.402:1 split on 2022-02-02
+2025-04-19 01:29:01,177 - INFO - Found 1 splits for SMCI
+2025-04-19 01:29:01,177 - INFO -   SMCI: 2024-10-01 - 10.0:1 split
+2025-04-19 01:29:01,230 - INFO - Adjusted 1194 historical price records for SMCI 10.0:1 split on 2024-10-01
+2025-04-19 01:29:06,926 - INFO - Found 1 splits for CRVL
+2025-04-19 01:29:06,926 - INFO -   CRVL: 2024-12-26 - 3.0:1 split
+2025-04-19 01:29:06,979 - INFO - Adjusted 1254 historical price records for CRVL 3.0:1 split on 2024-12-26
+2025-04-19 01:29:11,906 - INFO - Processed 2600/3920 symbols...
+2025-04-19 01:29:13,253 - INFO - Found 1 splits for THCH
+2025-04-19 01:29:13,254 - INFO -   THCH: 2025-01-13 - 0.2:1 split
+2025-04-19 01:29:13,305 - INFO - Adjusted 965 historical price records for THCH 0.2:1 split on 2025-01-13
+2025-04-19 01:29:30,815 - INFO - Found 1 splits for LEN
+2025-04-19 01:29:30,815 - INFO -   LEN: 2025-01-21 - 1.033:1 split
+2025-04-19 01:29:30,868 - INFO - Adjusted 1269 historical price records for LEN 1.033:1 split on 2025-01-21
+2025-04-19 01:29:37,018 - INFO - Found 1 splits for MDWD
+2025-04-19 01:29:37,019 - INFO -   MDWD: 2022-12-20 - 0.14285714285714285:1 split
+2025-04-19 01:29:37,058 - INFO - Adjusted 748 historical price records for MDWD 0.14285714285714285:1 split on 2022-12-20
+2025-04-19 01:29:47,501 - INFO - Found 1 splits for FSK
+2025-04-19 01:29:47,501 - INFO -   FSK: 2020-06-16 - 0.25:1 split
+2025-04-19 01:29:47,525 - INFO - Adjusted 114 historical price records for FSK 0.25:1 split on 2020-06-16
+2025-04-19 01:29:49,064 - INFO - Found 1 splits for DPRO
+2025-04-19 01:29:49,064 - INFO -   DPRO: 2024-09-05 - 0.04:1 split
+2025-04-19 01:29:49,111 - INFO - Adjusted 779 historical price records for DPRO 0.04:1 split on 2024-09-05
+2025-04-19 01:30:03,177 - INFO - Found 2 splits for WIMI
+2025-04-19 01:30:03,178 - INFO -   WIMI: 2025-04-03 - 2.0:1 split
+2025-04-19 01:30:03,178 - INFO -   WIMI: 2025-04-14 - 0.05:1 split
+2025-04-19 01:30:03,234 - INFO - Adjusted 1258 historical price records for WIMI 2.0:1 split on 2025-04-03
+2025-04-19 01:30:03,284 - INFO - Adjusted 1265 historical price records for WIMI 0.05:1 split on 2025-04-14
+2025-04-19 01:30:05,736 - INFO - Found 1 splits for SOND
+2025-04-19 01:30:05,736 - INFO -   SOND: 2023-09-21 - 0.05:1 split
+2025-04-19 01:30:05,777 - INFO - Adjusted 635 historical price records for SOND 0.05:1 split on 2023-09-21
+2025-04-19 01:30:37,930 - INFO - Found 1 splits for GOOGL
+2025-04-19 01:30:37,931 - INFO -   GOOGL: 2022-07-18 - 20.0:1 split
+2025-04-19 01:30:37,966 - INFO - Adjusted 639 historical price records for GOOGL 20.0:1 split on 2022-07-18
+2025-04-19 01:30:48,469 - INFO - Processed 2650/3920 symbols...
+2025-04-19 01:31:03,825 - INFO - Found 1 splits for CXT
+2025-04-19 01:31:03,826 - INFO -   CXT: 2023-04-04 - 2.879:1 split
+2025-04-19 01:31:03,847 - INFO - No historical price records to adjust for CXT before 2023-04-04
+2025-04-19 01:31:19,566 - INFO - Found 1 splits for ACHV
+2025-04-19 01:31:19,566 - INFO -   ACHV: 2020-07-31 - 0.05:1 split
+2025-04-19 01:31:19,591 - INFO - Adjusted 146 historical price records for ACHV 0.05:1 split on 2020-07-31
+2025-04-19 01:31:29,532 - INFO - Found 2 splits for FCUV
+2025-04-19 01:31:29,532 - INFO -   FCUV: 2023-03-24 - 1.5:1 split
+2025-04-19 01:31:29,532 - INFO -   FCUV: 2025-01-31 - 0.1:1 split
+2025-04-19 01:31:29,569 - INFO - Adjusted 393 historical price records for FCUV 1.5:1 split on 2023-03-24
+2025-04-19 01:31:29,615 - INFO - Adjusted 858 historical price records for FCUV 0.1:1 split on 2025-01-31
+2025-04-19 01:31:34,463 - INFO - Found 2 splits for DLPN
+2025-04-19 01:31:34,463 - INFO -   DLPN: 2020-11-27 - 0.2:1 split
+2025-04-19 01:31:34,463 - INFO -   DLPN: 2024-10-16 - 0.5:1 split
+2025-04-19 01:31:34,490 - INFO - Adjusted 229 historical price records for DLPN 0.2:1 split on 2020-11-27
+2025-04-19 01:31:34,537 - INFO - Adjusted 1205 historical price records for DLPN 0.5:1 split on 2024-10-16
+2025-04-19 01:31:36,980 - INFO - Found 3 splits for CENN
+2025-04-19 01:31:36,980 - INFO -   CENN: 2021-12-22 - 0.06666666666666667:1 split
+2025-04-19 01:31:36,980 - INFO -   CENN: 2023-12-01 - 0.1:1 split
+2025-04-19 01:31:36,980 - INFO -   CENN: 2023-12-08 - 0.1:1 split
+2025-04-19 01:31:37,013 - INFO - Adjusted 498 historical price records for CENN 0.06666666666666667:1 split on 2021-12-22
+2025-04-19 01:31:37,054 - INFO - Adjusted 986 historical price records for CENN 0.1:1 split on 2023-12-01
+2025-04-19 01:31:37,094 - INFO - Adjusted 991 historical price records for CENN 0.1:1 split on 2023-12-08
+2025-04-19 01:31:47,700 - INFO - Found 1 splits for INMD
+2025-04-19 01:31:47,701 - INFO -   INMD: 2021-10-01 - 2.0:1 split
+2025-04-19 01:31:47,730 - INFO - Adjusted 441 historical price records for INMD 2.0:1 split on 2021-10-01
+2025-04-19 01:31:49,781 - INFO - Found 2 splits for ELP
+2025-04-19 01:31:49,781 - INFO -   ELP: 2021-03-18 - 10.0:1 split
+2025-04-19 01:31:49,781 - INFO -   ELP: 2021-04-28 - 0.2:1 split
+2025-04-19 01:31:49,808 - INFO - Adjusted 304 historical price records for ELP 10.0:1 split on 2021-03-18
+2025-04-19 01:31:49,833 - INFO - Adjusted 332 historical price records for ELP 0.2:1 split on 2021-04-28
+2025-04-19 01:31:54,199 - INFO - Found 1 splits for CTAS
+2025-04-19 01:31:54,199 - INFO -   CTAS: 2024-09-12 - 4.0:1 split
+2025-04-19 01:31:54,251 - INFO - Adjusted 1181 historical price records for CTAS 4.0:1 split on 2024-09-12
+2025-04-19 01:31:56,387 - INFO - Found 1 splits for SF
+2025-04-19 01:31:56,387 - INFO -   SF: 2020-12-17 - 1.5:1 split
+2025-04-19 01:31:56,413 - INFO - Adjusted 243 historical price records for SF 1.5:1 split on 2020-12-17
+2025-04-19 01:32:07,108 - INFO - Found 1 splits for XPRO
+2025-04-19 01:32:07,109 - INFO -   XPRO: 2021-10-04 - 0.16666666666666666:1 split
+2025-04-19 01:32:07,139 - INFO - Adjusted 442 historical price records for XPRO 0.16666666666666666:1 split on 2021-10-04
+2025-04-19 01:32:22,095 - INFO - Found 1 splits for ADVM
+2025-04-19 01:32:22,096 - INFO -   ADVM: 2024-03-21 - 0.1:1 split
+2025-04-19 01:32:22,141 - INFO - Adjusted 1061 historical price records for ADVM 0.1:1 split on 2024-03-21
+2025-04-19 01:32:29,611 - INFO - Processed 2700/3920 symbols...
+2025-04-19 01:32:33,852 - INFO - Found 2 splits for CVLG
+2025-04-19 01:32:33,852 - INFO -   CVLG: 2024-12-31 - 2.0:1 split
+2025-04-19 01:32:33,853 - INFO -   CVLG: 2025-01-02 - 2.0:1 split
+2025-04-19 01:32:33,905 - INFO - Adjusted 1257 historical price records for CVLG 2.0:1 split on 2024-12-31
+2025-04-19 01:32:33,954 - INFO - Adjusted 1258 historical price records for CVLG 2.0:1 split on 2025-01-02
+2025-04-19 01:32:36,327 - INFO - Found 1 splits for LGO
+2025-04-19 01:32:36,327 - INFO -   LGO: 2021-03-08 - 0.1:1 split
+2025-04-19 01:32:36,340 - INFO - No historical price records to adjust for LGO before 2021-03-08
+2025-04-19 01:33:09,425 - INFO - Found 2 splits for BEP
+2025-04-19 01:33:09,425 - INFO -   BEP: 2020-07-30 - 1.251:1 split
+2025-04-19 01:33:09,425 - INFO -   BEP: 2020-12-14 - 1.5:1 split
+2025-04-19 01:33:09,449 - INFO - Adjusted 145 historical price records for BEP 1.251:1 split on 2020-07-30
+2025-04-19 01:33:09,472 - INFO - Adjusted 240 historical price records for BEP 1.5:1 split on 2020-12-14
+2025-04-19 01:33:25,103 - INFO - Found 1 splits for AXDX
+2025-04-19 01:33:25,103 - INFO -   AXDX: 2023-07-12 - 0.1:1 split
+2025-04-19 01:33:25,144 - INFO - Adjusted 886 historical price records for AXDX 0.1:1 split on 2023-07-12
+2025-04-19 01:33:32,783 - INFO - Found 2 splits for HOLO
+2025-04-19 01:33:32,783 - INFO -   HOLO: 2024-02-02 - 0.1:1 split
+2025-04-19 01:33:32,783 - INFO -   HOLO: 2024-10-09 - 0.05:1 split
+2025-04-19 01:33:32,825 - INFO - Adjusted 626 historical price records for HOLO 0.1:1 split on 2024-02-02
+2025-04-19 01:33:32,868 - INFO - Adjusted 798 historical price records for HOLO 0.05:1 split on 2024-10-09
+2025-04-19 01:33:57,256 - INFO - Found 1 splits for ICMB
+2025-04-19 01:33:57,256 - INFO -   ICMB: 2020-06-18 - 1.007:1 split
+2025-04-19 01:33:57,279 - INFO - Adjusted 116 historical price records for ICMB 1.007:1 split on 2020-06-18
+2025-04-19 01:34:01,963 - INFO - Found 1 splits for OCSL
+2025-04-19 01:34:01,963 - INFO -   OCSL: 2023-01-23 - 0.3333333333333333:1 split
+2025-04-19 01:34:02,001 - INFO - Adjusted 769 historical price records for OCSL 0.3333333333333333:1 split on 2023-01-23
+2025-04-19 01:34:09,870 - INFO - Processed 2750/3920 symbols...
+2025-04-19 01:34:12,189 - INFO - Found 1 splits for ELDN
+2025-04-19 01:34:12,190 - INFO -   ELDN: 2020-10-05 - 0.05555555555555555:1 split
+2025-04-19 01:34:12,215 - INFO - Adjusted 191 historical price records for ELDN 0.05555555555555555:1 split on 2020-10-05
+2025-04-19 01:34:18,980 - INFO - Found 1 splits for RYAAY
+2025-04-19 01:34:18,980 - INFO -   RYAAY: 2024-09-30 - 2.499:1 split
+2025-04-19 01:34:19,030 - INFO - Adjusted 1193 historical price records for RYAAY 2.499:1 split on 2024-09-30
+2025-04-19 01:34:24,270 - INFO - Found 1 splits for MYO
+2025-04-19 01:34:24,270 - INFO -   MYO: 2020-01-31 - 0.03333333333333333:1 split
+2025-04-19 01:34:24,291 - INFO - Adjusted 20 historical price records for MYO 0.03333333333333333:1 split on 2020-01-31
+2025-04-19 01:34:28,830 - INFO - Found 1 splits for FTAI
+2025-04-19 01:34:28,830 - INFO -   FTAI: 2022-08-02 - 1.171:1 split
+2025-04-19 01:34:28,867 - INFO - Adjusted 650 historical price records for FTAI 1.171:1 split on 2022-08-02
+2025-04-19 01:34:40,775 - INFO - Found 1 splits for BCTX
+2025-04-19 01:34:40,776 - INFO -   BCTX: 2020-01-02 - 0.0033333333333333335:1 split
+2025-04-19 01:34:40,782 - INFO - No historical price records to adjust for BCTX before 2020-01-02
+2025-04-19 01:34:54,185 - INFO - Found 1 splits for QIPT
+2025-04-19 01:34:54,185 - INFO -   QIPT: 2021-05-13 - 0.25:1 split
+2025-04-19 01:34:54,199 - INFO - No historical price records to adjust for QIPT before 2021-05-13
+2025-04-19 01:35:09,608 - INFO - Found 1 splits for CKPT
+2025-04-19 01:35:09,608 - INFO -   CKPT: 2022-12-06 - 0.1:1 split
+2025-04-19 01:35:09,648 - INFO - Adjusted 738 historical price records for CKPT 0.1:1 split on 2022-12-06
+2025-04-19 01:35:11,706 - INFO - Found 1 splits for EXPI
+2025-04-19 01:35:11,706 - INFO -   EXPI: 2021-02-16 - 2.0:1 split
+2025-04-19 01:35:11,733 - INFO - Adjusted 282 historical price records for EXPI 2.0:1 split on 2021-02-16
+2025-04-19 01:35:46,643 - INFO - Processed 2800/3920 symbols...
+2025-04-19 01:35:53,172 - INFO - Found 1 splits for EKSO
+2025-04-19 01:35:53,172 - INFO -   EKSO: 2020-03-25 - 0.06666666666666667:1 split
+2025-04-19 01:35:53,194 - INFO - Adjusted 57 historical price records for EKSO 0.06666666666666667:1 split on 2020-03-25
+2025-04-19 01:35:58,820 - INFO - Found 1 splits for LILA
+2025-04-19 01:35:58,820 - INFO -   LILA: 2020-09-11 - 1.061:1 split
+2025-04-19 01:35:58,846 - INFO - Adjusted 175 historical price records for LILA 1.061:1 split on 2020-09-11
+2025-04-19 01:36:15,878 - INFO - Found 1 splits for ARQQ
+2025-04-19 01:36:15,878 - INFO -   ARQQ: 2024-09-25 - 0.04:1 split
+2025-04-19 01:36:15,926 - INFO - Adjusted 876 historical price records for ARQQ 0.04:1 split on 2024-09-25
+2025-04-19 01:36:17,544 - INFO - Found 1 splits for SKLZ
+2025-04-19 01:36:17,544 - INFO -   SKLZ: 2023-06-26 - 0.05:1 split
+2025-04-19 01:36:17,585 - INFO - Adjusted 796 historical price records for SKLZ 0.05:1 split on 2023-06-26
+2025-04-19 01:36:32,550 - INFO - Found 1 splits for NWG
+2025-04-19 01:36:32,550 - INFO -   NWG: 2022-08-30 - 0.928:1 split
+2025-04-19 01:36:32,587 - INFO - Adjusted 670 historical price records for NWG 0.928:1 split on 2022-08-30
+2025-04-19 01:36:40,890 - INFO - Found 1 splits for ONIT
+2025-04-19 01:36:40,890 - INFO -   ONIT: 2020-08-14 - 0.06666666666666667:1 split
+2025-04-19 01:36:40,915 - INFO - Adjusted 156 historical price records for ONIT 0.06666666666666667:1 split on 2020-08-14
+2025-04-19 01:36:48,653 - INFO - Found 1 splits for UCAR
+2025-04-19 01:36:48,653 - INFO -   UCAR: 2024-04-03 - 0.01:1 split
+2025-04-19 01:36:48,693 - INFO - Adjusted 239 historical price records for UCAR 0.01:1 split on 2024-04-03
+2025-04-19 01:36:54,136 - INFO - Found 1 splits for PSFE
+2025-04-19 01:36:54,136 - INFO -   PSFE: 2022-12-13 - 0.08333333333333333:1 split
+2025-04-19 01:36:54,174 - INFO - Adjusted 548 historical price records for PSFE 0.08333333333333333:1 split on 2022-12-13
+2025-04-19 01:36:56,381 - INFO - Found 1 splits for FET
+2025-04-19 01:36:56,381 - INFO -   FET: 2020-11-10 - 0.05:1 split
+2025-04-19 01:36:56,406 - INFO - Adjusted 217 historical price records for FET 0.05:1 split on 2020-11-10
+2025-04-19 01:37:08,428 - INFO - Found 1 splits for WSM
+2025-04-19 01:37:08,428 - INFO -   WSM: 2024-07-09 - 2.0:1 split
+2025-04-19 01:37:08,478 - INFO - Adjusted 1135 historical price records for WSM 2.0:1 split on 2024-07-09
+2025-04-19 01:37:15,082 - INFO - Found 1 splits for FGF
+2025-04-19 01:37:15,082 - INFO -   FGF: 2024-11-01 - 0.04:1 split
+2025-04-19 01:37:15,136 - INFO - Adjusted 1217 historical price records for FGF 0.04:1 split on 2024-11-01
+2025-04-19 01:37:16,229 - INFO - Found 1 splits for HHH
+2025-04-19 01:37:16,229 - INFO -   HHH: 2024-08-01 - 1.049:1 split
+2025-04-19 01:37:16,274 - INFO - Adjusted 1152 historical price records for HHH 1.049:1 split on 2024-08-01
+2025-04-19 01:37:18,394 - INFO - Found 1 splits for NVO
+2025-04-19 01:37:18,394 - INFO -   NVO: 2023-09-20 - 2.0:1 split
+2025-04-19 01:37:18,436 - INFO - Adjusted 935 historical price records for NVO 2.0:1 split on 2023-09-20
+2025-04-19 01:37:21,468 - INFO - Processed 2850/3920 symbols...
+2025-04-19 01:37:35,908 - INFO - Found 1 splits for VRNS
+2025-04-19 01:37:35,908 - INFO -   VRNS: 2021-03-15 - 3.0:1 split
+2025-04-19 01:37:35,936 - INFO - Adjusted 301 historical price records for VRNS 3.0:1 split on 2021-03-15
+2025-04-19 01:37:45,641 - INFO - Found 2 splits for YQ
+2025-04-19 01:37:45,641 - INFO -   YQ: 2021-11-17 - 0.25:1 split
+2025-04-19 01:37:45,641 - INFO -   YQ: 2023-12-18 - 0.2:1 split
+2025-04-19 01:37:45,673 - INFO - Adjusted 240 historical price records for YQ 0.25:1 split on 2021-11-17
+2025-04-19 01:37:45,717 - INFO - Adjusted 763 historical price records for YQ 0.2:1 split on 2023-12-18
+2025-04-19 01:37:47,093 - INFO - Found 1 splits for SWI
+2025-04-19 01:37:47,093 - INFO -   SWI: 2021-08-02 - 0.5:1 split
+2025-04-19 01:37:47,122 - INFO - Adjusted 398 historical price records for SWI 0.5:1 split on 2021-08-02
+2025-04-19 01:38:07,715 - INFO - Found 1 splits for INSG
+2025-04-19 01:38:07,715 - INFO -   INSG: 2024-01-24 - 0.1:1 split
+2025-04-19 01:38:07,763 - INFO - Adjusted 1021 historical price records for INSG 0.1:1 split on 2024-01-24
+2025-04-19 01:38:31,469 - INFO - Found 1 splits for ATNM
+2025-04-19 01:38:31,469 - INFO -   ATNM: 2020-08-11 - 0.03333333333333333:1 split
+2025-04-19 01:38:31,494 - INFO - Adjusted 153 historical price records for ATNM 0.03333333333333333:1 split on 2020-08-11
+2025-04-19 01:38:54,479 - INFO - Processed 2900/3920 symbols...
+2025-04-19 01:38:56,440 - INFO - Found 1 splits for AMRN
+2025-04-19 01:38:56,440 - INFO -   AMRN: 2025-04-11 - 0.05:1 split
+2025-04-19 01:38:56,500 - INFO - Adjusted 1326 historical price records for AMRN 0.05:1 split on 2025-04-11
+2025-04-19 01:39:00,451 - INFO - Found 1 splits for USAU
+2025-04-19 01:39:00,451 - INFO -   USAU: 2020-03-20 - 0.1:1 split
+2025-04-19 01:39:00,473 - INFO - Adjusted 54 historical price records for USAU 0.1:1 split on 2020-03-20
+2025-04-19 01:39:28,562 - INFO - Found 1 splits for ZYXI
+2025-04-19 01:39:28,562 - INFO -   ZYXI: 2022-01-05 - 1.1:1 split
+2025-04-19 01:39:28,596 - INFO - Adjusted 507 historical price records for ZYXI 1.1:1 split on 2022-01-05
+2025-04-19 01:40:03,016 - INFO - Found 1 splits for AFMD
+2025-04-19 01:40:03,016 - INFO -   AFMD: 2024-03-11 - 0.1:1 split
+2025-04-19 01:40:03,073 - INFO - Adjusted 1053 historical price records for AFMD 0.1:1 split on 2024-03-11
+2025-04-19 01:40:05,776 - INFO - Found 2 splits for BIP
+2025-04-19 01:40:05,777 - INFO -   BIP: 2020-03-31 - 1.12:1 split
+2025-04-19 01:40:05,777 - INFO -   BIP: 2022-06-13 - 1.5:1 split
+2025-04-19 01:40:05,799 - INFO - Adjusted 61 historical price records for BIP 1.12:1 split on 2020-03-31
+2025-04-19 01:40:05,832 - INFO - Adjusted 616 historical price records for BIP 1.5:1 split on 2022-06-13
+2025-04-19 01:40:23,650 - INFO - Found 1 splits for OTLK
+2025-04-19 01:40:23,650 - INFO -   OTLK: 2024-03-14 - 0.05:1 split
+2025-04-19 01:40:23,699 - INFO - Adjusted 1056 historical price records for OTLK 0.05:1 split on 2024-03-14
+2025-04-19 01:40:30,308 - INFO - Processed 2950/3920 symbols...
+2025-04-19 01:41:06,081 - INFO - Found 1 splits for ALUR
+2025-04-19 01:41:06,081 - INFO -   ALUR: 2025-01-03 - 0.04:1 split
+2025-04-19 01:41:06,128 - INFO - Adjusted 358 historical price records for ALUR 0.04:1 split on 2025-01-03
+2025-04-19 01:41:07,844 - INFO - Found 1 splits for SLNO
+2025-04-19 01:41:07,844 - INFO -   SLNO: 2022-08-26 - 0.06666666666666667:1 split
+2025-04-19 01:41:07,883 - INFO - Adjusted 668 historical price records for SLNO 0.06666666666666667:1 split on 2022-08-26
+2025-04-19 01:41:14,585 - INFO - Found 1 splits for GBDC
+2025-04-19 01:41:14,585 - INFO -   GBDC: 2020-04-13 - 1.021:1 split
+2025-04-19 01:41:14,607 - INFO - Adjusted 69 historical price records for GBDC 1.021:1 split on 2020-04-13
+2025-04-19 01:41:24,703 - INFO - Found 1 splits for IBM
+2025-04-19 01:41:24,703 - INFO -   IBM: 2021-11-04 - 1.046:1 split
+2025-04-19 01:41:24,735 - INFO - Adjusted 465 historical price records for IBM 1.046:1 split on 2021-11-04
+2025-04-19 01:42:03,091 - INFO - Processed 3000/3920 symbols...
+2025-04-19 01:42:13,313 - INFO - Found 1 splits for PFE
+2025-04-19 01:42:13,314 - INFO -   PFE: 2020-11-17 - 1.054:1 split
+2025-04-19 01:42:13,341 - INFO - Adjusted 222 historical price records for PFE 1.054:1 split on 2020-11-17
+2025-04-19 01:42:18,629 - INFO - Found 1 splits for FOA
+2025-04-19 01:42:18,629 - INFO -   FOA: 2024-07-26 - 0.1:1 split
+2025-04-19 01:42:18,682 - INFO - Adjusted 1148 historical price records for FOA 0.1:1 split on 2024-07-26
+2025-04-19 01:42:30,853 - INFO - Found 1 splits for CENT
+2025-04-19 01:42:30,853 - INFO -   CENT: 2024-02-09 - 1.277:1 split
+2025-04-19 01:42:30,900 - INFO - Adjusted 1033 historical price records for CENT 1.277:1 split on 2024-02-09
+2025-04-19 01:42:35,368 - INFO - Found 1 splits for SPIR
+2025-04-19 01:42:35,368 - INFO -   SPIR: 2023-08-31 - 0.125:1 split
+2025-04-19 01:42:35,408 - INFO - Adjusted 922 historical price records for SPIR 0.125:1 split on 2023-08-31
+2025-04-19 01:42:40,685 - INFO - Found 1 splits for MUX
+2025-04-19 01:42:40,685 - INFO -   MUX: 2022-07-28 - 0.1:1 split
+2025-04-19 01:42:40,720 - INFO - Adjusted 647 historical price records for MUX 0.1:1 split on 2022-07-28
+2025-04-19 01:42:57,834 - INFO - Found 1 splits for BKKT
+2025-04-19 01:42:57,834 - INFO -   BKKT: 2024-04-29 - 0.04:1 split
+2025-04-19 01:42:57,881 - INFO - Adjusted 863 historical price records for BKKT 0.04:1 split on 2024-04-29
+2025-04-19 01:43:06,395 - INFO - Found 1 splits for SPCE
+2025-04-19 01:43:06,395 - INFO -   SPCE: 2024-06-17 - 0.05:1 split
+2025-04-19 01:43:06,441 - INFO - Adjusted 1121 historical price records for SPCE 0.05:1 split on 2024-06-17
+2025-04-19 01:43:10,459 - INFO - Found 1 splits for NSSC
+2025-04-19 01:43:10,459 - INFO -   NSSC: 2022-01-05 - 2.0:1 split
+2025-04-19 01:43:10,491 - INFO - Adjusted 507 historical price records for NSSC 2.0:1 split on 2022-01-05
+2025-04-19 01:43:20,157 - INFO - Found 1 splits for BIPC
+2025-04-19 01:43:20,158 - INFO -   BIPC: 2022-06-13 - 1.5:1 split
+2025-04-19 01:43:20,193 - INFO - Adjusted 555 historical price records for BIPC 1.5:1 split on 2022-06-13
+2025-04-19 01:43:28,220 - INFO - Found 1 splits for SCLX
+2025-04-19 01:43:28,220 - INFO -   SCLX: 2025-04-15 - 0.02857142857142857:1 split
+2025-04-19 01:43:28,277 - INFO - Adjusted 1033 historical price records for SCLX 0.02857142857142857:1 split on 2025-04-15
+2025-04-19 01:43:45,832 - INFO - Processed 3050/3920 symbols...
+2025-04-19 01:43:56,163 - INFO - Found 1 splits for IP
+2025-04-19 01:43:56,163 - INFO -   IP: 2021-10-01 - 1.056:1 split
+2025-04-19 01:43:56,194 - INFO - Adjusted 441 historical price records for IP 1.056:1 split on 2021-10-01
+2025-04-19 01:44:01,407 - INFO - Found 1 splits for SANW
+2025-04-19 01:44:01,407 - INFO -   SANW: 2024-10-18 - 0.05263157894736842:1 split
+2025-04-19 01:44:01,461 - INFO - Adjusted 1207 historical price records for SANW 0.05263157894736842:1 split on 2024-10-18
+2025-04-19 01:44:15,979 - INFO - Found 1 splits for NCMI
+2025-04-19 01:44:15,979 - INFO -   NCMI: 2023-08-04 - 0.1:1 split
+2025-04-19 01:44:16,022 - INFO - Adjusted 903 historical price records for NCMI 0.1:1 split on 2023-08-04
+2025-04-19 01:44:26,121 - INFO - Found 1 splits for DQ
+2025-04-19 01:44:26,121 - INFO -   DQ: 2020-11-17 - 5.0:1 split
+2025-04-19 01:44:26,147 - INFO - Adjusted 222 historical price records for DQ 5.0:1 split on 2020-11-17
+2025-04-19 01:44:54,879 - INFO - Found 1 splits for VEVMQ
+2025-04-19 01:44:54,880 - INFO -   VEVMQ: 2021-03-29 - 0.3333333333333333:1 split
+2025-04-19 01:44:54,893 - INFO - No historical price records to adjust for VEVMQ before 2021-03-29
+2025-04-19 01:45:03,922 - INFO - Found 1 splits for CELU
+2025-04-19 01:45:03,922 - INFO -   CELU: 2024-02-29 - 0.1:1 split
+2025-04-19 01:45:03,979 - INFO - Adjusted 1046 historical price records for CELU 0.1:1 split on 2024-02-29
+2025-04-19 01:45:13,347 - INFO - Found 2 splits for KXIN
+2025-04-19 01:45:13,347 - INFO -   KXIN: 2023-09-15 - 0.06666666666666667:1 split
+2025-04-19 01:45:13,347 - INFO -   KXIN: 2024-10-25 - 0.016666666666666666:1 split
+2025-04-19 01:45:13,391 - INFO - Adjusted 932 historical price records for KXIN 0.06666666666666667:1 split on 2023-09-15
+2025-04-19 01:45:13,440 - INFO - Adjusted 1212 historical price records for KXIN 0.016666666666666666:1 split on 2024-10-25
+2025-04-19 01:45:24,717 - INFO - Processed 3100/3920 symbols...
+2025-04-19 01:45:32,768 - INFO - Found 1 splits for PAVM
+2025-04-19 01:45:32,768 - INFO -   PAVM: 2023-12-07 - 0.06666666666666667:1 split
+2025-04-19 01:45:32,813 - INFO - Adjusted 990 historical price records for PAVM 0.06666666666666667:1 split on 2023-12-07
+2025-04-19 01:46:10,209 - INFO - Found 1 splits for GWH
+2025-04-19 01:46:10,209 - INFO -   GWH: 2024-08-26 - 0.06666666666666667:1 split
+2025-04-19 01:46:10,260 - INFO - Adjusted 939 historical price records for GWH 0.06666666666666667:1 split on 2024-08-26
+2025-04-19 01:46:45,735 - INFO - Found 1 splits for SYRS
+2025-04-19 01:46:45,735 - INFO -   SYRS: 2022-09-19 - 0.1:1 split
+2025-04-19 01:46:45,774 - INFO - Adjusted 683 historical price records for SYRS 0.1:1 split on 2022-09-19
+2025-04-19 01:46:53,794 - INFO - Found 2 splits for ONVO
+2025-04-19 01:46:53,795 - INFO -   ONVO: 2020-08-19 - 0.05:1 split
+2025-04-19 01:46:53,795 - INFO -   ONVO: 2025-03-21 - 0.08333333333333333:1 split
+2025-04-19 01:46:53,819 - INFO - Adjusted 159 historical price records for ONVO 0.05:1 split on 2020-08-19
+2025-04-19 01:46:53,875 - INFO - Adjusted 1311 historical price records for ONVO 0.08333333333333333:1 split on 2025-03-21
+2025-04-19 01:47:03,860 - INFO - Processed 3150/3920 symbols...
+2025-04-19 01:47:22,225 - INFO - Found 1 splits for LGND
+2025-04-19 01:47:22,226 - INFO -   LGND: 2022-11-02 - 1.603:1 split
+2025-04-19 01:47:22,267 - INFO - Adjusted 715 historical price records for LGND 1.603:1 split on 2022-11-02
+2025-04-19 01:48:43,029 - INFO - Processed 3200/3920 symbols...
+2025-04-19 01:48:56,195 - INFO - Found 1 splits for FTNT
+2025-04-19 01:48:56,195 - INFO -   FTNT: 2022-06-23 - 5.0:1 split
+2025-04-19 01:48:56,235 - INFO - Adjusted 623 historical price records for FTNT 5.0:1 split on 2022-06-23
+2025-04-19 01:48:57,502 - INFO - Found 1 splits for MRK
+2025-04-19 01:48:57,502 - INFO -   MRK: 2021-06-03 - 1.048:1 split
+2025-04-19 01:48:57,530 - INFO - Adjusted 357 historical price records for MRK 1.048:1 split on 2021-06-03
+2025-04-19 01:49:18,287 - INFO - Found 1 splits for AVNW
+2025-04-19 01:49:18,287 - INFO -   AVNW: 2021-04-08 - 2.0:1 split
+2025-04-19 01:49:18,316 - INFO - Adjusted 318 historical price records for AVNW 2.0:1 split on 2021-04-08
+2025-04-19 01:49:33,135 - INFO - Found 1 splits for NTES
+2025-04-19 01:49:33,135 - INFO -   NTES: 2020-10-02 - 5.0:1 split
+2025-04-19 01:49:33,161 - INFO - Adjusted 190 historical price records for NTES 5.0:1 split on 2020-10-02
+2025-04-19 01:49:52,144 - INFO - Found 1 splits for MBIN
+2025-04-19 01:49:52,144 - INFO -   MBIN: 2022-01-18 - 1.5:1 split
+2025-04-19 01:49:52,179 - INFO - Adjusted 515 historical price records for MBIN 1.5:1 split on 2022-01-18
+2025-04-19 01:50:05,458 - INFO - Found 1 splits for DNA
+2025-04-19 01:50:05,458 - INFO -   DNA: 2024-08-20 - 0.025:1 split
+2025-04-19 01:50:05,512 - INFO - Adjusted 840 historical price records for DNA 0.025:1 split on 2024-08-20
+2025-04-19 01:50:20,174 - INFO - Processed 3250/3920 symbols...
+2025-04-19 01:50:29,150 - INFO - Found 1 splits for IRS
+2025-04-19 01:50:29,150 - INFO -   IRS: 2023-10-03 - 0.907:1 split
+2025-04-19 01:50:29,197 - INFO - Adjusted 944 historical price records for IRS 0.907:1 split on 2023-10-03
+2025-04-19 01:50:44,468 - INFO - Found 1 splits for SNX
+2025-04-19 01:50:44,468 - INFO -   SNX: 2020-12-01 - 2.0:1 split
+2025-04-19 01:50:44,494 - INFO - Adjusted 231 historical price records for SNX 2.0:1 split on 2020-12-01
+2025-04-19 01:50:53,172 - INFO - Found 2 splits for MDU
+2025-04-19 01:50:53,172 - INFO -   MDU: 2023-06-01 - 1.457:1 split
+2025-04-19 01:50:53,172 - INFO -   MDU: 2024-11-01 - 1.805:1 split
+2025-04-19 01:50:53,216 - INFO - Adjusted 859 historical price records for MDU 1.457:1 split on 2023-06-01
+2025-04-19 01:50:53,265 - INFO - Adjusted 1217 historical price records for MDU 1.805:1 split on 2024-11-01
+2025-04-19 01:51:38,176 - INFO - Found 2 splits for VIRX
+2025-04-19 01:51:38,177 - INFO -   VIRX: 2020-09-03 - 0.1:1 split
+2025-04-19 01:51:38,177 - INFO -   VIRX: 2021-02-25 - 0.285:1 split
+2025-04-19 01:51:38,202 - INFO - Adjusted 170 historical price records for VIRX 0.1:1 split on 2020-09-03
+2025-04-19 01:51:38,227 - INFO - Adjusted 289 historical price records for VIRX 0.285:1 split on 2021-02-25
+2025-04-19 01:51:42,331 - INFO - Found 1 splits for BBWI
+2025-04-19 01:51:42,331 - INFO -   BBWI: 2021-08-03 - 1.237:1 split
+2025-04-19 01:51:42,346 - INFO - No historical price records to adjust for BBWI before 2021-08-03
+2025-04-19 01:52:02,212 - INFO - Processed 3300/3920 symbols...
+2025-04-19 01:52:11,872 - INFO - Found 1 splits for SNDL
+2025-04-19 01:52:11,873 - INFO -   SNDL: 2022-07-26 - 0.1:1 split
+2025-04-19 01:52:11,912 - INFO - Adjusted 645 historical price records for SNDL 0.1:1 split on 2022-07-26
+2025-04-19 01:52:20,582 - INFO - Found 1 splits for TLPH
+2025-04-19 01:52:20,582 - INFO -   TLPH: 2022-10-26 - 0.05:1 split
+2025-04-19 01:52:20,620 - INFO - Adjusted 710 historical price records for TLPH 0.05:1 split on 2022-10-26
+2025-04-19 01:52:59,144 - INFO - Found 1 splits for OKUR
+2025-04-19 01:52:59,145 - INFO -   OKUR: 2024-10-07 - 0.1:1 split
+2025-04-19 01:52:59,196 - INFO - Adjusted 879 historical price records for OKUR 0.1:1 split on 2024-10-07
+2025-04-19 01:53:23,880 - INFO - Found 2 splits for SBEV
+2025-04-19 01:53:23,880 - INFO -   SBEV: 2021-06-11 - 0.3333333333333333:1 split
+2025-04-19 01:53:23,880 - INFO -   SBEV: 2025-03-28 - 0.025:1 split
+2025-04-19 01:53:23,894 - INFO - No historical price records to adjust for SBEV before 2021-06-11
+2025-04-19 01:53:23,952 - INFO - Adjusted 953 historical price records for SBEV 0.025:1 split on 2025-03-28
+2025-04-19 01:53:28,827 - INFO - Found 1 splits for BTAI
+2025-04-19 01:53:28,828 - INFO -   BTAI: 2025-02-10 - 0.0625:1 split
+2025-04-19 01:53:28,882 - INFO - Adjusted 1283 historical price records for BTAI 0.0625:1 split on 2025-02-10
+2025-04-19 01:53:31,205 - INFO - Found 1 splits for TXMD
+2025-04-19 01:53:31,205 - INFO -   TXMD: 2022-05-09 - 0.02:1 split
+2025-04-19 01:53:31,238 - INFO - Adjusted 592 historical price records for TXMD 0.02:1 split on 2022-05-09
+2025-04-19 01:53:38,114 - INFO - Processed 3350/3920 symbols...
+2025-04-19 01:53:44,066 - INFO - Found 1 splits for EHC
+2025-04-19 01:53:44,066 - INFO -   EHC: 2022-07-01 - 1.257:1 split
+2025-04-19 01:53:44,102 - INFO - Adjusted 629 historical price records for EHC 1.257:1 split on 2022-07-01
+2025-04-19 01:53:50,653 - INFO - Found 1 splits for WPRT
+2025-04-19 01:53:50,654 - INFO -   WPRT: 2023-06-06 - 0.1:1 split
+2025-04-19 01:53:50,696 - INFO - Adjusted 862 historical price records for WPRT 0.1:1 split on 2023-06-06
+2025-04-19 01:54:09,046 - INFO - Found 1 splits for BHP
+2025-04-19 01:54:09,046 - INFO -   BHP: 2022-06-02 - 1.121:1 split
+2025-04-19 01:54:09,082 - INFO - Adjusted 609 historical price records for BHP 1.121:1 split on 2022-06-02
+2025-04-19 01:54:11,400 - INFO - Found 1 splits for GTE
+2025-04-19 01:54:11,400 - INFO -   GTE: 2023-05-05 - 0.1:1 split
+2025-04-19 01:54:11,441 - INFO - Adjusted 841 historical price records for GTE 0.1:1 split on 2023-05-05
+2025-04-19 01:54:48,394 - INFO - Found 1 splits for TREX
+2025-04-19 01:54:48,394 - INFO -   TREX: 2020-09-15 - 2.0:1 split
+2025-04-19 01:54:48,419 - INFO - Adjusted 177 historical price records for TREX 2.0:1 split on 2020-09-15
+2025-04-19 01:55:12,954 - INFO - Found 1 splits for COO
+2025-04-19 01:55:12,954 - INFO -   COO: 2024-02-20 - 4.0:1 split
+2025-04-19 01:55:13,010 - INFO - Adjusted 1039 historical price records for COO 4.0:1 split on 2024-02-20
+2025-04-19 01:55:17,311 - INFO - Processed 3400/3920 symbols...
+2025-04-19 01:55:30,325 - INFO - Found 1 splits for CSX
+2025-04-19 01:55:30,325 - INFO -   CSX: 2021-06-29 - 3.0:1 split
+2025-04-19 01:55:30,355 - INFO - Adjusted 375 historical price records for CSX 3.0:1 split on 2021-06-29
+2025-04-19 01:55:39,382 - INFO - Found 1 splits for IPI
+2025-04-19 01:55:39,382 - INFO -   IPI: 2020-08-14 - 0.1:1 split
+2025-04-19 01:55:39,407 - INFO - Adjusted 156 historical price records for IPI 0.1:1 split on 2020-08-14
+2025-04-19 01:55:41,929 - INFO - Found 1 splits for GLAD
+2025-04-19 01:55:41,929 - INFO -   GLAD: 2024-04-05 - 0.5:1 split
+2025-04-19 01:55:41,977 - INFO - Adjusted 1071 historical price records for GLAD 0.5:1 split on 2024-04-05
+2025-04-19 01:55:53,518 - INFO - Found 2 splits for CARA
+2025-04-19 01:55:53,518 - INFO -   CARA: 2024-12-31 - 0.08333333333333333:1 split
+2025-04-19 01:55:53,518 - INFO -   CARA: 2025-04-16 - 0.3333333333333333:1 split
+2025-04-19 01:55:53,576 - INFO - Adjusted 1257 historical price records for CARA 0.08333333333333333:1 split on 2024-12-31
+2025-04-19 01:55:53,628 - INFO - Adjusted 1328 historical price records for CARA 0.3333333333333333:1 split on 2025-04-16
+2025-04-19 01:56:07,784 - INFO - Found 1 splits for MTCH
+2025-04-19 01:56:07,785 - INFO -   MTCH: 2020-07-01 - 3.502:1 split
+2025-04-19 01:56:07,808 - INFO - Adjusted 125 historical price records for MTCH 3.502:1 split on 2020-07-01
+2025-04-19 01:56:38,084 - INFO - Found 1 splits for POET
+2025-04-19 01:56:38,084 - INFO -   POET: 2022-02-28 - 0.1:1 split
+2025-04-19 01:56:38,102 - INFO - No historical price records to adjust for POET before 2022-02-28
+2025-04-19 01:56:47,539 - INFO - Found 6 splits for MULN
+2025-04-19 01:56:47,539 - INFO -   MULN: 2023-05-04 - 0.04:1 split
+2025-04-19 01:56:47,539 - INFO -   MULN: 2023-08-11 - 0.1111111111111111:1 split
+2025-04-19 01:56:47,539 - INFO -   MULN: 2023-12-21 - 0.01:1 split
+2025-04-19 01:56:47,539 - INFO -   MULN: 2024-09-17 - 0.01:1 split
+2025-04-19 01:56:47,539 - INFO -   MULN: 2025-02-18 - 0.016666666666666666:1 split
+2025-04-19 01:56:47,539 - INFO -   MULN: 2025-04-11 - 0.01:1 split
+2025-04-19 01:56:47,584 - INFO - Adjusted 840 historical price records for MULN 0.04:1 split on 2023-05-04
+2025-04-19 01:56:47,624 - INFO - Adjusted 908 historical price records for MULN 0.1111111111111111:1 split on 2023-08-11
+2025-04-19 01:56:47,663 - INFO - Adjusted 1000 historical price records for MULN 0.01:1 split on 2023-12-21
+2025-04-19 01:56:47,708 - INFO - Adjusted 1184 historical price records for MULN 0.01:1 split on 2024-09-17
+2025-04-19 01:56:47,748 - ERROR - Error adjusting prices for MULN: numeric field overflow
+DETAIL:  A field with precision 10, scale 2 must round to an absolute value less than 10^8.
+
+2025-04-19 01:56:47,790 - ERROR - Error adjusting prices for MULN: numeric field overflow
+DETAIL:  A field with precision 10, scale 2 must round to an absolute value less than 10^8.
+
+2025-04-19 01:56:54,417 - INFO - Processed 3450/3920 symbols...
+2025-04-19 01:57:34,596 - INFO - Found 1 splits for AMWL
+2025-04-19 01:57:34,596 - INFO -   AMWL: 2024-07-11 - 0.05:1 split
+2025-04-19 01:57:34,647 - INFO - Adjusted 958 historical price records for AMWL 0.05:1 split on 2024-07-11
+2025-04-19 01:57:40,227 - INFO - Found 1 splits for MSGS
+2025-04-19 01:57:40,227 - INFO -   MSGS: 2020-04-20 - 1.402:1 split
+2025-04-19 01:57:40,250 - INFO - Adjusted 74 historical price records for MSGS 1.402:1 split on 2020-04-20
+2025-04-19 01:57:44,184 - INFO - Found 1 splits for IMPP
+2025-04-19 01:57:44,184 - INFO -   IMPP: 2023-04-28 - 0.06666666666666667:1 split
+2025-04-19 01:57:44,222 - INFO - Adjusted 350 historical price records for IMPP 0.06666666666666667:1 split on 2023-04-28
+2025-04-19 01:57:48,680 - INFO - Found 1 splits for ACR
+2025-04-19 01:57:48,680 - INFO -   ACR: 2021-02-17 - 0.3333333333333333:1 split
+2025-04-19 01:57:48,707 - INFO - Adjusted 283 historical price records for ACR 0.3333333333333333:1 split on 2021-02-17
+2025-04-19 01:58:17,320 - INFO - Found 1 splits for RLI
+2025-04-19 01:58:17,320 - INFO -   RLI: 2025-01-16 - 2.0:1 split
+2025-04-19 01:58:17,378 - INFO - Adjusted 1267 historical price records for RLI 2.0:1 split on 2025-01-16
+2025-04-19 01:58:27,726 - INFO - Processed 3500/3920 symbols...
+2025-04-19 01:58:54,631 - INFO - Found 1 splits for ZD
+2025-04-19 01:58:54,631 - INFO -   ZD: 2021-10-08 - 1.15:1 split
+2025-04-19 01:58:54,664 - INFO - Adjusted 446 historical price records for ZD 1.15:1 split on 2021-10-08
+2025-04-19 01:59:04,197 - INFO - Found 1 splits for TLSA
+2025-04-19 01:59:04,197 - INFO -   TLSA: 2020-07-31 - 2.499:1 split
+2025-04-19 01:59:04,221 - INFO - Adjusted 146 historical price records for TLSA 2.499:1 split on 2020-07-31
+2025-04-19 01:59:11,591 - INFO - Found 1 splits for LICYF
+2025-04-19 01:59:11,592 - INFO -   LICYF: 2024-06-04 - 0.125:1 split
+2025-04-19 01:59:11,619 - INFO - No historical price records to adjust for LICYF before 2024-06-04
+2025-04-19 01:59:21,372 - INFO - Found 1 splits for FVCB
+2025-04-19 01:59:21,372 - INFO -   FVCB: 2023-02-01 - 1.25:1 split
+2025-04-19 01:59:21,414 - INFO - Adjusted 776 historical price records for FVCB 1.25:1 split on 2023-02-01
+2025-04-19 01:59:36,256 - INFO - Found 1 splits for ENOV
+2025-04-19 01:59:36,256 - INFO -   ENOV: 2022-04-05 - 0.581:1 split
+2025-04-19 01:59:36,298 - INFO - Adjusted 569 historical price records for ENOV 0.581:1 split on 2022-04-05
+2025-04-19 01:59:37,838 - INFO - Found 1 splits for DAVE
+2025-04-19 01:59:37,838 - INFO -   DAVE: 2023-01-06 - 0.03125:1 split
+2025-04-19 01:59:37,876 - INFO - Adjusted 429 historical price records for DAVE 0.03125:1 split on 2023-01-06
+2025-04-19 01:59:42,625 - INFO - Found 1 splits for MESO
+2025-04-19 01:59:42,625 - INFO -   MESO: 2024-01-10 - 0.5:1 split
+2025-04-19 01:59:42,672 - INFO - Adjusted 1012 historical price records for MESO 0.5:1 split on 2024-01-10
+2025-04-19 01:59:56,091 - INFO - Found 1 splits for VLDX
+2025-04-19 01:59:56,091 - INFO -   VLDX: 2024-06-13 - 0.02857142857142857:1 split
+2025-04-19 01:59:56,119 - INFO - No historical price records to adjust for VLDX before 2024-06-13
+2025-04-19 02:00:00,301 - INFO - Found 1 splits for ASRT
+2025-04-19 02:00:00,301 - INFO -   ASRT: 2021-05-18 - 0.25:1 split
+2025-04-19 02:00:00,331 - INFO - Adjusted 346 historical price records for ASRT 0.25:1 split on 2021-05-18
+2025-04-19 02:00:05,009 - INFO - Processed 3550/3920 symbols...
+2025-04-19 02:00:09,016 - INFO - Found 1 splits for OUST
+2025-04-19 02:00:09,016 - INFO -   OUST: 2023-04-21 - 0.1:1 split
+2025-04-19 02:00:09,061 - INFO - Adjusted 831 historical price records for OUST 0.1:1 split on 2023-04-21
+2025-04-19 02:00:13,374 - INFO - Found 1 splits for VRNT
+2025-04-19 02:00:13,374 - INFO -   VRNT: 2021-02-02 - 1.963:1 split
+2025-04-19 02:00:13,400 - INFO - Adjusted 273 historical price records for VRNT 1.963:1 split on 2021-02-02
+2025-04-19 02:00:14,879 - INFO - Found 1 splits for SQNS
+2025-04-19 02:00:14,879 - INFO -   SQNS: 2024-10-09 - 0.4:1 split
+2025-04-19 02:00:14,935 - INFO - Adjusted 1200 historical price records for SQNS 0.4:1 split on 2024-10-09
+2025-04-19 02:00:39,967 - INFO - Found 1 splits for ANY
+2025-04-19 02:00:39,967 - INFO -   ANY: 2023-06-29 - 0.14285714285714285:1 split
+2025-04-19 02:00:40,015 - INFO - Adjusted 878 historical price records for ANY 0.14285714285714285:1 split on 2023-06-29
+2025-04-19 02:00:59,443 - INFO - Found 1 splits for BWA
+2025-04-19 02:00:59,443 - INFO -   BWA: 2023-07-05 - 1.136:1 split
+2025-04-19 02:00:59,488 - INFO - Adjusted 881 historical price records for BWA 1.136:1 split on 2023-07-05
+2025-04-19 02:01:03,080 - INFO - Found 1 splits for NYMT
+2025-04-19 02:01:03,080 - INFO -   NYMT: 2023-03-09 - 0.25:1 split
+2025-04-19 02:01:03,121 - INFO - Adjusted 801 historical price records for NYMT 0.25:1 split on 2023-03-09
+2025-04-19 02:01:12,536 - INFO - Found 1 splits for LAR
+2025-04-19 02:01:12,536 - INFO -   LAR: 2023-10-04 - 2.484:1 split
+2025-04-19 02:01:12,561 - INFO - No historical price records to adjust for LAR before 2023-10-04
+2025-04-19 02:01:30,092 - INFO - Found 1 splits for ALPP
+2025-04-19 02:01:30,092 - INFO -   ALPP: 2023-05-15 - 0.125:1 split
+2025-04-19 02:01:30,130 - INFO - Adjusted 393 historical price records for ALPP 0.125:1 split on 2023-05-15
+2025-04-19 02:01:34,098 - INFO - Found 1 splits for CHDN
+2025-04-19 02:01:34,098 - INFO -   CHDN: 2023-05-22 - 2.0:1 split
+2025-04-19 02:01:34,142 - INFO - Adjusted 852 historical price records for CHDN 2.0:1 split on 2023-05-22
+2025-04-19 02:01:45,469 - INFO - Processed 3600/3920 symbols...
+2025-04-19 02:01:55,061 - INFO - Found 1 splits for ROOT
+2025-04-19 02:01:55,061 - INFO -   ROOT: 2022-08-15 - 0.05555555555555555:1 split
+2025-04-19 02:01:55,097 - INFO - Adjusted 451 historical price records for ROOT 0.05555555555555555:1 split on 2022-08-15
+2025-04-19 02:02:01,506 - INFO - Found 2 splits for BLUE
+2025-04-19 02:02:01,506 - INFO -   BLUE: 2021-11-05 - 1.544:1 split
+2025-04-19 02:02:01,506 - INFO -   BLUE: 2024-12-13 - 0.05:1 split
+2025-04-19 02:02:01,539 - INFO - Adjusted 466 historical price records for BLUE 1.544:1 split on 2021-11-05
+2025-04-19 02:02:01,590 - INFO - Adjusted 1246 historical price records for BLUE 0.05:1 split on 2024-12-13
+2025-04-19 02:02:27,122 - INFO - Found 1 splits for GRNT
+2025-04-19 02:02:27,122 - INFO -   GRNT: 2021-03-26 - 2.499:1 split
+2025-04-19 02:02:27,149 - INFO - Adjusted 95 historical price records for GRNT 2.499:1 split on 2021-03-26
+2025-04-19 02:02:34,252 - INFO - Found 1 splits for AQMS
+2025-04-19 02:02:34,252 - INFO -   AQMS: 2024-11-05 - 0.05:1 split
+2025-04-19 02:02:34,308 - INFO - Adjusted 1219 historical price records for AQMS 0.05:1 split on 2024-11-05
+2025-04-19 02:03:23,173 - INFO - Found 1 splits for ABAT
+2025-04-19 02:03:23,173 - INFO -   ABAT: 2023-09-11 - 0.06666666666666667:1 split
+2025-04-19 02:03:23,197 - INFO - No historical price records to adjust for ABAT before 2023-09-11
+2025-04-19 02:03:27,298 - INFO - Processed 3650/3920 symbols...
+2025-04-19 02:04:00,218 - INFO - Found 1 splits for VTOL
+2025-04-19 02:04:00,218 - INFO -   VTOL: 2020-06-12 - 0.5:1 split
+2025-04-19 02:04:00,242 - INFO - Adjusted 112 historical price records for VTOL 0.5:1 split on 2020-06-12
+2025-04-19 02:04:08,737 - INFO - Found 1 splits for PVLA
+2025-04-19 02:04:08,737 - INFO -   PVLA: 2024-04-23 - 0.0125:1 split
+2025-04-19 02:04:08,791 - INFO - Adjusted 1083 historical price records for PVLA 0.0125:1 split on 2024-04-23
+2025-04-19 02:05:04,101 - INFO - Processed 3700/3920 symbols...
+2025-04-19 02:05:24,459 - INFO - Found 1 splits for NMTC
+2025-04-19 02:05:24,459 - INFO -   NMTC: 2021-04-01 - 0.3333333333333333:1 split
+2025-04-19 02:05:24,472 - INFO - No historical price records to adjust for NMTC before 2021-04-01
+2025-04-19 02:05:25,977 - INFO - Found 1 splits for AAON
+2025-04-19 02:05:25,977 - INFO -   AAON: 2023-08-17 - 1.5:1 split
+2025-04-19 02:05:26,023 - INFO - Adjusted 912 historical price records for AAON 1.5:1 split on 2023-08-17
+2025-04-19 02:05:34,636 - INFO - Found 1 splits for EW
+2025-04-19 02:05:34,636 - INFO -   EW: 2020-06-01 - 3.0:1 split
+2025-04-19 02:05:34,660 - INFO - Adjusted 103 historical price records for EW 3.0:1 split on 2020-06-01
+2025-04-19 02:05:46,509 - INFO - Found 1 splits for STR
+2025-04-19 02:05:46,509 - INFO -   STR: 2022-06-06 - 0.25:1 split
+2025-04-19 02:05:46,546 - INFO - Adjusted 611 historical price records for STR 0.25:1 split on 2022-06-06
+2025-04-19 02:05:54,123 - INFO - Found 1 splits for NKLAQ
+2025-04-19 02:05:54,123 - INFO -   NKLAQ: 2024-06-25 - 0.03333333333333333:1 split
+2025-04-19 02:05:54,150 - INFO - No historical price records to adjust for NKLAQ before 2024-06-25
+2025-04-19 02:05:55,248 - INFO - Found 1 splits for GSAT
+2025-04-19 02:05:55,248 - INFO -   GSAT: 2025-02-11 - 0.06666666666666667:1 split
+2025-04-19 02:05:55,307 - INFO - Adjusted 1284 historical price records for GSAT 0.06666666666666667:1 split on 2025-02-11
+2025-04-19 02:06:34,852 - INFO - Found 1 splits for VSTM
+2025-04-19 02:06:34,852 - INFO -   VSTM: 2023-06-01 - 0.08333333333333333:1 split
+2025-04-19 02:06:34,896 - INFO - Adjusted 859 historical price records for VSTM 0.08333333333333333:1 split on 2023-06-01
+2025-04-19 02:06:39,329 - INFO - Found 1 splits for RZLT
+2025-04-19 02:06:39,329 - INFO -   RZLT: 2020-10-13 - 0.02:1 split
+2025-04-19 02:06:39,340 - INFO - No historical price records to adjust for RZLT before 2020-10-13
+2025-04-19 02:06:42,558 - INFO - Processed 3750/3920 symbols...
+2025-04-19 02:07:07,415 - INFO - Found 1 splits for ODP
+2025-04-19 02:07:07,415 - INFO -   ODP: 2020-07-01 - 0.1:1 split
+2025-04-19 02:07:07,440 - INFO - Adjusted 125 historical price records for ODP 0.1:1 split on 2020-07-01
+2025-04-19 02:07:39,488 - INFO - Found 1 splits for SCVL
+2025-04-19 02:07:39,488 - INFO -   SCVL: 2021-07-20 - 2.0:1 split
+2025-04-19 02:07:39,520 - INFO - Adjusted 389 historical price records for SCVL 2.0:1 split on 2021-07-20
+2025-04-19 02:07:41,165 - INFO - Found 3 splits for XELA
+2025-04-19 02:07:41,165 - INFO -   XELA: 2021-01-26 - 0.3333333333333333:1 split
+2025-04-19 02:07:41,165 - INFO -   XELA: 2022-07-26 - 0.05:1 split
+2025-04-19 02:07:41,165 - INFO -   XELA: 2023-05-15 - 0.005:1 split
+2025-04-19 02:07:41,192 - INFO - Adjusted 268 historical price records for XELA 0.3333333333333333:1 split on 2021-01-26
+2025-04-19 02:07:41,226 - INFO - Adjusted 645 historical price records for XELA 0.05:1 split on 2022-07-26
+2025-04-19 02:07:41,265 - INFO - Adjusted 847 historical price records for XELA 0.005:1 split on 2023-05-15
+2025-04-19 02:07:45,618 - INFO - Found 1 splits for FORA
+2025-04-19 02:07:45,618 - INFO -   FORA: 2021-03-03 - 0.05:1 split
+2025-04-19 02:07:45,631 - INFO - No historical price records to adjust for FORA before 2021-03-03
+2025-04-19 02:07:49,789 - INFO - Found 1 splits for HYMC
+2025-04-19 02:07:49,789 - INFO -   HYMC: 2023-11-15 - 0.1:1 split
+2025-04-19 02:07:49,834 - INFO - Adjusted 975 historical price records for HYMC 0.1:1 split on 2023-11-15
+2025-04-19 02:08:03,836 - INFO - Found 1 splits for VTLE
+2025-04-19 02:08:03,836 - INFO -   VTLE: 2020-06-02 - 0.05:1 split
+2025-04-19 02:08:03,859 - INFO - Adjusted 104 historical price records for VTLE 0.05:1 split on 2020-06-02
+2025-04-19 02:08:09,643 - INFO - Found 1 splits for EXLS
+2025-04-19 02:08:09,643 - INFO -   EXLS: 2023-08-02 - 5.0:1 split
+2025-04-19 02:08:09,686 - INFO - Adjusted 901 historical price records for EXLS 5.0:1 split on 2023-08-02
+2025-04-19 02:08:27,862 - INFO - Processed 3800/3920 symbols...
+2025-04-19 02:08:30,139 - INFO - Found 1 splits for SNCR
+2025-04-19 02:08:30,139 - INFO -   SNCR: 2023-12-11 - 0.1111111111111111:1 split
+2025-04-19 02:08:30,184 - INFO - Adjusted 992 historical price records for SNCR 0.1111111111111111:1 split on 2023-12-11
+2025-04-19 02:09:13,338 - INFO - Found 1 splits for POST
+2025-04-19 02:09:13,338 - INFO -   POST: 2022-03-11 - 1.528:1 split
+2025-04-19 02:09:13,375 - INFO - Adjusted 552 historical price records for POST 1.528:1 split on 2022-03-11
+2025-04-19 02:09:24,118 - INFO - Found 2 splits for AGEN
+2025-04-19 02:09:24,118 - INFO -   AGEN: 2023-04-26 - 1.019:1 split
+2025-04-19 02:09:24,118 - INFO -   AGEN: 2024-04-12 - 0.05:1 split
+2025-04-19 02:09:24,160 - INFO - Adjusted 834 historical price records for AGEN 1.019:1 split on 2023-04-26
+2025-04-19 02:09:24,205 - INFO - Adjusted 1076 historical price records for AGEN 0.05:1 split on 2024-04-12
+2025-04-19 02:09:28,166 - INFO - Found 1 splits for ZH
+2025-04-19 02:09:28,166 - INFO -   ZH: 2024-05-10 - 0.16666666666666666:1 split
+2025-04-19 02:09:28,211 - INFO - Adjusted 786 historical price records for ZH 0.16666666666666666:1 split on 2024-05-10
+2025-04-19 02:09:29,683 - INFO - Found 1 splits for GOOG
+2025-04-19 02:09:29,683 - INFO -   GOOG: 2022-07-18 - 20.0:1 split
+2025-04-19 02:09:29,719 - INFO - Adjusted 639 historical price records for GOOG 20.0:1 split on 2022-07-18
+2025-04-19 02:09:44,021 - INFO - Found 1 splits for PTN
+2025-04-19 02:09:44,021 - INFO -   PTN: 2022-08-31 - 0.04:1 split
+2025-04-19 02:09:44,057 - INFO - Adjusted 671 historical price records for PTN 0.04:1 split on 2022-08-31
+2025-04-19 02:09:55,442 - INFO - Found 1 splits for HOOK
+2025-04-19 02:09:55,442 - INFO -   HOOK: 2024-07-10 - 0.1:1 split
+2025-04-19 02:09:55,498 - INFO - Adjusted 1136 historical price records for HOOK 0.1:1 split on 2024-07-10
+2025-04-19 02:10:06,593 - INFO - Processed 3850/3920 symbols...
+2025-04-19 02:10:08,377 - INFO - Found 1 splits for ILMN
+2025-04-19 02:10:08,377 - INFO -   ILMN: 2024-06-25 - 1.028:1 split
+2025-04-19 02:10:08,426 - INFO - Adjusted 1126 historical price records for ILMN 1.028:1 split on 2024-06-25
+2025-04-19 02:10:10,801 - INFO - Found 1 splits for FEAM
+2025-04-19 02:10:10,801 - INFO -   FEAM: 2025-02-18 - 0.043478260869565216:1 split
+2025-04-19 02:10:10,850 - INFO - Adjusted 734 historical price records for FEAM 0.043478260869565216:1 split on 2025-02-18
+2025-04-19 02:10:17,025 - INFO - Found 1 splits for JEF
+2025-04-19 02:10:17,025 - INFO -   JEF: 2023-01-17 - 1.046:1 split
+2025-04-19 02:10:17,064 - INFO - Adjusted 765 historical price records for JEF 1.046:1 split on 2023-01-17
+2025-04-19 02:10:34,389 - INFO - Found 2 splits for CPRT
+2025-04-19 02:10:34,389 - INFO -   CPRT: 2022-11-04 - 2.0:1 split
+2025-04-19 02:10:34,389 - INFO -   CPRT: 2023-08-22 - 2.0:1 split
+2025-04-19 02:10:34,429 - INFO - Adjusted 717 historical price records for CPRT 2.0:1 split on 2022-11-04
+2025-04-19 02:10:34,467 - INFO - Adjusted 915 historical price records for CPRT 2.0:1 split on 2023-08-22
+2025-04-19 02:10:43,747 - INFO - Found 3 splits for AHT
+2025-04-19 02:10:43,747 - INFO -   AHT: 2020-07-16 - 0.1:1 split
+2025-04-19 02:10:43,747 - INFO -   AHT: 2021-07-19 - 0.1:1 split
+2025-04-19 02:10:43,747 - INFO -   AHT: 2024-10-28 - 0.1:1 split
+2025-04-19 02:10:43,770 - INFO - Adjusted 135 historical price records for AHT 0.1:1 split on 2020-07-16
+2025-04-19 02:10:43,797 - INFO - Adjusted 388 historical price records for AHT 0.1:1 split on 2021-07-19
+2025-04-19 02:10:43,845 - INFO - Adjusted 1213 historical price records for AHT 0.1:1 split on 2024-10-28
+2025-04-19 02:10:49,282 - INFO - Found 1 splits for SURG
+2025-04-19 02:10:49,283 - INFO -   SURG: 2021-11-02 - 0.02:1 split
+2025-04-19 02:10:49,298 - INFO - No historical price records to adjust for SURG before 2021-11-02
+2025-04-19 02:10:57,166 - INFO - Found 1 splits for LAZR
+2025-04-19 02:10:57,166 - INFO -   LAZR: 2024-11-21 - 0.06666666666666667:1 split
+2025-04-19 02:10:57,219 - INFO - Adjusted 1231 historical price records for LAZR 0.06666666666666667:1 split on 2024-11-21
+2025-04-19 02:11:13,991 - INFO - Found 1 splits for QTTB
+2025-04-19 02:11:13,991 - INFO -   QTTB: 2024-03-26 - 0.05555555555555555:1 split
+2025-04-19 02:11:14,039 - INFO - Adjusted 1064 historical price records for QTTB 0.05555555555555555:1 split on 2024-03-26
+2025-04-19 02:11:24,833 - INFO - Found 2 splits for TTOO
+2025-04-19 02:11:24,833 - INFO -   TTOO: 2022-10-13 - 0.02:1 split
+2025-04-19 02:11:24,833 - INFO -   TTOO: 2023-10-13 - 0.01:1 split
+2025-04-19 02:11:24,871 - INFO - Adjusted 701 historical price records for TTOO 0.02:1 split on 2022-10-13
+2025-04-19 02:11:24,912 - INFO - Adjusted 952 historical price records for TTOO 0.01:1 split on 2023-10-13
+2025-04-19 02:11:48,477 - INFO - Processed 3900/3920 symbols...
+2025-04-19 02:11:51,974 - INFO - Found 1 splits for GRPN
+2025-04-19 02:11:51,974 - INFO -   GRPN: 2020-06-11 - 0.05:1 split
+2025-04-19 02:11:51,997 - INFO - Adjusted 111 historical price records for GRPN 0.05:1 split on 2020-06-11
+2025-04-19 02:12:07,675 - INFO - Found 2 splits for METC
+2025-04-19 02:12:07,675 - INFO -   METC: 2024-12-02 - 1.01:1 split
+2025-04-19 02:12:07,675 - INFO -   METC: 2025-02-28 - 1.014:1 split
+2025-04-19 02:12:07,730 - INFO - Adjusted 1237 historical price records for METC 1.01:1 split on 2024-12-02
+2025-04-19 02:12:07,779 - INFO - Adjusted 1296 historical price records for METC 1.014:1 split on 2025-02-28
+2025-04-19 02:12:28,264 - INFO - Historical price adjustment complete:
+2025-04-19 02:12:28,264 - INFO -   Processed 3920 symbols
+2025-04-19 02:12:28,264 - INFO -   Found 615 splits
+2025-04-19 02:12:28,264 - INFO -   Adjusted 408152 historical price records

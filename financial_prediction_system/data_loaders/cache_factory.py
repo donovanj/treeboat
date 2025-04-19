@@ -19,7 +19,8 @@ class CacheFactory:
                 cls._redis_cache = RedisCache()
                 logger.info("Redis cache initialized successfully")
             except Exception as e:
-                logger.error(f"Failed to initialize Redis cache: {str(e)}")
+                logger.error(f"Failed to initialize Redis cache: {type(e).__name__}")
+                # Don't log the exception details which might contain sensitive information
                 cls._redis_cache = None
         return cls._redis_cache
         
@@ -29,6 +30,7 @@ class CacheFactory:
         """Get a data cache instance (Singleton pattern)"""
         redis_cache = cls.get_redis_cache()
         if redis_cache is None:
+            logger.warning("Data cache not created because Redis cache is not available")
             return None
             
         if cls._data_cache is None:
@@ -46,5 +48,5 @@ class CacheFactory:
                 logger.info("Cache cleared successfully")
                 return True
             except Exception as e:
-                logger.error(f"Failed to clear cache: {str(e)}")
+                logger.error(f"Failed to clear cache: {type(e).__name__}")
         return False 

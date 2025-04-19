@@ -7,7 +7,7 @@ from .treasury_loader import TreasuryDataLoader
 from .index_loader import IndexDataLoader
 from .cache_factory import CacheFactory
 import pandas as pd
-from datetime import date
+from datetime import date, datetime, timedelta
 
 class DataLoaderFactory:
     _loaders: Dict[str, Type[BaseDataLoader]] = {
@@ -124,7 +124,7 @@ class DataLoaderFactory:
                 index_data[f"{index_symbol.lower()}_prices"] = df
                 
             except Exception as e:
-                logger.warning(f"Failed to load data for index {index_symbol}: {str(e)}")
+                logger.warning(f"Failed to load data for index {index_symbol}: {type(e).__name__}")
         
         return index_data
 

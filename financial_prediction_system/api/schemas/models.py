@@ -113,7 +113,7 @@ class ModelExplanationRequest(BaseModel):
     visualization_type: Optional[str] = Field("summary", description="Type of visualization to generate")
     
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "sample_size": 100,
                 "include_background": True,
@@ -129,7 +129,7 @@ class ShapVisualization(BaseModel):
     feature_importance_json: Optional[str] = Field(None, description="URL to feature importance JSON")
     
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "summary_plot": "/static/explanations/1/summary_plot.png",
                 "waterfall_plot": "/static/explanations/1/waterfall_plot.png",
@@ -198,7 +198,7 @@ class ModelExplanationResponse(BaseModel):
     visualizations: Optional[ShapVisualization] = Field(None, description="URLs to visualization files")
     
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "model_id": 1,
                 "explanation": {

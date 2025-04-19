@@ -219,24 +219,60 @@ class IndexDataLoader(BaseDataLoader):
         return validated_data
 
     def _load_index_data(self, config: Dict[str, str], start_date: Optional[date] = None, end_date: Optional[date] = None) -> tuple:
+        """
+        Load data for a specific index using the data provider.
+        
+        Args:
+            config: Configuration dictionary for the index
+            start_date: Start date for the data
+            end_date: End date for the data
+            
+        Returns:
+            tuple of (validated_records, num_records)
+        """
         if not start_date:
             start_date = date(2000, 1, 1)
         if not end_date:
             end_date = datetime.now().date()
 
         try:
+            # Check for existing data to avoid reloading
+            model_class = self.model_map.get(config['table_name'])
+            existing_query = self.db.query(model_class.date).filter(
+                model_class.symbol == config['db_symbol'],
+                model_class.date >= start_date,
+                model_class.date <= end_date
+            ).all()
+            existing_dates = set(d[0] for d in existing_query)
+            
+            # Skip loading if we already have all the needed dates
+            # Except for today's date which might need refreshing
+            today = datetime.now().date()
+            if existing_dates and (end_date < today or today in existing_dates):
+                weekday_dates = set()
+                current_date = start_date
+                while current_date <= end_date:
+                    if current_date.weekday() < 5:  # Only weekdays
+                        weekday_dates.add(current_date)
+                    current_date += timedelta(days=1)
+                
+                # Only missing dates (excluding today which might need updating)
+                missing_dates = weekday_dates - existing_dates
+                if not missing_dates or (len(missing_dates) == 1 and today in missing_dates and today.weekday() == 1):
+                    self._log_progress(f"Already have data for {config['db_symbol']} from {start_date} to {end_date}", "debug")
+                    return [], 0
+            
             # Use the data provider strategy to fetch data
-            yahoo_symbol = config['yahoo_symbol']
-            self._log_progress(f"Fetching data for {yahoo_symbol} from {start_date} to {end_date}", "debug")
-            raw_data = self.data_provider.fetch_data(start_date, end_date, yahoo_symbol)
+            # We pass the DB symbol to fetch_data, the provider will handle the Yahoo symbol mapping
+            self._log_progress(f"Fetching data for {config['db_symbol']} from {start_date} to {end_date}", "debug")
+            raw_data = self.data_provider.fetch_data(start_date, end_date, config['db_symbol'])
             
             if not raw_data:
                 self._log_progress(f"No data returned from provider for {config['db_symbol']} between {start_date} and {end_date}", "warning")
                 # In case of no data, check if this is a special case for specific dates
-                if (end_date - start_date).days <= 5:  # If we're fetching a small date range
+                if (end_date - start_date).days <= 5:
                     # Try to fill in with the most recent data available
                     self._log_progress(f"Checking if we can fill in missing data for index {config['db_symbol']}", "debug")
-                    model_class = self.model_map.get(config['table_name'])
                     last_record = self.db.query(model_class).filter(
                         model_class.symbol == config['db_symbol'],
                         model_class.date < start_date
@@ -250,16 +286,18 @@ class IndexDataLoader(BaseDataLoader):
                         while current_date <= end_date:
                             # Skip weekends
                             if current_date.weekday() < 5:  # 0-4 are Monday to Friday
-                                filled_records.append({
-                                    'symbol': config['db_symbol'],
-                                    'date': current_date,
-                                    'open': last_record.close,
-                                    'high': last_record.close,
-                                    'low': last_record.close,
-                                    'close': last_record.close,
-                                    'volume': 0  # Zero volume indicates trading was limited
-                                })
-                                self._log_progress(f"Filled missing data for {config['db_symbol']} on {current_date}", "info")
+                                # Skip if we already have this date
+                                if current_date not in existing_dates:
+                                    filled_records.append({
+                                        'symbol': config['db_symbol'],
+                                        'date': current_date,
+                                        'open': last_record.close,
+                                        'high': last_record.close,
+                                        'low': last_record.close,
+                                        'close': last_record.close,
+                                        'volume': 0  # Zero volume indicates trading was limited
+                                    })
+                                    self._log_progress(f"Filled missing data for {config['db_symbol']} on {current_date}", "info")
                             current_date += timedelta(days=1)
                         
                         if filled_records:
@@ -285,31 +323,53 @@ class IndexDataLoader(BaseDataLoader):
             if missing_dates:
                 self._log_progress(f"Provider missing data for {config['db_symbol']} on dates: {sorted(missing_dates)}", "warning")
 
-            # Map Yahoo symbol to DB symbol
+            # Make sure we're using the db_symbol
             records = []
             for record in raw_data:
-                record['symbol'] = config['db_symbol']  # Replace Yahoo symbol with DB symbol
+                # Skip dates we already have (except today which might need updating)
+                if record['date'] in existing_dates and record['date'] != today:
+                    continue
+                    
+                record['symbol'] = config['db_symbol']  # Ensure correct symbol
                 records.append(record)
                 
             validated_records = self.validate_data(records)
-            self._save_records(validated_records, config['table_name'])
+            if validated_records:
+                self._save_records(validated_records, config['table_name'])
             return validated_records, len(validated_records)
         except Exception as e:
             self._handle_error(e, f"loading data for {config['db_symbol']}")
+            return [], 0
 
     def _save_records(self, records: List[Dict[str, Any]], table_name: str):
-        try:
-            model_class = self.model_map.get(table_name)
-            if not model_class:
-                raise ValueError(f"Unknown table name: {table_name}")
-
-            for record in records:
-                # Create model instance
-                model_instance = model_class(**record)
-                
-                # Use merge to handle upsert
-                self.db.merge(model_instance)
+        """
+        Save records to the database.
+        
+        Args:
+            records: List of records to save
+            table_name: Name of the table to save to
+        """
+        if not records:
+            return
             
+        model_class = self.model_map.get(table_name)
+        if not model_class:
+            self._log_progress(f"Unknown table name: {table_name}", "error")
+            return
+            
+        try:
+            for record in records:
+                # Check if this record already exists
+                existing = self.db.query(model_class).filter(
+                    model_class.symbol == record['symbol'],
+                    model_class.date == record['date']
+                ).first()
+                
+                # Only save if it doesn't exist or it has zero volume and we're updating with real data
+                if not existing or (existing.volume == 0 and record['volume'] > 0):
+                    model_instance = model_class(**record)
+                    self.db.merge(model_instance)
+                    
             self.db.commit()
         except Exception as e:
             self.db.rollback()
@@ -332,26 +392,29 @@ class IndexDataLoader(BaseDataLoader):
 
     def _check_for_data_gaps(self, latest_date: date, table_name: str, symbol: str) -> List[tuple]:
         """
-        Check for gaps in index data from latest_date to today using QuantLib's NYSE calendar.
+        Check for gaps in data from latest_date to today using market calendar.
         
         Args:
             latest_date: The latest date for which we have data
-            table_name: Table name to query
-            symbol: Index symbol to check
+            table_name: The name of the table for this index
+            symbol: Symbol to check
             
         Returns:
             List of tuples (start_date, end_date) for each gap that needs to be filled
         """
         today = datetime.now().date()
+        
+        # If latest_date is already today, we're up to date
+        if latest_date >= today:
+            self._log_progress(f"Index {symbol} data is already up to date with latest record on {latest_date}", "info")
+            return []
             
-        # Check if we already have any of these dates in the database
+        # Get existing dates from the database for this index
         model_class = self.model_map.get(table_name)
         if not model_class:
             self._log_progress(f"Unknown table name: {table_name}", "error")
             return []
             
-        # Get existing dates from the database
-        existing_dates = set()
         query = self.db.query(model_class.date).filter(
             model_class.symbol == symbol,
             model_class.date > latest_date,

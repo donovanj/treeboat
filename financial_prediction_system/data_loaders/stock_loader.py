@@ -4,17 +4,25 @@ from sqlalchemy.orm import Session
 from sqlalchemy import and_
 from financial_prediction_system.infrastructure.database.models_and_schemas.models import Stock, StockPrice
 from .base_loader import BaseDataLoader
-from .data_providers import AlpacaProvider, check_missing_market_dates, get_market_date_ranges
+from .data_providers import AlpacaProvider, YahooFinanceProvider, check_missing_market_dates, get_market_date_ranges
 from .cache_decorator import cacheable, invalidate_cache
 from .cache import RedisCache
 import pandas as pd
+from financial_prediction_system.logging_config import logger
 
 class StockDataLoader(BaseDataLoader):
     def __init__(self, db: Session, cache: Optional[RedisCache] = None):
-        # Use AlpacaProvider as default strategy
-        data_provider = AlpacaProvider()
+        # Use AlpacaProvider as default strategy, but fall back to YahooFinanceProvider if it fails
+        try:
+            data_provider = AlpacaProvider()
+            logger.info("Using Alpaca as the data provider")
+        except Exception as e:
+            logger.warning(f"Failed to initialize Alpaca provider: {type(e).__name__}. Falling back to Yahoo Finance")
+            data_provider = YahooFinanceProvider()
+            
         super().__init__(db, data_provider)
         self.cache = cache
+        self.provider_name = data_provider.__class__.__name__
 
     def load_data(self, symbol: str, start_date: date, end_date: date) -> pd.DataFrame:
         """
@@ -121,6 +129,7 @@ class StockDataLoader(BaseDataLoader):
     def _check_for_data_gaps(self, latest_date: date, symbol: Optional[str] = None) -> List[tuple]:
         """
         Check for gaps in data from latest_date to today using QuantLib's NYSE calendar.
+        If today is Tuesday and we have Monday's data, don't try to update today's data.
         
         Args:
             latest_date: The latest date for which we have data
@@ -130,6 +139,11 @@ class StockDataLoader(BaseDataLoader):
             List of tuples (start_date, end_date) for each gap that needs to be filled
         """
         today = datetime.now().date()
+        
+        # If we already have today's data, no need to update
+        if latest_date >= today:
+            self._log_progress(f"Data is already up to date with latest record on {latest_date}", "info")
+            return []
         
         # Get existing dates from the database
         existing_dates = set()
@@ -212,75 +226,137 @@ class StockDataLoader(BaseDataLoader):
 
     def _load_symbol_data(self, symbol: str, start_date: date, end_date: date) -> tuple:
         try:
-            # Use the data provider to fetch data
-            self._log_progress(f"Fetching data for {symbol} from {start_date} to {end_date}", "debug")
-            records = self.data_provider.fetch_data(start_date, end_date, symbol)
+            # First check if we already have data for these dates
+            existing_dates = set()
+            query = self.db.query(StockPrice.date).filter(
+                StockPrice.symbol == symbol,
+                StockPrice.date >= start_date,
+                StockPrice.date <= end_date
+            ).all()
+            existing_dates = set(date for (date,) in query)
             
-            if not records:
-                self._log_progress(f"No data returned from provider for {symbol} between {start_date} and {end_date}", "warning")
-                # In case of no data, check if this is a special case for certain dates
-                if (end_date - start_date).days <= 5:  # If we're fetching a small date range
-                    # Try to fill in with the most recent data available (appropriate for low volume stocks)
-                    self._log_progress(f"Checking if we need to fill in missing data for low volume stock {symbol}", "debug")
-                    last_record = self.db.query(StockPrice).filter(
-                        StockPrice.symbol == symbol,
-                        StockPrice.date < start_date
-                    ).order_by(StockPrice.date.desc()).first()
+            # If we already have all the data for all the days in the range, return early
+            if existing_dates:
+                weekday_dates = set()
+                current_date = start_date
+                while current_date <= end_date:
+                    if current_date.weekday() < 5:  # Only weekdays
+                        weekday_dates.add(current_date)
+                    current_date += timedelta(days=1)
+                
+                # Check if we have data for all weekdays
+                missing_dates = weekday_dates - existing_dates
+                if not missing_dates:
+                    self._log_progress(f"Already have data for {symbol} from {start_date} to {end_date}", "debug")
+                    return [], 0
+                
+                # Adjust start_date and end_date to only fetch missing dates
+                # But only if we're not looking for today's data, which might be updated throughout the day
+                today = datetime.now().date()
+                if not any(d == today for d in missing_dates):
+                    # Create a new range covering just the missing dates
+                    date_ranges = get_market_date_ranges(existing_dates, start_date, end_date, "NYSE")
+                    if not date_ranges:
+                        return [], 0
                     
-                    if last_record:
-                        self._log_progress(f"Found previous data for {symbol}, will use for filling", "debug")
-                        # Create records for each day using the last available price
-                        current_date = start_date
-                        filled_records = []
-                        while current_date <= end_date:
-                            # Skip weekends
-                            if current_date.weekday() < 5:  # 0-4 are Monday to Friday
-                                filled_records.append({
-                                    'symbol': symbol,
-                                    'date': current_date,
-                                    'open': last_record.close,
-                                    'high': last_record.close,
-                                    'low': last_record.close,
-                                    'close': last_record.close,
-                                    'volume': 0  # Zero volume indicates no trading
-                                })
-                                self._log_progress(f"Filled missing data for {symbol} on {current_date} with previous close", "info")
-                            current_date += timedelta(days=1)
-                        
-                        # Validate and save these records
-                        if filled_records:
-                            validated_records = self.validate_data(filled_records)
-                            self._save_records(validated_records)
-                            return validated_records, len(validated_records)
-                
-                return [], 0
-                
-            self._log_progress(f"Received {len(records)} records for {symbol}", "debug")
+                    # Load each range individually
+                    all_validated_records = []
+                    total_records = 0
+                    for range_start, range_end in date_ranges:
+                        self._log_progress(f"Fetching missing data for {symbol} from {range_start} to {range_end}", "debug")
+                        validated_data, records = self._fetch_and_process_data(symbol, range_start, range_end)
+                        all_validated_records.extend(validated_data)
+                        total_records += records
+                    
+                    return all_validated_records, total_records
             
-            # Check for specific dates in the returned data
-            received_dates = {r['date'] for r in records}
-            expected_dates = set()
-            check_date = start_date
-            while check_date <= end_date:
-                if check_date.weekday() < 5:  # Skip weekends
-                    expected_dates.add(check_date)
-                check_date += timedelta(days=1)
-                
-            missing_dates = expected_dates - received_dates
-            if missing_dates:
-                self._log_progress(f"Provider missing data for {symbol} on dates: {sorted(missing_dates)}", "warning")
-                
-            validated_records = self.validate_data(records)
-            self._save_records(validated_records)
-            return validated_records, len(validated_records)
+            # Use the data provider to fetch data for the full range
+            return self._fetch_and_process_data(symbol, start_date, end_date)
         except Exception as e:
             self._handle_error(e, f"loading data for {symbol}")
+            return [], 0
+    
+    def _fetch_and_process_data(self, symbol: str, start_date: date, end_date: date) -> tuple:
+        """Helper to fetch and process data from the provider"""
+        self._log_progress(f"Fetching data for {symbol} from {start_date} to {end_date}", "debug")
+        records = self.data_provider.fetch_data(start_date, end_date, symbol)
+        
+        if not records:
+            self._log_progress(f"No data returned from provider for {symbol} between {start_date} and {end_date}", "warning")
+            # In case of no data, check if this is a special case for certain dates
+            if (end_date - start_date).days <= 5:  # If we're fetching a small date range
+                # Try to fill in with the most recent data available (appropriate for low volume stocks)
+                self._log_progress(f"Checking if we need to fill in missing data for low volume stock {symbol}", "debug")
+                last_record = self.db.query(StockPrice).filter(
+                    StockPrice.symbol == symbol,
+                    StockPrice.date < start_date
+                ).order_by(StockPrice.date.desc()).first()
+                
+                if last_record:
+                    self._log_progress(f"Found previous data for {symbol}, will use for filling", "debug")
+                    # Create records for each day using the last available price
+                    current_date = start_date
+                    filled_records = []
+                    while current_date <= end_date:
+                        # Skip weekends
+                        if current_date.weekday() < 5:  # 0-4 are Monday to Friday
+                            filled_records.append({
+                                'symbol': symbol,
+                                'date': current_date,
+                                'open': last_record.close,
+                                'high': last_record.close,
+                                'low': last_record.close,
+                                'close': last_record.close,
+                                'volume': 0  # Zero volume indicates no trading
+                            })
+                            self._log_progress(f"Filled missing data for {symbol} on {current_date} with previous close", "info")
+                        current_date += timedelta(days=1)
+                    
+                    # Validate and save these records
+                    if filled_records:
+                        validated_records = self.validate_data(filled_records)
+                        self._save_records(validated_records)
+                        return validated_records, len(validated_records)
+            
+            return [], 0
+            
+        self._log_progress(f"Received {len(records)} records for {symbol}", "debug")
+        
+        # Check for specific dates in the returned data
+        received_dates = {r['date'] for r in records}
+        expected_dates = set()
+        check_date = start_date
+        while check_date <= end_date:
+            if check_date.weekday() < 5:  # Skip weekends
+                expected_dates.add(check_date)
+            check_date += timedelta(days=1)
+            
+        missing_dates = expected_dates - received_dates
+        if missing_dates:
+            self._log_progress(f"Provider missing data for {symbol} on dates: {sorted(missing_dates)}", "warning")
+            
+        validated_records = self.validate_data(records)
+        self._save_records(validated_records)
+        return validated_records, len(validated_records)
 
     def _save_records(self, records: List[Dict[str, Any]]):
         try:
             for record in records:
-                price = StockPrice(**record)
-                self.db.merge(price)  # Use merge for upsert functionality
+                # Check if this record already exists
+                existing = self.db.query(StockPrice).filter(
+                    StockPrice.symbol == record['symbol'],
+                    StockPrice.date == record['date']
+                ).first()
+                
+                # Only save if it doesn't exist or we have a more complete record
+                # (existing record has 0 volume but new record has real data)
+                if not existing or (
+                    existing and (
+                        existing.volume == 0 and record['volume'] > 0
+                    )
+                ):
+                    price = StockPrice(**record)
+                    self.db.merge(price)  # Use merge for upsert functionality
             self.db.commit()
         except Exception as e:
             self.db.rollback()

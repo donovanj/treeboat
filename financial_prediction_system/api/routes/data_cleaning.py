@@ -136,8 +136,7 @@ def get_cleaning_eda(
                     yaxis=dict(title='Close'),
                     yaxis2=dict(title='Volume', overlaying='y', side='right', showgrid=False),
                     barmode='overlay',
-                    legend=dict(x=0, y=1.1, orientation='h'),
-                    template='plotly_dark'
+                    legend=dict(x=0, y=1.1, orientation='h')
                 )
                 # 2. Bands: High-Low, Bollinger Bands, ATR
                 high = prices_df['high']
@@ -177,8 +176,7 @@ def get_cleaning_eda(
                     title=f"{sample_symbol} Bands & Ranges",
                     xaxis_title="Date",
                     yaxis_title="Price",
-                    xaxis_rangeslider_visible=False,
-                    template='plotly_dark'
+                    xaxis_rangeslider_visible=False
                 )
                 # 3. Trendlines: Linear & Exponential
                 x = np.arange(len(prices_df))
@@ -204,8 +202,7 @@ def get_cleaning_eda(
                     title=f"{sample_symbol} Trendlines",
                     xaxis_title="Date",
                     yaxis_title="Price",
-                    xaxis_rangeslider_visible=False,
-                    template='plotly_dark'
+                    xaxis_rangeslider_visible=False
                 )
                 # 4. Descriptive stats
                 returns = close.pct_change().dropna()
@@ -221,8 +218,7 @@ def get_cleaning_eda(
                     missing_heatmap_fig.update_layout(
                         title="Missing Data Heatmap",
                         xaxis_title="Date",
-                        yaxis_title="Field",
-                        template='plotly_dark'
+                        yaxis_title="Field"
                     )
                     missing_heatmap_fig = missing_heatmap_fig.to_plotly_json()
                 else:
@@ -236,8 +232,7 @@ def get_cleaning_eda(
                 box_violin_fig.add_trace(go.Violin(y=prices_df['volume'], name='Volume', box_visible=True, meanline_visible=True))
                 box_violin_fig.add_trace(go.Violin(y=returns, name='Returns', box_visible=True, meanline_visible=True))
                 box_violin_fig.update_layout(
-                    title=f"{sample_symbol} Box/Violin Plots",
-                    template='plotly_dark'
+                    title=f"{sample_symbol} Box/Violin Plots"
                 )
                 # Plotly candlestick chart (legacy)
                 fig = go.Figure(data=[go.Candlestick(
@@ -251,8 +246,7 @@ def get_cleaning_eda(
                 fig.update_layout(
                     title=f"{sample_symbol} Price & Volume",
                     xaxis_title="Date",
-                    yaxis_title="Price",
-                    template='plotly_dark'
+                    yaxis_title="Price"
                 )
                 plotly_fig = fig.to_plotly_json()
                 # Convert all new figs to JSON

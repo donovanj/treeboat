@@ -29,6 +29,7 @@ const DataCleaning: React.FC = () => {
   const { stock, setStock, startDate, setStartDate, endDate, setEndDate } = useGlobalSelection();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<any>(null);
   
   // Local state for range selection
   const [selectedRange, setSelectedRange] = useState<[Date | null, Date | null]>([null, null]);
@@ -98,8 +99,9 @@ const DataCleaning: React.FC = () => {
         console.log('DataCleaning API response:', data); 
         if (!data.success) {
              setError(data.error || 'Unknown error processing data cleaning results');
+        } else {
+             setData(data);
         }
-        // Process data as needed...
         setLoading(false);
       })
       .catch(err => {
@@ -214,8 +216,244 @@ const DataCleaning: React.FC = () => {
       
       {!loading && !error && (
         <>
-           <Typography variant="h5" sx={{ mt: 4, mb: 1 }}>Data Cleaning Results Placeholder</Typography>
-           {/* Display results here */}
+           <Typography variant="h5" sx={{ mt: 4, mb: 1 }}>Data Cleaning Results</Typography>
+           
+           {/* Stocks Table Summary */}
+           <Paper sx={{ p: 2, mb: 3 }}>
+             <Typography variant="h6" gutterBottom>Stocks Table Analysis</Typography>
+             <Grid container spacing={2}>
+               <Grid item xs={12} md={6}>
+                 <TableContainer>
+                   <Table size="small">
+                     <TableHead>
+                       <TableRow>
+                         <TableCell>Metric</TableCell>
+                         <TableCell>Value</TableCell>
+                       </TableRow>
+                     </TableHead>
+                     <TableBody>
+                       {data?.summary && Object.entries(data.summary).map(([key, value]) => (
+                         <TableRow key={key}>
+                           <TableCell>{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</TableCell>
+                           <TableCell>{value as string}</TableCell>
+                         </TableRow>
+                       ))}
+                     </TableBody>
+                   </Table>
+                 </TableContainer>
+               </Grid>
+               <Grid item xs={12} md={6}>
+                 <Typography variant="subtitle1" gutterBottom>Issues Detected</Typography>
+                 {data?.issues && Object.entries(data.issues).map(([key, value]) => {
+                   const issues = value as string[];
+                   return issues.length > 0 ? (
+                     <Box key={key} sx={{ mb: 2 }}>
+                       <Typography variant="body2" color="error">
+                         {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} ({issues.length}):
+                       </Typography>
+                       <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                         {issues.slice(0, 5).map((issue, idx) => (
+                           <li key={idx}><Typography variant="body2">{issue}</Typography></li>
+                         ))}
+                         {issues.length > 5 && <li><Typography variant="body2">...and {issues.length - 5} more</Typography></li>}
+                       </ul>
+                     </Box>
+                   ) : null;
+                 })}
+               </Grid>
+             </Grid>
+           </Paper>
+
+           {/* Price Data Analysis */}
+           <Paper sx={{ p: 2, mb: 3 }}>
+             <Typography variant="h6" gutterBottom>Price Data Analysis</Typography>
+             
+             {/* Price Issues */}
+             {data?.price_issues && Object.keys(data.price_issues).length > 0 && (
+               <Box sx={{ mb: 3 }}>
+                 <Typography variant="subtitle1" color="error" gutterBottom>Issues Detected</Typography>
+                 <Grid container spacing={2}>
+                   {Object.entries(data.price_issues).map(([key, value]) => {
+                     if (key === 'inconsistent_rows' && Array.isArray(value) && value.length > 0) {
+                       return (
+                         <Grid item xs={12} key={key}>
+                           <Typography variant="body2" color="error">
+                             {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} ({value.length}):
+                           </Typography>
+                           <TableContainer sx={{ maxHeight: 200 }}>
+                             <Table size="small">
+                               <TableHead>
+                                 <TableRow>
+                                   <TableCell>Date</TableCell>
+                                   <TableCell>Open</TableCell>
+                                   <TableCell>High</TableCell>
+                                   <TableCell>Low</TableCell>
+                                   <TableCell>Close</TableCell>
+                                 </TableRow>
+                               </TableHead>
+                               <TableBody>
+                                 {value.map((row: any, idx: number) => (
+                                   <TableRow key={idx}>
+                                     <TableCell>{row.date}</TableCell>
+                                     <TableCell>{row.open}</TableCell>
+                                     <TableCell>{row.high}</TableCell>
+                                     <TableCell>{row.low}</TableCell>
+                                     <TableCell>{row.close}</TableCell>
+                                   </TableRow>
+                                 ))}
+                               </TableBody>
+                             </Table>
+                           </TableContainer>
+                         </Grid>
+                       );
+                     } else if (key === 'missing_dates' && Array.isArray(value) && value.length > 0) {
+                       return (
+                         <Grid item xs={12} md={6} key={key}>
+                           <Typography variant="body2" color="error">
+                             {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} ({value.length}):
+                           </Typography>
+                           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                             {value.map((date: string, idx: number) => (
+                               <Box key={idx} sx={{ bgcolor: 'error.light', color: 'error.contrastText', px: 1, borderRadius: 1 }}>
+                                 {date}
+                               </Box>
+                             ))}
+                             {value.length > 10 && <Box sx={{ px: 1 }}>...and more</Box>}
+                           </Box>
+                         </Grid>
+                       );
+                     } else {
+                       return (
+                         <Grid item xs={12} md={6} key={key}>
+                           <Typography variant="body2" color="error">
+                             {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}:
+                           </Typography>
+                           <Typography variant="body2">{value as string}</Typography>
+                         </Grid>
+                       );
+                     }
+                   })}
+                 </Grid>
+               </Box>
+             )}
+
+             {/* Descriptive Statistics */}
+             {data?.describe_stats && (
+               <Box sx={{ mb: 3 }}>
+                 <Typography variant="subtitle1" gutterBottom>Descriptive Statistics</Typography>
+                 <Grid container spacing={2}>
+                   {Object.entries(data.describe_stats).map(([key, stats]) => (
+                     <Grid item xs={12} md={4} key={key}>
+                       <Typography variant="body2" fontWeight="bold">{key.toUpperCase()}</Typography>
+                       <TableContainer>
+                         <Table size="small">
+                           <TableBody>
+                             {Object.entries(stats as Record<string, number>).map(([stat, value]) => (
+                               <TableRow key={stat}>
+                                 <TableCell>{stat}</TableCell>
+                                 <TableCell>{typeof value === 'number' ? value.toFixed(2) : value}</TableCell>
+                               </TableRow>
+                             ))}
+                           </TableBody>
+                         </Table>
+                       </TableContainer>
+                     </Grid>
+                   ))}
+                 </Grid>
+               </Box>
+             )}
+           </Paper>
+
+           {/* Visualizations */}
+           <Paper sx={{ p: 2, mb: 3 }}>
+             <Typography variant="h6" gutterBottom>Visualizations</Typography>
+             
+             <Grid container spacing={3}>
+               {/* OHLCV Chart */}
+               {data?.ohlcv_fig && (
+                 <Grid item xs={12} lg={6}>
+                   <Paper elevation={2} sx={{ p: 1 }}>
+                     <Plot
+                       data={data.ohlcv_fig.data}
+                       layout={data.ohlcv_fig.layout}
+                       style={{ width: '100%', height: '400px' }}
+                       config={{ responsive: true }}
+                     />
+                   </Paper>
+                 </Grid>
+               )}
+
+               {/* Bands Chart */}
+               {data?.bands_fig && (
+                 <Grid item xs={12} lg={6}>
+                   <Paper elevation={2} sx={{ p: 1 }}>
+                     <Plot
+                       data={data.bands_fig.data}
+                       layout={data.bands_fig.layout}
+                       style={{ width: '100%', height: '400px' }}
+                       config={{ responsive: true }}
+                     />
+                   </Paper>
+                 </Grid>
+               )}
+
+               {/* Trendlines Chart */}
+               {data?.trendlines_fig && (
+                 <Grid item xs={12} lg={6}>
+                   <Paper elevation={2} sx={{ p: 1 }}>
+                     <Plot
+                       data={data.trendlines_fig.data}
+                       layout={data.trendlines_fig.layout}
+                       style={{ width: '100%', height: '400px' }}
+                       config={{ responsive: true }}
+                     />
+                   </Paper>
+                 </Grid>
+               )}
+
+               {/* Box/Violin Chart */}
+               {data?.box_violin_fig && (
+                 <Grid item xs={12} lg={6}>
+                   <Paper elevation={2} sx={{ p: 1 }}>
+                     <Plot
+                       data={data.box_violin_fig.data}
+                       layout={data.box_violin_fig.layout}
+                       style={{ width: '100%', height: '400px' }}
+                       config={{ responsive: true }}
+                     />
+                   </Paper>
+                 </Grid>
+               )}
+
+               {/* Missing Data Heatmap */}
+               {data?.missing_heatmap_fig && (
+                 <Grid item xs={12}>
+                   <Paper elevation={2} sx={{ p: 1 }}>
+                     <Plot
+                       data={data.missing_heatmap_fig.data}
+                       layout={data.missing_heatmap_fig.layout}
+                       style={{ width: '100%', height: '300px' }}
+                       config={{ responsive: true }}
+                     />
+                   </Paper>
+                 </Grid>
+               )}
+
+               {/* Legacy Candlestick Chart */}
+               {data?.plotly_fig && (
+                 <Grid item xs={12}>
+                   <Paper elevation={2} sx={{ p: 1 }}>
+                     <Plot
+                       data={data.plotly_fig.data}
+                       layout={data.plotly_fig.layout}
+                       style={{ width: '100%', height: '400px' }}
+                       config={{ responsive: true }}
+                     />
+                   </Paper>
+                 </Grid>
+               )}
+             </Grid>
+           </Paper>
         </>
       )}
     </Paper>

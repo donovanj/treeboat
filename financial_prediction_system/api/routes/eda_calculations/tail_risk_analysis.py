@@ -505,8 +505,8 @@ def plot_hill(returns: pd.Series) -> go.Figure:
     ))
     fig.update_layout(
         title=title,
-        yaxis_title='Tail Index Estimate (ξ)',
-        xaxis_title='Number of Order Statistics (k)',
+        yaxis_title='Tail Index Estimate (ξ).\n\nHow quickly the probability decreases as we move toward more extreme events',
+        xaxis_title='Number of Order Statistics (k).\n\nHow many of the most extreme price movements you\'re including in your analysis (selected date range)',
         hovermode='x unified'
     )
     # Add horizontal line at 0 for reference (often indicates transition)

@@ -52,7 +52,8 @@ def create_box_violin_pair(values, by_category, title, y_title):
         "layout": {
             "title": f"{title} (Box Plot)",
             "yaxis": {"title": y_title},
-            "xaxis": {"title": "Category"} # Add category axis title
+            "xaxis": {"title": "Category"},
+            "yaxis_scale": "log"
         }
     }
     
@@ -69,7 +70,8 @@ def create_box_violin_pair(values, by_category, title, y_title):
         "layout": {
             "title": f"{title} (Violin Plot)",
             "yaxis": {"title": y_title},
-             "xaxis": {"title": "Category"} # Add category axis title
+            "xaxis": {"title": "Category"},
+            "yaxis_scale": "log"
         }
     }
     

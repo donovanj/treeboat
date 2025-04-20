@@ -79,6 +79,17 @@ const EDA: React.FC = () => {
   const [volumePriceLevelBoxFig, setVolumePriceLevelBoxFig] = useState<any>(null);
   const [volumePriceLevelViolinFig, setVolumePriceLevelViolinFig] = useState<any>(null);
 
+  // New Gap-Volume visualizations
+  const [gapVolumeScatterFig, setGapVolumeScatterFig] = useState<any>(null);
+  const [gapVolumeBubbleFig, setGapVolumeBubbleFig] = useState<any>(null);
+  const [gapVolumeHeatmapFig, setGapVolumeHeatmapFig] = useState<any>(null);
+  const [gapFollowThroughFig, setGapFollowThroughFig] = useState<any>(null);
+  const [gapCategoryBoxFig, setGapCategoryBoxFig] = useState<any>(null);
+  const [gapVolumeTimeseriesFig, setGapVolumeTimeseriesFig] = useState<any>(null);
+  const [volumeWeightedGapsFig, setVolumeWeightedGapsFig] = useState<any>(null);
+  const [gapVolumeSurfaceFig, setGapVolumeSurfaceFig] = useState<any>(null);
+  const [gapViolinStripFig, setGapViolinStripFig] = useState<any>(null);
+
   // Volatility Analysis Plots
   const [rollingVolatilityFig, setRollingVolatilityFig] = useState<any>(null);
   const [parkinsonVolatilityFig, setParkinsonVolatilityFig] = useState<any>(null);
@@ -275,13 +286,86 @@ const EDA: React.FC = () => {
               return; // Stop processing further
           }
           
-          // Set original plots
-          setTrendlinesFig(data.trendlines || null);
+          // Set original plots with enhanced tooltips
+          // Add percentage change to trendlines figure
+          if (data.trendlines) {
+            console.log('Original trendlines figure:', data.trendlines);
+            const enhancedTrendlines = JSON.parse(JSON.stringify(data.trendlines));
+            if (enhancedTrendlines.data && Array.isArray(enhancedTrendlines.data)) {
+              // Find the candlestick trace (usually the first one)
+              const candlestickTrace = enhancedTrendlines.data.find((trace: any) => trace.type === 'candlestick');
+              console.log('Candlestick trace in trendlines:', candlestickTrace);
+              if (candlestickTrace) {
+                // Calculate percentage change for each point
+                const close = candlestickTrace.close;
+                const open = candlestickTrace.open;
+                if (close && open && Array.isArray(close) && Array.isArray(open)) {
+                  const pctChange = close.map((c: number, i: number) => {
+                    if (c === null || open[i] === null) return null;
+                    return ((c - open[i]) / open[i] * 100).toFixed(2) + '%';
+                  });
+                  
+                  // Enhance the hovertemplate to include percentage change
+                  candlestickTrace.hovertemplate = 
+                    'Date: %{x}<br>' +
+                    'Open: %{open}<br>' +
+                    'High: %{high}<br>' +
+                    'Low: %{low}<br>' +
+                    'Close: %{close}<br>' +
+                    'Change: %{customdata}<extra></extra>';
+                  
+                  // Add the percentage change as custom data
+                  candlestickTrace.customdata = pctChange;
+                }
+              }
+            }
+            console.log('Enhanced trendlines figure:', enhancedTrendlines);
+            setTrendlinesFig(enhancedTrendlines);
+          } else {
+            setTrendlinesFig(null);
+          }
+          
           setEcdfFig(data.ecdf || null);
           setHistFig(data.hist || null);
           
-          // Set new visualizations
-          setCandlestickFig(data.candlestick || null);
+          // Set new visualizations with enhanced tooltips
+          // Add percentage change to candlestick figure
+          if (data.candlestick) {
+            console.log('Original candlestick figure:', data.candlestick);
+            const enhancedCandlestick = JSON.parse(JSON.stringify(data.candlestick));
+            if (enhancedCandlestick.data && Array.isArray(enhancedCandlestick.data)) {
+              // Find the candlestick trace
+              const candlestickTrace = enhancedCandlestick.data.find((trace: any) => trace.type === 'candlestick');
+              console.log('Candlestick trace in candlestick figure:', candlestickTrace);
+              if (candlestickTrace) {
+                // Calculate percentage change for each point
+                const close = candlestickTrace.close;
+                const open = candlestickTrace.open;
+                if (close && open && Array.isArray(close) && Array.isArray(open)) {
+                  const pctChange = close.map((c: number, i: number) => {
+                    if (c === null || open[i] === null) return null;
+                    return ((c - open[i]) / open[i] * 100).toFixed(2) + '%';
+                  });
+                  
+                  // Enhance the hovertemplate to include percentage change
+                  candlestickTrace.hovertemplate = 
+                    'Date: %{x}<br>' +
+                    'Open: %{open}<br>' +
+                    'High: %{high}<br>' +
+                    'Low: %{low}<br>' +
+                    'Close: %{close}<br>' +
+                    'Change: %{customdata}<extra></extra>';
+                  
+                  // Add the percentage change as custom data
+                  candlestickTrace.customdata = pctChange;
+                }
+              }
+            }
+            console.log('Enhanced candlestick figure:', enhancedCandlestick);
+            setCandlestickFig(enhancedCandlestick);
+          } else {
+            setCandlestickFig(null);
+          }
           
           // Price data visualizations
           setPriceRangeBoxFig(data.price_range_box || null);
@@ -298,17 +382,20 @@ const EDA: React.FC = () => {
           // Volume data visualizations
           setVolumeDistBoxFig(data.volume_dist_box || null);
           setVolumeDistViolinFig(data.volume_dist_violin || null);
-          setRelativeVolumeBoxFig(data.relative_volume_box || null);
-          setRelativeVolumeViolinFig(data.relative_volume_violin || null);
           setPriceVolumeBoxFig(data.price_volume_box || null);
           setPriceVolumeViolinFig(data.price_volume_violin || null);
-          setVolumePersistenceBoxFig(data.volume_persistence_box || null);
-          setVolumePersistenceViolinFig(data.volume_persistence_violin || null);
-          setVolumeEventBoxFig(data.volume_event_box || null);
-          setVolumeEventViolinFig(data.volume_event_violin || null);
-          setVolumePriceLevelBoxFig(data.volume_price_level_box || null);
-          setVolumePriceLevelViolinFig(data.volume_price_level_violin || null);
-
+          
+          // New Gap-Volume visualizations
+          setGapVolumeScatterFig(data.gap_volume_scatter || null);
+          setGapVolumeBubbleFig(data.gap_volume_bubble || null);
+          setGapVolumeHeatmapFig(data.gap_volume_heatmap || null);
+          setGapFollowThroughFig(data.gap_follow_through || null);
+          setGapCategoryBoxFig(data.gap_category_box || null);
+          setGapVolumeTimeseriesFig(data.gap_volume_timeseries || null);
+          setVolumeWeightedGapsFig(data.volume_weighted_gaps || null);
+          setGapVolumeSurfaceFig(data.gap_volume_surface || null);
+          setGapViolinStripFig(data.gap_violin_strip || null);
+          
           // Set Volatility Plots
           setRollingVolatilityFig(data.rolling_volatility || null);
           setParkinsonVolatilityFig(data.parkinson_volatility || null);
@@ -688,6 +775,51 @@ const EDA: React.FC = () => {
               "Volume on Up vs Down Days",
               "Comparison of volume during positive and negative return days."
             )}
+            {renderPlot(
+              gapVolumeScatterFig,
+              "Gap vs Volume Scatter",
+              "Relationship between overnight gap sizes and daily volume, color-coded by up/down days."
+            )}
+            {renderPlot(
+              gapVolumeBubbleFig,
+              "Gap Events Over Time",
+              "Bubble chart showing gap events with size representing volume."
+            )}
+            {renderPlot(
+              gapVolumeHeatmapFig,
+              "Gap-Volume Distribution",
+              "Heatmap showing the frequency distribution of gap size vs volume levels."
+            )}
+            {renderPlot(
+              gapFollowThroughFig,
+              "Gap Follow-through Analysis",
+              "Analysis of gap size vs subsequent intraday movement, with volume-weighted markers."
+            )}
+            {renderPlot(
+              gapCategoryBoxFig,
+              "Volume by Gap Category",
+              "Distribution of volume across different gap size categories."
+            )}
+            {renderPlot(
+              gapVolumeTimeseriesFig,
+              "Volume and Gaps Over Time",
+              "Dual-axis time series showing volume and overnight gaps."
+            )}
+            {renderPlot(
+              volumeWeightedGapsFig,
+              "Volume-Weighted Gap Distribution",
+              "Gap distribution with bar widths weighted by average volume."
+            )}
+            {renderPlot(
+              gapVolumeSurfaceFig,
+              "Gap-Volume-Frequency Surface",
+              "3D surface plot showing relationships between gaps, volume, and frequency."
+            )}
+            {renderPlot(
+              gapViolinStripFig,
+              "Volume Distribution by Gap Category",
+              "Detailed volume distribution for each gap category with individual points shown."
+            )}
           </TabPanel>
           
           {/* Volatility Analysis Tab */}
@@ -794,7 +926,7 @@ const EDA: React.FC = () => {
              {renderPlot(
                  hillPlot,
                  "Hill Plot for Tail Index",
-                 "Estimation of the tail index (alpha) using the Hill estimator. Lower values indicate heavier tails."
+                 "Hill Plot that measures the tail risk of a stock's returns. In simple terms, it tells you how likely the stock is to experience extreme price movements (crashes or spikes)"
              )}
           </TabPanel>
           {/* ------------------------------ */}

@@ -1,0 +1,76 @@
+{
+  "hash": "98b5db51",
+  "configHash": "0aec2192",
+  "lockfileHash": "a70f8059",
+  "browserHash": "542a65d2",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "cef22cf8",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "ce4221b2",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "984e25df",
+      "needsInterop": true
+    },
+    "@mui/material": {
+      "src": "../../node_modules/@mui/material/index.js",
+      "file": "@mui_material.js",
+      "fileHash": "c0200c56",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "9f3abcdf",
+      "needsInterop": false
+    },
+    "react-plotly.js": {
+      "src": "../../node_modules/react-plotly.js/react-plotly.js",
+      "file": "react-plotly__js.js",
+      "fileHash": "ce9a4507",
+      "needsInterop": true
+    },
+    "@mui/material/Autocomplete": {
+      "src": "../../node_modules/@mui/material/Autocomplete/index.js",
+      "file": "@mui_material_Autocomplete.js",
+      "fileHash": "fb824cd8",
+      "needsInterop": false
+    },
+    "@mui/material/TextField": {
+      "src": "../../node_modules/@mui/material/TextField/index.js",
+      "file": "@mui_material_TextField.js",
+      "fileHash": "04a7b7ad",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-53GUJW7B": {
+      "file": "chunk-53GUJW7B.js"
+    },
+    "chunk-UIQSK2C7": {
+      "file": "chunk-UIQSK2C7.js"
+    },
+    "chunk-EUS6TCJ6": {
+      "file": "chunk-EUS6TCJ6.js"
+    },
+    "chunk-YUNTBJI6": {
+      "file": "chunk-YUNTBJI6.js"
+    },
+    "chunk-ZS7J76T3": {
+      "file": "chunk-ZS7J76T3.js"
+    },
+    "chunk-45FXRYJS": {
+      "file": "chunk-45FXRYJS.js"
+    }
+  }
+}

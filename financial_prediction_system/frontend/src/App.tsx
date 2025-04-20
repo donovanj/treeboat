@@ -53,7 +53,7 @@ function App() {
               ))}
             </List>
           </Drawer>
-          <Box component="main" sx={{ flexGrow: 1, p: 3, ml: `${drawerWidth}px` }}>
+          <Box component="main" sx={{ flexGrow: 1, pt: 1, ml: 0 }}>
             <Toolbar />
             <Routes>
               <Route path="/" element={<Dashboard />} />

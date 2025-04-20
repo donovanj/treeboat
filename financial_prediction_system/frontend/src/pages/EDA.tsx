@@ -118,6 +118,11 @@ const EDA: React.FC = () => {
   const [hillPlot, setHillPlot] = useState<any>(null);
   // --------------------------------
 
+  // --- Momentum / Mean Reversion Plots --- 
+  const [rsiPlot, setRsiPlot] = useState<any>(null);
+  const [macdPlot, setMacdPlot] = useState<any>(null);
+  const [bollingerBandsPlot, setBollingerBandsPlot] = useState<any>(null);
+
   // Local state to manage the date range selection process
   const [selectedRange, setSelectedRange] = useState<[Date | null, Date | null]>([null, null]);
 
@@ -228,6 +233,9 @@ const EDA: React.FC = () => {
     setRollingVarCvarPlot(null);
     setEvtReturnLevelPlot(null);
     setHillPlot(null);
+    setRsiPlot(null);
+    setMacdPlot(null);
+    setBollingerBandsPlot(null);
 
     let url = '/api/eda';  
     const params = [];
@@ -335,6 +343,12 @@ const EDA: React.FC = () => {
           setEvtReturnLevelPlot(data.evt_return_level_plot || null);
           setHillPlot(data.hill_plot || null);
           // -------------------------------------
+
+          // --- Set Momentum / Mean Reversion Plots ---
+          setRsiPlot(data.rsi_plot || null);
+          setMacdPlot(data.macd_plot || null);
+          setBollingerBandsPlot(data.bollinger_bands_plots || null);
+          // ---------------------------------------------
 
         } catch (e) {
           console.error('JSON parse error:', e);
@@ -784,6 +798,25 @@ const EDA: React.FC = () => {
              )}
           </TabPanel>
           {/* ------------------------------ */}
+          {/* --- Momentum / Mean Reversion Tab --- */}
+          <TabPanel value={tabValue} index={8}>
+            {renderPlot(
+              rsiPlot,
+              "Relative Strength Index (RSI)",
+              "Measures the speed and change of price movements (typically 14-period). Oscillates between 0 and 100."
+            )}
+            {renderPlot(
+              macdPlot,
+              "Moving Average Convergence Divergence (MACD)",
+              "Shows the relationship between two exponential moving averages of price. Includes MACD line, Signal line, and Histogram."
+            )}
+            {renderPlot(
+              bollingerBandsPlot,
+              "Bollinger Bands",
+              "Volatility bands placed above and below a moving average. Bands widen with increased volatility and narrow with decreased volatility."
+            )}
+          </TabPanel>
+          {/* ----------------------------------- */}
         </>
       )}
     </Paper>

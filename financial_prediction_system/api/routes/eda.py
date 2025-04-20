@@ -160,7 +160,8 @@ def eda_endpoint(
         # 10. Momentum / Mean Reversion Analysis
         if not stock_df.empty:
             try:
-                mom_rev_results = momentum_mean_reversion.run_all_momentum_mean_reversion_analyses(stock_df, symbol)
+                # Pass an empty dictionary for params, as this route doesn't take custom ones
+                mom_rev_results = momentum_mean_reversion.run_all_momentum_mean_reversion_analyses(stock_df, {})
                 response_data.update(mom_rev_results) # Add plots/info
             except Exception as e:
                  print(f"Error generating momentum/mean reversion plots: {e}")

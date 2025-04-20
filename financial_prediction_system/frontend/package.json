@@ -5,11 +5,15 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mantine/core": "^7.17.4",
+    "@mantine/dates": "^7.17.4",
+    "@mantine/hooks": "^7.17.4",
     "@mui/icons-material": "^5.14.0",
     "@mui/material": "^5.14.0",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.7",
     "d3": "^7.9.0",
+    "dayjs": "^1.11.13",
     "plotly.js": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -20,7 +24,7 @@
   "devDependencies": {
     "@types/react-plotly.js": "^2.6.3",
     "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.2.8"
+    "vite": "^6.3.2"
   },
   "scripts": {
     "dev": "vite",

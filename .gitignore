@@ -16,7 +16,6 @@ __pycache__/
 .pytest_cache/
 __init__.py
 __pycache__/
-# Dependencies
 node_modules
 financial_prediction_system/frontend/.vite
 .vite/

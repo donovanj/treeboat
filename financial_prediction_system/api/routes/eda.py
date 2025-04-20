@@ -7,9 +7,31 @@ import pandas as pd
 import plotly.graph_objs as go
 from plotly.utils import PlotlyJSONEncoder
 from sqlalchemy.orm import Session
-from sqlalchemy import text # Import text for raw SQL
+from sqlalchemy import text
+from plotly.subplots import make_subplots
+import plotly.figure_factory as ff
+import plotly.express as px
+import traceback # Keep for error handling
 
-from financial_prediction_system.api.dependencies import get_db # Import db dependency
+from financial_prediction_system.api.dependencies import get_db
+from financial_prediction_system.utils.nan_safe_json import NaNHandlingResponse
+
+# Import from the new calculation modules
+from .eda_calculations import base_data
+from .eda_calculations import price_analysis
+from .eda_calculations import volume_analysis
+from .eda_calculations import volatility_analysis
+from .eda_calculations import correlation_analysis
+# Import anomaly detection (placeholder for now, will be populated later)
+from .eda_calculations import anomaly_detection 
+# --- New Imports ---
+from .eda_calculations import spectral_analysis
+from .eda_calculations import derived_metrics
+# -------------------
+
+# --- Tail Risk ---
+from .eda_calculations import tail_risk_analysis
+# -----------------
 
 router = APIRouter(prefix="/api")
 
@@ -18,325 +40,140 @@ def eda_test_endpoint():
     """Simple test endpoint to verify the API is working correctly."""
     return {"status": "success", "message": "Test endpoint is working"}
 
-@router.get("/eda")
+@router.get("/eda", response_class=NaNHandlingResponse)
 def eda_endpoint(
     symbol: str = Query(None, description="Stock symbol"),
     start: str = Query(None, description="Start date in YYYY-MM-DD"),
     end: str = Query(None, description="End date in YYYY-MM-DD"),
-    db: Session = Depends(get_db) # Inject DB session
+    db: Session = Depends(get_db)
 ):
     """
-    Return EDA visualizations for the specified stock and date range.
+    Return EDA visualizations for the specified stock and date range, 
+    now generated using refactored calculation modules.
     """
-    # Set default values if not provided
-    if not symbol:
-        symbol = "AAPL" # Default symbol
-        
-    if not start or not end:
-        end_date = datetime.now().date()
-        start_date = end_date - timedelta(days=365)
-        start = start or start_date.isoformat()
-        end = end or end_date.isoformat()
     
+    response_data = {}
+
     try:
-        # Construct the SQL query safely using parameters
-        sql_query = text("""
-            SELECT date, open, high, low, close, volume 
-            FROM stock_prices 
-            WHERE symbol = :symbol AND date >= :start AND date <= :end
-            ORDER BY date ASC
-        """)
-        
-        # Execute query and fetch into Pandas DataFrame
-        df = pd.read_sql(
-            sql_query, 
-            db.connection(), # Use the connection from the session
-            params={'symbol': symbol, 'start': start, 'end': end}, 
-            parse_dates=['date'] # Automatically parse the date column
+        # 1. Prepare Base Data
+        symbol, start, end, stock_df, returns_df, other_data = base_data.prepare_data_for_analysis(
+            db, symbol, start, end
         )
 
-        if df.empty:
+        # Check if data preparation failed critically
+        if stock_df is None:
              return JSONResponse(
                  status_code=404, 
-                 content={"error": f"No data found for symbol {symbol} between {start} and {end}"}
+                 content={"error": f"Could not fetch or prepare basic data for symbol {symbol} between {start} and {end}"}
              )
 
-        # Ensure correct data types (especially numeric)
-        for col in ['open', 'high', 'low', 'close', 'volume']:
-             df[col] = pd.to_numeric(df[col], errors='coerce')
-        df.dropna(inplace=True) # Drop rows where conversion failed
+        # --- Run Analyses ---
+        # Store results in the response_data dictionary
         
-        # --- Create Year-Month column for chronological grouping --- 
-        df['year_month'] = df['date'].dt.strftime('%Y-%m')
+        # 2. Price Analysis
+        price_results = price_analysis.run_all_price_analyses(stock_df, symbol)
+        response_data.update(price_results)
         
-        # Create candlestick chart
-        candlestick = {
-            "data": [
-                {
-                    "type": "candlestick",
-                    "x": df['date'].tolist(),
-                    "open": df['open'].tolist(),
-                    "high": df['high'].tolist(),
-                    "low": df['low'].tolist(),
-                    "close": df['close'].tolist(),
-                    "name": symbol
-                },
-                {
-                    "type": "bar",
-                    "x": df['date'].tolist(),
-                    "y": df['volume'].tolist(),
-                    "yaxis": "y2",
-                    "name": "Volume",
-                    "marker": {"color": "rgba(0,0,255,0.3)"}
-                }
-            ],
-            "layout": {
-                "title": f"{symbol} Price Chart",
-                "yaxis": {"title": "Price"},
-                "yaxis2": {
-                    "title": "Volume",
-                    "overlaying": "y",
-                    "side": "right",
-                    "showgrid": False
-                }
-            }
-        }
-        
-        # Trendlines (linear and exponential)
-        x = np.arange(len(df))
-        y = df['close'].values
-        
-        linear_fit = np.polyfit(x, y, 1)
-        linear_trend = linear_fit[0] * x + linear_fit[1]
-        
-        exp_fit = np.polyfit(x, np.log(y), 1)
-        exp_trend = np.exp(exp_fit[1]) * np.exp(exp_fit[0] * x)
-        
-        trendlines_fig = {
-            "data": [
-                {
-                    "type": "candlestick",
-                    "x": df['date'].tolist(),
-                    "open": df['open'].tolist(),
-                    "high": df['high'].tolist(),
-                    "low": df['low'].tolist(),
-                    "close": df['close'].tolist(),
-                    "name": symbol
-                },
-                {
-                    "type": "scatter",
-                    "x": df['date'].tolist(),
-                    "y": linear_trend.tolist(),
-                    "name": "Linear Trend",
-                    "mode": "lines",
-                    "line": {"color": "red", "width": 2}
-                },
-                {
-                    "type": "scatter",
-                    "x": df['date'].tolist(),
-                    "y": exp_trend.tolist(), 
-                    "name": "Exp Trend",
-                    "mode": "lines",
-                    "line": {"color": "green", "width": 2, "dash": "dash"}
-                }
-            ],
-            "layout": {
-                "title": f"{symbol} Price with Trendlines",
-                "yaxis": {"title": "Price"}
-            }
-        }
-        
-        # ECDF for returns
-        returns = df['close'].pct_change().dropna()
-        sorted_returns = np.sort(returns)
-        ecdf = np.arange(1, len(sorted_returns)+1) / len(sorted_returns)
-        
-        ecdf_fig = {
-            "data": [
-                {
-                    "type": "scatter",
-                    "x": sorted_returns.tolist(),
-                    "y": ecdf.tolist(),
-                    "mode": "lines",
-                    "name": "ECDF",
-                    "line": {"color": "blue", "width": 2}
-                }
-            ],
-            "layout": {
-                "title": f"{symbol} Returns ECDF",
-                "xaxis": {"title": "Return"},
-                "yaxis": {"title": "Probability"}
-            }
-        }
-        
-        # Histogram/Distplot for returns
-        hist_fig = {
-            "data": [
-                {
-                    "type": "histogram",
-                    "x": returns.tolist(),
-                    "nbinsx": 30,
-                    "name": "Returns Distribution",
-                    "marker": {"color": "rgba(0,0,255,0.7)"}
-                }
-            ],
-            "layout": {
-                "title": f"{symbol} Returns Distribution",
-                "xaxis": {"title": "Return"},
-                "yaxis": {"title": "Frequency"}
-            }
-        }
-        
-        # --- Updated Helper function for box/violin plots --- 
-        def create_box_violin_pair(values, by_category, title, y_title):
-            """Generates paired box and violin plots, grouping by the provided category series."""
-            
-            temp_df = pd.DataFrame({'value': values, 'category': by_category})
-            # Sort by category (which should be chronologically sortable, e.g., 'YYYY-MM')
-            unique_cats = sorted(temp_df['category'].unique())
-            
-            grouped_data = [temp_df['value'][temp_df['category'] == cat].tolist() for cat in unique_cats]
-            
-            # --- Format labels from 'YYYY-MM' to 'Mon YYYY' --- 
-            cat_labels = []
-            for cat in unique_cats:
-                try:
-                    # Parse 'YYYY-MM' and format to 'Mon YYYY' (e.g., "Oct 2024")
-                    dt_obj = datetime.strptime(cat, '%Y-%m')
-                    cat_labels.append(dt_obj.strftime('%b %Y'))
-                except ValueError:
-                    cat_labels.append(str(cat)) # Fallback to original string if parsing fails
-            # --------------------------------------------------------
-            
-            box_data = {
-                "data": [
-                    {
-                        "type": "box",
-                        "y": y_data,
-                        "name": cat,
-                        "boxmean": True
-                    } for cat, y_data in zip(cat_labels, grouped_data) if len(y_data) > 0
-                ],
-                "layout": {
-                    "title": f"{title} (Box Plot)",
-                    "yaxis": {"title": y_title}
-                }
-            }
-            
-            violin_data = {
-                "data": [
-                    {
-                        "type": "violin",
-                        "y": y_data,
-                        "name": cat,
-                        "box": {"visible": True},
-                        "meanline": {"visible": True}
-                    } for cat, y_data in zip(cat_labels, grouped_data) if len(y_data) > 0
-                ],
-                "layout": {
-                    "title": f"{title} (Violin Plot)",
-                    "yaxis": {"title": y_title}
-                }
-            }
-            
-            return box_data, violin_data
-        
-        # Price range analysis - Use year_month for grouping
-        price_range = df['high'] - df['low']
-        price_range_box, price_range_violin = create_box_violin_pair(
-            price_range.values, df['year_month'], f"{symbol} Price Range by Month", "High - Low"
-        )
-        
-        # Gap analysis (overnight gaps) - Use year_month for grouping
-        gaps = df['open'].values[1:] - df['close'].values[:-1]
-        gaps = np.insert(gaps, 0, 0) # Add a 0 for the first day
-        # Ensure gaps array matches df length if using year_month from original df
-        if len(gaps) == len(df):
-            gap_analysis_box, gap_analysis_violin = create_box_violin_pair(
-                gaps, df['year_month'], f"{symbol} Overnight Gaps by Month", "Open - Previous Close"
-            )
-        else: # Handle potential length mismatch (though unlikely with insert)
-             gap_analysis_box, gap_analysis_violin = None, None
-        
-        # Close relative to range positioning - Use year_month for grouping
-        close_position = (df['close'] - df['low']) / (df['high'] - df['low'] + 1e-10)  
-        close_positioning_box, close_positioning_violin = create_box_violin_pair(
-            close_position.values, df['year_month'], f"{symbol} Close Position Within Range", "(Close - Low) / (High - Low)"
-        )
+        # 3. Volume Analysis
+        volume_results = volume_analysis.run_all_volume_analyses(stock_df, symbol)
+        response_data.update(volume_results)
 
-        # Volume distribution by month - Use year_month for grouping
-        volume_dist_box, volume_dist_violin = create_box_violin_pair(
-            df['volume'].values, df['year_month'], f"{symbol} Volume by Month", "Volume"
-        )
+        # 4. Volatility Analysis (returns updated df and results)
+        # Pass the stock_df which may not have index set, functions inside handle indexing
+        stock_df_vol, volatility_results = volatility_analysis.run_all_volatility_analyses(stock_df.copy(), symbol) # Pass a copy to avoid modifying original df unintentionally across modules
+        response_data.update(volatility_results)
+        # Use the potentially updated stock_df (with vol columns) for subsequent analyses if needed
+        # For now, correlation and anomaly detection use returns_df or the original stock_df
 
-        # Up/down day categories for price-volume analysis (remains mostly the same, uses boolean indexing)
-        returns = df['close'].pct_change() # Recalculate returns matching df length
-        up_days = returns > 0
-        down_days = returns <= 0
-        volume = df['volume'].values
+        # 5. Correlation Analysis
+        correlation_results = correlation_analysis.run_all_correlation_analyses(returns_df, symbol, start, end)
+        response_data.update(correlation_results)
+        
+        # 6. Anomaly Detection (To be implemented)
+        anomaly_results = anomaly_detection.run_all_anomaly_analyses(stock_df_vol, symbol) # Pass df with vol columns
+        response_data.update(anomaly_results)
 
-        # Check masks have same length as volume
-        if len(up_days) == len(volume):
-            volume_up = volume[up_days].tolist()
-            volume_down = volume[down_days].tolist()
-            
-            if len(volume_up) > 0 and len(volume_down) > 0:
-                price_volume_box = {
-                    "data": [
-                        {"type": "box", "y": volume_up, "name": "Up Days", "boxmean": True},
-                        {"type": "box", "y": volume_down, "name": "Down Days", "boxmean": True}
-                    ],
-                    "layout": {
-                        "title": f"{symbol} Volume on Up vs Down Days",
-                        "yaxis": {"title": "Volume"}
-                    }
-                }
-                price_volume_violin = {
-                    "data": [
-                        {"type": "violin", "y": volume_up, "name": "Up Days", "box": {"visible": True}, "meanline": {"visible": True}},
-                        {"type": "violin", "y": volume_down, "name": "Down Days", "box": {"visible": True}, "meanline": {"visible": True}}
-                    ],
-                    "layout": {
-                        "title": f"{symbol} Volume on Up vs Down Days",
-                        "yaxis": {"title": "Volume"}
-                    }
-                }
-            else:
-                price_volume_box = None
-                price_volume_violin = None
+        # --- New Calculations ---
+        # 7. Spectral Analysis 
+        # Use the original stock_df as spectral methods often work on price series
+        if not stock_df.empty:
+            try:
+                fft_fig = spectral_analysis.plot_fft(stock_df)
+                response_data['fft_plot'] = json.loads(json.dumps(fft_fig, cls=PlotlyJSONEncoder))
+            except Exception as e:
+                 print(f"Error generating FFT plot: {e}")
+                 response_data['fft_plot'] = None # Indicate error or missing plot
+            try:
+                dwt_fig = spectral_analysis.plot_dwt(stock_df)
+                response_data['dwt_plot'] = json.loads(json.dumps(dwt_fig, cls=PlotlyJSONEncoder))
+            except Exception as e:
+                print(f"Error generating DWT plot: {e}")
+                response_data['dwt_plot'] = None
+            try:
+                cwt_fig = spectral_analysis.plot_cwt(stock_df)
+                response_data['cwt_plot'] = json.loads(json.dumps(cwt_fig, cls=PlotlyJSONEncoder))
+            except Exception as e:
+                print(f"Error generating CWT plot: {e}")
+                response_data['cwt_plot'] = None
         else:
-             price_volume_box = None
-             price_volume_violin = None
+             response_data['fft_plot'] = None
+             response_data['dwt_plot'] = None
+             response_data['cwt_plot'] = None
+             
+        # 8. Derived Metrics Calculation
+        # Calculate metrics, but don't necessarily plot them here.
+        # Return the data itself, potentially for display in tables or custom FE plots.
+        try:
+            derived_metrics_df = derived_metrics.calculate_all_derived_metrics(stock_df)
+            # Convert DataFrame to JSON serializable format (e.g., records orientation)
+            # Handle potential NaNs/Infs explicitly before serialization if NaNHandlingResponse doesn't cover DataFrames
+            derived_metrics_df_serializable = derived_metrics_df.replace([np.inf, -np.inf], None) # Replace Inf with None
+            response_data['derived_metrics_data'] = json.loads(derived_metrics_df_serializable.to_json(orient='records', date_format='iso'))
+        except Exception as e:
+            print(f"Error calculating derived metrics: {e}")
+            response_data['derived_metrics_data'] = None # Indicate error
+        # ------------------------
 
-        # Prepare the complete response
-        response_data = {
-            "candlestick": candlestick,
-            "trendlines": trendlines_fig,
-            "ecdf": ecdf_fig,
-            "hist": hist_fig,
-            "price_range_box": price_range_box,
-            "price_range_violin": price_range_violin, 
-            "gap_analysis_box": gap_analysis_box,
-            "gap_analysis_violin": gap_analysis_violin,
-            "close_positioning_box": close_positioning_box,
-            "close_positioning_violin": close_positioning_violin,
-            "volume_dist_box": volume_dist_box,
-            "volume_dist_violin": volume_dist_violin
-        }
-        
-        if price_volume_box and price_volume_violin:
-            response_data["price_volume_box"] = price_volume_box
-            response_data["price_volume_violin"] = price_volume_violin
-            
-        # Make sure we convert any numpy types to Python native types for JSON serialization
+        # 9. Tail Risk Analysis
+        if not stock_df.empty:
+            try:
+                tail_risk_results = tail_risk_analysis.calculate_tail_risk_plots(stock_df)
+                response_data.update(tail_risk_results) # Add plots/info from tail risk module
+            except Exception as e:
+                print(f"Error generating tail risk plots: {e}")
+                # Add keys with None to indicate failure for this module
+                response_data['var_comparison_plot'] = None
+                response_data['rolling_var_cvar_plot'] = None
+                response_data['evt_return_level_plot'] = None
+                response_data['hill_plot'] = None
+        else:
+             response_data['var_comparison_plot'] = None
+             response_data['rolling_var_cvar_plot'] = None
+             response_data['evt_return_level_plot'] = None
+             response_data['hill_plot'] = None
+        # ------------------------
+
+        # Final check if any data was generated
+        # Check if *any* value in response_data is not None
+        if not any(response_data.values()):
+             print(f"Warning: No analysis results generated for {symbol} between {start} and {end}")
+             # Return a 200 OK but with an info message if base data was found but no plots generated
+             return JSONResponse(
+                 status_code=200,
+                 content={"info": f"Data found for {symbol}, but no analysis plots could be generated."}
+             )
+
+        # Return all collected plot data
+        # Note: PlotlyJSONEncoder is handled within the calculation functions now
+        # NaNHandlingResponse will take care of any remaining NaNs
         return response_data
-        
+
     except Exception as e:
-        import traceback
+        print(f"Error during EDA endpoint execution: {e}")
         return JSONResponse(
             status_code=500,
             content={
-                "error": str(e),
-                "trace": traceback.format_exc()
+                "error": f"An unexpected error occurred: {str(e)}",
+                "trace": traceback.format_exc() # Provide trace for debugging
             }
         )

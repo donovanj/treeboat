@@ -102,6 +102,7 @@ const EDA: React.FC = () => {
   const [iforestFig, setIforestFig] = useState<any>(null);
   const [dbscanFig, setDbscanFig] = useState<any>(null);
   const [stlFig, setStlFig] = useState<any>(null);
+  const [logReturnsZScoreFig, setLogReturnsZScoreFig] = useState<any>(null);
   // -------------------------------
 
   // --- Spectral Analysis Plots ---
@@ -116,6 +117,11 @@ const EDA: React.FC = () => {
   const [evtReturnLevelPlot, setEvtReturnLevelPlot] = useState<any>(null);
   const [hillPlot, setHillPlot] = useState<any>(null);
   // --------------------------------
+
+  // --- Momentum / Mean Reversion Plots --- 
+  const [rsiPlot, setRsiPlot] = useState<any>(null);
+  const [macdPlot, setMacdPlot] = useState<any>(null);
+  const [bollingerBandsPlot, setBollingerBandsPlot] = useState<any>(null);
 
   // Local state to manage the date range selection process
   const [selectedRange, setSelectedRange] = useState<[Date | null, Date | null]>([null, null]);
@@ -219,6 +225,7 @@ const EDA: React.FC = () => {
     setIforestFig(null);
     setDbscanFig(null);
     setStlFig(null);
+    setLogReturnsZScoreFig(null);
     setFftFig(null);
     setDwtFig(null);
     setCwtFig(null);
@@ -226,6 +233,9 @@ const EDA: React.FC = () => {
     setRollingVarCvarPlot(null);
     setEvtReturnLevelPlot(null);
     setHillPlot(null);
+    setRsiPlot(null);
+    setMacdPlot(null);
+    setBollingerBandsPlot(null);
 
     let url = '/api/eda';  
     const params = [];
@@ -318,6 +328,7 @@ const EDA: React.FC = () => {
           setIforestFig(data.iforest_pca_plot || null);
           setDbscanFig(data.dbscan_pca_plot || null);
           setStlFig(data.stl_decomposition_plot || null);
+          setLogReturnsZScoreFig(data.log_returns_z_score_plot || null);
           // ------------------------------------
 
           // --- Set Spectral Analysis Plots ---
@@ -332,6 +343,12 @@ const EDA: React.FC = () => {
           setEvtReturnLevelPlot(data.evt_return_level_plot || null);
           setHillPlot(data.hill_plot || null);
           // -------------------------------------
+
+          // --- Set Momentum / Mean Reversion Plots ---
+          setRsiPlot(data.rsi_plot || null);
+          setMacdPlot(data.macd_plot || null);
+          setBollingerBandsPlot(data.bollinger_bands_plots || null);
+          // ---------------------------------------------
 
         } catch (e) {
           console.error('JSON parse error:', e);
@@ -607,6 +624,7 @@ const EDA: React.FC = () => {
               <Tab label="Anomaly Detection" />
               <Tab label="Spectral Analysis" />
               <Tab label="Tail Risk Analysis" />
+              <Tab label="Momentum/Mean Reversion" />
             </Tabs>
           </Box>
           
@@ -727,31 +745,12 @@ const EDA: React.FC = () => {
 
           {/* --- Anomaly Detection Tab --- */}
           <TabPanel value={tabValue} index={5}>
-              {renderPlot(
-                 zScoreFig,
-                 "Log Return Z-Scores",
-                 "Standard and Modified Z-scores for daily log returns, with +/-3 SD and +/-3.5 MAD thresholds."
-             )}
-             {renderPlot(
-                 zAnomaliesFig,
-                 "Log Returns with Z-Score Anomalies",
-                 "Daily log returns with points marked as anomalous (outside thresholds) by Z-score or Modified Z-score."
-             )}
-             {renderPlot(
-                 iforestFig,
-                 "Isolation Forest Anomalies (PCA)",
-                 "PCA projection of log returns and 21d volatility, highlighting anomalies detected by Isolation Forest."
-             )}
-             {renderPlot(
-                 dbscanFig,
-                 "DBSCAN Anomalies (PCA)",
-                 "PCA projection of log returns and 21d volatility, highlighting anomalies detected by DBSCAN (Note: highly parameter-sensitive)."
-             )}
-             {renderPlot(
-                 stlFig,
-                 "STL Decomposition (Close Price)",
-                 "Seasonal-Trend decomposition using LOESS on the closing price (Period=21). Helps identify residual anomalies."
-             )}
+            <Typography variant="h4" gutterBottom>Anomaly Detection</Typography>
+            {renderPlot(logReturnsZScoreFig, "Z-Scores (Log Returns)", "Z-score and Modified Z-score for log returns. Useful for spotting unusual return magnitudes.")}
+            {renderPlot(zAnomaliesFig, "Log Returns with Z-Score Anomalies", "Highlights points in the log return series flagged as anomalous by Z-scores or Modified Z-scores.")}
+            {renderPlot(iforestFig, "Isolation Forest Anomalies (PCA)", "PCA visualization of features used for Isolation Forest, highlighting detected anomalies. Good for multivariate outlier detection.")}
+            {renderPlot(dbscanFig, "DBSCAN Anomalies (PCA)", "PCA visualization of features used for DBSCAN, highlighting detected noise points (anomalies). Effective for density-based clustering anomalies.")}
+            {renderPlot(stlFig, "STL Decomposition", "Seasonal-Trend decomposition using Loess for the closing price. Anomalies might appear as large spikes in the residual component.")}
           </TabPanel>
           {/* ----------------------------- */}
           
@@ -799,6 +798,25 @@ const EDA: React.FC = () => {
              )}
           </TabPanel>
           {/* ------------------------------ */}
+          {/* --- Momentum / Mean Reversion Tab --- */}
+          <TabPanel value={tabValue} index={8}>
+            {renderPlot(
+              rsiPlot,
+              "Relative Strength Index (RSI)",
+              "Measures the speed and change of price movements (typically 14-period). Oscillates between 0 and 100."
+            )}
+            {renderPlot(
+              macdPlot,
+              "Moving Average Convergence Divergence (MACD)",
+              "Shows the relationship between two exponential moving averages of price. Includes MACD line, Signal line, and Histogram."
+            )}
+            {renderPlot(
+              bollingerBandsPlot,
+              "Bollinger Bands",
+              "Volatility bands placed above and below a moving average. Bands widen with increased volatility and narrow with decreased volatility."
+            )}
+          </TabPanel>
+          {/* ----------------------------------- */}
         </>
       )}
     </Paper>

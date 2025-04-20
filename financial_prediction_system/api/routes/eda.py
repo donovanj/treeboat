@@ -33,6 +33,10 @@ from .eda_calculations import derived_metrics
 from .eda_calculations import tail_risk_analysis
 # -----------------
 
+# --- Momentum / Mean Reversion ---
+from .eda_calculations import momentum_mean_reversion
+# ----------------------------------
+
 router = APIRouter(prefix="/api")
 
 @router.get("/eda-test")
@@ -152,6 +156,47 @@ def eda_endpoint(
              response_data['evt_return_level_plot'] = None
              response_data['hill_plot'] = None
         # ------------------------
+
+        # 10. Momentum / Mean Reversion Analysis
+        if not stock_df.empty:
+            try:
+                # Pass an empty dictionary for params, as this route doesn't take custom ones
+                mom_rev_results = momentum_mean_reversion.run_all_momentum_mean_reversion_analyses(stock_df, {})
+                response_data.update(mom_rev_results) # Add plots/info
+            except Exception as e:
+                 print(f"Error generating momentum/mean reversion plots: {e}")
+                 # Add keys with None to indicate potential failure - adapt if keys change in module
+                 response_data['return_acf_plot'] = None
+                 response_data['return_pacf_plot'] = None
+                 response_data['volatility_acf_plot'] = None
+                 response_data['volatility_pacf_plot'] = None
+                 response_data['rolling_return_acf_heatmap'] = None
+                 response_data['rolling_return_pacf_heatmap'] = None
+                 response_data['rolling_volatility_acf_heatmap'] = None
+                 response_data['rolling_volatility_pacf_heatmap'] = None
+                 response_data['rolling_return_correlation_heatmap'] = None
+                 response_data['roc_plots'] = None
+                 response_data['macd_plot'] = None
+                 response_data['hurst_plot'] = None
+                 response_data['rsi_plot'] = None
+                 response_data['bollinger_bands_plots'] = None
+                 response_data['rolling_adf_plots'] = None
+                 response_data['phase_plot_roc_hurst'] = None
+                 response_data['phase_plot_macd_rsi'] = None
+        else:
+            # Set all potential keys to None if stock_df was empty
+            mom_rev_keys = [
+                'return_acf_plot', 'return_pacf_plot', 'volatility_acf_plot', 
+                'volatility_pacf_plot', 'rolling_return_acf_heatmap', 
+                'rolling_return_pacf_heatmap', 'rolling_volatility_acf_heatmap', 
+                'rolling_volatility_pacf_heatmap', 'rolling_return_correlation_heatmap',
+                'roc_plots', 'macd_plot', 'hurst_plot', 'rsi_plot', 
+                'bollinger_bands_plots', 'rolling_adf_plots', 'phase_plot_roc_hurst', 
+                'phase_plot_macd_rsi'
+            ]
+            for key in mom_rev_keys:
+                response_data[key] = None
+        # -------------------------------------------
 
         # Final check if any data was generated
         # Check if *any* value in response_data is not None

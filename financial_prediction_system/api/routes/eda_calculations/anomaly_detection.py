@@ -2,22 +2,26 @@
 
 import pandas as pd
 import numpy as np
-import plotly.graph_objs as go
-from plotly.subplots import make_subplots
-import plotly.express as px # Import px consistently
 import json
-from plotly.utils import PlotlyJSONEncoder
-from scipy import stats # For z-score and median absolute deviation
 import logging
 
-# Optional QuantLib for business day frequency
+# Plotting
+import plotly.graph_objs as go
+import plotly.express as px
+from plotly.subplots import make_subplots
+from plotly.utils import PlotlyJSONEncoder
+
+# Stats / Math
+from scipy import stats
+
+# Optional: QuantLib
 try:
     import QuantLib as ql
     QUANTLIB_AVAILABLE = True
 except ImportError:
     QUANTLIB_AVAILABLE = False
 
-# Optional Sklearn for clustering/anomaly detection models
+# Optional: Sklearn
 try:
     from sklearn.ensemble import IsolationForest
     from sklearn.preprocessing import StandardScaler
@@ -26,13 +30,14 @@ try:
     SKLEARN_AVAILABLE = True
 except ImportError:
     SKLEARN_AVAILABLE = False
-    # Dummy classes/functions if sklearn not available
+    # Dummy classes for graceful failure if sklearn is not installed
     class IsolationForest: pass
     class StandardScaler: pass
     class DBSCAN: pass
     class PCA: pass
+    logger.warning("scikit-learn not found. Clustering-based anomaly detection (IsolationForest, DBSCAN) will be skipped.")
 
-# Optional Statsmodels for LOWESS/STL
+# Optional: Statsmodels
 try:
     from statsmodels.nonparametric.smoothers_lowess import lowess as sm_lowess
     from statsmodels.tsa.seasonal import STL
@@ -41,10 +46,12 @@ except ImportError:
     STATSMODELS_AVAILABLE = False
     sm_lowess = None
     STL = None
-    # print("Warning: statsmodels not installed. LOWESS/STL will be skipped.")
+    logger.warning("statsmodels not found. LOWESS smoothing and STL decomposition will be skipped.")
 
 # Get the logger instance
 logger = logging.getLogger("financial_prediction_system")
+# Ensure logger is configured (e.g., basicConfig) - this might be done elsewhere in app setup
+# logging.basicConfig(level=logging.INFO) # Example basic config if needed here
 
 # --- Constants ---
 Z_SCORE_THRESHOLD = 3.0
@@ -96,20 +103,23 @@ def apply_isolation_forest(df: pd.DataFrame, features: list[str]) -> pd.Series |
 
     try:
         data_subset = df[features].dropna()
+        logger.debug(f"[IForest] Shape of data_subset after dropna: {data_subset.shape}")
         if data_subset.empty or len(data_subset) < 2:
-            logger.warning("Not enough valid data points for Isolation Forest after dropping NaNs.")
+            logger.warning("[IForest] Not enough valid data points for Isolation Forest after dropping NaNs.")
             return None
             
         scaler = StandardScaler()
         scaled_data = scaler.fit_transform(data_subset)
+        logger.debug(f"[IForest] Scaled data shape: {scaled_data.shape}")
 
         model = IsolationForest(contamination=IFOREST_CONTAMINATION, random_state=42)
         predictions = model.fit_predict(scaled_data)
-        # Anomalies are -1, normal are 1. Convert to boolean (True for anomaly).
         anomalies = pd.Series(predictions == -1, index=data_subset.index)
-        return anomalies.reindex(df.index, fill_value=False) # Reindex to original df index
+        num_anomalies = anomalies.sum()
+        logger.info(f"[IForest] Detected {num_anomalies} anomalies out of {len(anomalies)} points.")
+        return anomalies.reindex(df.index, fill_value=False)
     except Exception as e:
-        logger.error(f"Error applying Isolation Forest: {e}", exc_info=True)
+        logger.error(f"[IForest] Error applying Isolation Forest: {e}", exc_info=True)
         return None
 
 def apply_dbscan(df: pd.DataFrame, features: list[str]) -> pd.Series | None:
@@ -123,21 +133,23 @@ def apply_dbscan(df: pd.DataFrame, features: list[str]) -> pd.Series | None:
 
     try:
         data_subset = df[features].dropna()
+        logger.debug(f"[DBSCAN] Shape of data_subset after dropna: {data_subset.shape}")
         if data_subset.empty or len(data_subset) < DBSCAN_MIN_SAMPLES:
-             logger.warning(f"Not enough valid data points ({len(data_subset)}) for DBSCAN (min_samples={DBSCAN_MIN_SAMPLES}).")
+             logger.warning(f"[DBSCAN] Not enough valid data points ({len(data_subset)}) for DBSCAN (min_samples={DBSCAN_MIN_SAMPLES}).")
              return None
 
         scaler = StandardScaler()
         scaled_data = scaler.fit_transform(data_subset)
+        logger.debug(f"[DBSCAN] Scaled data shape: {scaled_data.shape}")
 
-        # Note: DBSCAN's eps parameter is highly sensitive and often requires tuning.
         model = DBSCAN(eps=DBSCAN_EPS, min_samples=DBSCAN_MIN_SAMPLES)
         predictions = model.fit_predict(scaled_data)
-        # Anomalies are typically labeled -1 by DBSCAN.
         anomalies = pd.Series(predictions == -1, index=data_subset.index)
-        return anomalies.reindex(df.index, fill_value=False) # Reindex to original df index
+        num_anomalies = anomalies.sum()
+        logger.info(f"[DBSCAN] Detected {num_anomalies} anomalies out of {len(anomalies)} points.")
+        return anomalies.reindex(df.index, fill_value=False)
     except Exception as e:
-        logger.error(f"Error applying DBSCAN: {e}", exc_info=True)
+        logger.error(f"[DBSCAN] Error applying DBSCAN: {e}", exc_info=True)
         return None
 
 def perform_stl_decomposition(series: pd.Series, period: int = STL_PERIOD) -> pd.DataFrame | None:
@@ -150,99 +162,203 @@ def perform_stl_decomposition(series: pd.Series, period: int = STL_PERIOD) -> pd
         logger.warning(f"Not enough data ({len(series.dropna())}) for STL decomposition with period {period}. Required: {2 * period}")
         return None
 
-    # --- Prepare Series Index ---
-    series_indexed = series.dropna().copy()
-    original_index = series_indexed.index
-    is_datetime_index = isinstance(series_indexed.index, pd.DatetimeIndex)
+    # --- Prepare Series Index (Revised Logic V2 - Incorporating QuantLib) ---
+    series_clean = series.dropna().copy()
+    if series_clean.empty or len(series_clean) < 2 * period:
+        logger.warning(f"Not enough non-NaN data ({len(series_clean)}) for STL period {period}.")
+        return None
+        
+    original_index = series_clean.index
+    processed_series = series_clean
     freq = None
 
-    if is_datetime_index:
-        # Try QuantLib calendar approach first if available
+    if isinstance(series_clean.index, pd.DatetimeIndex):
+        logger.debug("[STL Prep] Input has DatetimeIndex.")
+        
+        # === Try QuantLib NYSE Calendar First ===
         if QUANTLIB_AVAILABLE:
-            cal = ql.UnitedStates(ql.UnitedStates.NYSE)
-            start_date_ql = ql.Date(original_index.min().day, original_index.min().month, original_index.min().year)
-            end_date_ql = ql.Date(original_index.max().day, original_index.max().month, original_index.max().year)
-            
-            business_days_ql = []
-            current_date_ql = start_date_ql
-            while current_date_ql <= end_date_ql:
-                if cal.isBusinessDay(current_date_ql):
-                    business_days_ql.append(pd.Timestamp(current_date_ql.year(), current_date_ql.month(), current_date_ql.dayOfMonth()))
-                current_date_ql += ql.Period(1, ql.Days)
-            
-            if business_days_ql:
-                business_days_index = pd.DatetimeIndex(business_days_ql)
-                try:
-                    series_indexed = series_indexed.reindex(business_days_index).interpolate(method='time')
-                    # Check if reindexing + interpolation succeeded
-                    if not series_indexed.isnull().all():
-                       freq = 'B' # Assign business day frequency
-                       logger.info("Successfully reindexed series to NYSE business days for STL.")
+            logger.debug("[STL Prep] QuantLib available. Attempting NYSE calendar regularization.")
+            try:
+                cal = ql.UnitedStates(ql.UnitedStates.NYSE)
+                start_date_ql = ql.Date(original_index.min().day, original_index.min().month, original_index.min().year)
+                end_date_ql = ql.Date(original_index.max().day, original_index.max().month, original_index.max().year)
+                
+                business_days_ql = []
+                current_date_ql = start_date_ql
+                while current_date_ql <= end_date_ql:
+                    if cal.isBusinessDay(current_date_ql):
+                        # Use pd.Timestamp for easier conversion back to DatetimeIndex
+                        business_days_ql.append(pd.Timestamp(current_date_ql.year(), current_date_ql.month(), current_date_ql.dayOfMonth()))
+                    current_date_ql += ql.Period(1, ql.Days)
+                
+                if business_days_ql:
+                    business_days_index = pd.DatetimeIndex(business_days_ql)
+                    # Reindex the original cleaned series to the QL business days
+                    reindexed_series = series_clean.reindex(business_days_index)
+                    # Interpolate gaps created by reindexing
+                    reindexed_series.interpolate(method='time', inplace=True)
+                    # Check if it worked
+                    if not reindexed_series.isnull().all() and len(reindexed_series.dropna()) >= 2 * period:
+                         processed_series = reindexed_series
+                         freq = 'B' # Assign business day frequency based on QL calendar
+                         logger.info(f"[STL Prep] Successfully regularized index using QuantLib NYSE calendar. Freq='{freq}'. New length: {len(processed_series)}")
                     else:
-                         logger.warning("Reindexing to NYSE business days resulted in all NaNs. Falling back to original index.")
-                         series_indexed = series.dropna().copy() # Revert
-                         freq = pd.infer_freq(series_indexed.index)
-                except Exception as e:
-                    logger.warning(f"Failed to reindex/interpolate with QuantLib calendar: {e}. Falling back to original index.")
-                    series_indexed = series.dropna().copy() # Revert
-                    freq = pd.infer_freq(series_indexed.index)
-            else:
-                logger.warning("QuantLib calendar generated no business days for the period. Using original index.")
-                freq = pd.infer_freq(series_indexed.index)
+                         logger.warning("[STL Prep] Reindexing/interpolating with QuantLib calendar resulted in all NaNs or insufficient length. Falling back.")
+                         # Keep processed_series as series_clean, freq remains None
+                else:
+                    logger.warning("[STL Prep] QuantLib calendar generated no business days for the period. Falling back.")
+            except Exception as e:
+                logger.warning(f"[STL Prep] Error during QuantLib calendar processing: {e}. Falling back.")
+                # Keep processed_series as series_clean, freq remains None
         else:
-             # Fallback if QuantLib not available: try pandas frequency inference
-             freq = pd.infer_freq(series_indexed.index)
-             if freq:
+             logger.debug("[STL Prep] QuantLib not available.")
+             
+        # === Fallback to Pandas Frequency Inference (if QuantLib failed or not available) ===
+        if freq is None: # Only if QuantLib didn't set the frequency
+             logger.debug("[STL Prep] Attempting pandas frequency inference.")
+             inferred_freq = pd.infer_freq(series_clean.index)
+             logger.debug(f"[STL Prep] Inferred frequency: {inferred_freq}")
+             if inferred_freq in ['B', 'D']:
                  try:
-                    series_indexed = series_indexed.asfreq(freq)
-                 except ValueError as e: # Handle cases like non-monotonic index etc.
-                    logger.warning(f"Could not use inferred frequency '{freq}' with asfreq: {e}. Proceeding without regular frequency.")
-                    freq = None # Reset freq if asfreq fails
+                     temp_series = series_clean.asfreq(inferred_freq)
+                     temp_series.interpolate(method='time', inplace=True)
+                     if not temp_series.isnull().all() and len(temp_series.dropna()) >= 2 * period:
+                          processed_series = temp_series
+                          freq = inferred_freq
+                          logger.info(f"[STL Prep] Successfully regularized index using pandas infer/asfreq '{freq}'. New length: {len(processed_series)}")
+                     else:
+                          logger.warning(f"[STL Prep] Regularizing with pandas asfreq('{inferred_freq}') failed or insufficient length. Reverting.")
+                          processed_series = series_clean # Revert to original cleaned data
+                          freq = None
+                 except Exception as e:
+                     logger.warning(f"[STL Prep] Failed pandas asfreq('{inferred_freq}'): {e}. Reverting.")
+                     processed_series = series_clean # Revert
+                     freq = None
              else:
-                 logger.warning("Could not infer frequency for STL using pandas. Results might be less reliable.")
-    else:
-        # Not a DatetimeIndex initially, try converting it
+                 logger.warning(f"[STL Prep] Inferred frequency ('{inferred_freq}') is not B or D.")
+                 # We might still have a valid DatetimeIndex, just not daily/business
+                 processed_series = series_clean 
+                 # Keep freq as None unless infer_freq returned something usable by STL? Maybe not.
+                 freq = None # Safer to treat irregular freq as needing integer index later
+            
+    # === Handle Non-DatetimeIndex or Conversion ===
+    else: # Input was not DatetimeIndex
+        logger.debug("[STL Prep] Input index is not DatetimeIndex. Attempting conversion.")
         try:
-            series_indexed.index = pd.to_datetime(series_indexed.index)
-            # Try frequency inference again after conversion
-            freq = pd.infer_freq(series_indexed.index)
-            if freq:
-                 try:
-                    series_indexed = series_indexed.asfreq(freq)
-                 except ValueError as e:
-                    logger.warning(f"Could not use inferred frequency '{freq}' after index conversion: {e}. Proceeding without regular frequency.")
-                    freq = None
+            datetime_index = pd.to_datetime(series_clean.index)
+            processed_series.index = datetime_index
+            logger.info("[STL Prep] Successfully converted index to DatetimeIndex.")
+            # Now, attempt QuantLib / Pandas infer/asfreq on the *converted* index
+            
+            # === Try QuantLib NYSE Calendar First (After Conversion) ===
+            if QUANTLIB_AVAILABLE:
+                logger.debug("[STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.")
+                try:
+                    cal = ql.UnitedStates(ql.UnitedStates.NYSE)
+                    current_original_index = processed_series.index # Use the newly converted index
+                    start_date_ql = ql.Date(current_original_index.min().day, current_original_index.min().month, current_original_index.min().year)
+                    end_date_ql = ql.Date(current_original_index.max().day, current_original_index.max().month, current_original_index.max().year)
+                    
+                    business_days_ql = []
+                    current_date_ql = start_date_ql
+                    while current_date_ql <= end_date_ql:
+                        if cal.isBusinessDay(current_date_ql):
+                            business_days_ql.append(pd.Timestamp(current_date_ql.year(), current_date_ql.month(), current_date_ql.dayOfMonth()))
+                        current_date_ql += ql.Period(1, ql.Days)
+                    
+                    if business_days_ql:
+                        business_days_index = pd.DatetimeIndex(business_days_ql)
+                        # Use the current processed_series for reindexing
+                        reindexed_series = processed_series.reindex(business_days_index)
+                        reindexed_series.interpolate(method='time', inplace=True)
+                        if not reindexed_series.isnull().all() and len(reindexed_series.dropna()) >= 2 * period:
+                             processed_series = reindexed_series
+                             freq = 'B'
+                             logger.info(f"[STL Prep] (Post-Convert) Successfully regularized using QL NYSE calendar. Freq='{freq}'. Length: {len(processed_series)}")
+                        else:
+                             logger.warning("[STL Prep] (Post-Convert) QL reindexing failed or insufficient length. Falling back.")
+                             # Freq remains None
+                    else:
+                        logger.warning("[STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.")
+                except Exception as e:
+                    logger.warning(f"[STL Prep] (Post-Convert) Error during QL processing: {e}. Falling back.")
+                    # Freq remains None
             else:
-                 logger.warning("Index converted to DatetimeIndex, but could not infer frequency for STL.")
+                 logger.debug("[STL Prep] (Post-Convert) QuantLib not available.")
+                 
+            # === Fallback to Pandas Frequency Inference (After Conversion) ===
+            if freq is None: 
+                 logger.debug("[STL Prep] (Post-Convert) Attempting pandas frequency inference.")
+                 inferred_freq = pd.infer_freq(processed_series.index) # Use the converted index
+                 logger.debug(f"[STL Prep] (Post-Convert) Inferred frequency: {inferred_freq}")
+                 if inferred_freq in ['B', 'D']:
+                     try:
+                         temp_series = processed_series.asfreq(inferred_freq)
+                         temp_series.interpolate(method='time', inplace=True)
+                         if not temp_series.isnull().all() and len(temp_series.dropna()) >= 2 * period:
+                              processed_series = temp_series
+                              freq = inferred_freq
+                              logger.info(f"[STL Prep] (Post-Convert) Successfully regularized using pandas '{freq}'. Length: {len(processed_series)}")
+                         else:
+                              logger.warning(f"[STL Prep] (Post-Convert) Pandas asfreq('{inferred_freq}') failed or insufficient length. Reverting.")
+                              processed_series = processed_series # Keep the converted index, but freq is None
+                              freq = None
+                     except Exception as e:
+                         logger.warning(f"[STL Prep] (Post-Convert) Failed pandas asfreq('{inferred_freq}'): {e}. Reverting.")
+                         processed_series = processed_series # Keep converted index
+                         freq = None
+                 else:
+                     logger.warning(f"[STL Prep] (Post-Convert) Inferred frequency ('{inferred_freq}') is not B or D.")
+                     freq = None # Treat irregular freq as needing integer index later
+                 
         except Exception as e:
-            logger.warning(f"Could not convert index to DatetimeIndex for STL: {e}. Using integer index.")
-            # Use integer index if conversion fails
-            series_indexed = series_indexed.reset_index(drop=True)
-            is_datetime_index = False # Mark as not datetime index
+            logger.warning(f"[STL Prep] Could not convert index to DatetimeIndex: {e}. Will use integer index.")
+            processed_series = series_clean.reset_index(drop=True)
+            freq = None 
 
-    # --- Interpolate remaining NaNs ---
-    # Interpolate first (time method if datetime index, linear otherwise)
-    interp_method = 'time' if is_datetime_index and freq else 'linear'
-    series_indexed.interpolate(method=interp_method, limit_direction='both', inplace=True)
-    # Fill any remaining start/end NaNs
-    series_indexed.bfill(inplace=True)
-    series_indexed.ffill(inplace=True)
+    # --- Final Checks and Fallback to Integer Index ---
+    if freq is None or len(processed_series.dropna()) < 2 * period:
+        if freq is None:
+             logger.warning("[STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.")
+        else:
+             logger.warning(f"[STL Prep] Series too short ({len(processed_series.dropna())}) after frequency regularization. Falling back to integer index.")
+             
+        processed_series = series_clean.reset_index(drop=True)
+        freq = None
+        logger.info(f"[STL Prep] Using integer index. Length: {len(processed_series)}")
+        if len(processed_series) < 2 * period:
+             logger.error(f"[STL Prep] Data length ({len(processed_series)}) insufficient for STL period {period} even with integer index.")
+             return None
+             
+    # --- Interpolate/Fill any remaining NaNs ---
+    interp_method = 'time' if freq else 'linear' # Use time for DatetimeIndex, linear for Int index
+    processed_series.interpolate(method=interp_method, limit_direction='both', inplace=True)
+    processed_series.ffill(inplace=True)
+    processed_series.bfill(inplace=True)
 
-    if series_indexed.isnull().any():
-        logger.warning("Series still contains NaNs after interpolation/fill for STL. Decomposition might fail or be inaccurate.")
-        # Optionally, drop remaining NaNs if STL requires it, but this might shorten the series
-        # series_indexed.dropna(inplace=True)
-
-    if len(series_indexed) < 2 * period:
-        logger.warning(f"Not enough data points ({len(series_indexed)}) after processing for STL period {period}. Required: {2 * period}")
-        return None
-
+    if processed_series.isnull().any():
+        logger.error("[STL Prep] Series still contains NaNs after final interpolation/fill. Cannot perform STL.")
+        return None # STL requires complete data
+        
     # --- Perform STL ---
     try:
-        logger.info(f"Performing STL decomposition with period={period}, frequency='{freq if freq else 'None'}', length={len(series_indexed)}");
-        # Pass freq to STL if inferred, otherwise let statsmodels handle it
-        stl_instance = STL(series_indexed, period=period, robust=True)
+        logger.info(f"Performing STL decomposition with period={period}, frequency='{freq if freq else 'Integer'}', length={len(processed_series)}");
+        # Pass freq ONLY if it's a valid DatetimeIndex frequency string
+        # If we fell back to integer index, STL doesn't need/use freq
+        stl_kwargs = {'period': period, 'robust': True}
+        # STL might handle integer index directly, or we let it use internal defaults without freq
+        
+        stl_instance = STL(processed_series, **stl_kwargs)
         result = stl_instance.fit()
+        
+        # === DEBUGGING: Check residuals immediately after fit ===
+        residual_nan_count = result.resid.isnull().sum() if result and hasattr(result, 'resid') else 'N/A'
+        logger.debug(f"[STL Debug] Residuals directly after STL fit - NaN count: {residual_nan_count}")
+        if result and hasattr(result, 'resid') and not result.resid.isnull().all():
+             logger.debug(f"[STL Debug] Residuals head:\n{result.resid.head().to_string()}")
+        else:
+             logger.debug("[STL Debug] Residuals are None, do not exist, or are all NaN immediately after fit.")
+        # =======================================================
 
         # Combine results into a DataFrame, reindexing to original dates where possible
         decomp_df = pd.DataFrame({
@@ -251,12 +367,30 @@ def perform_stl_decomposition(series: pd.Series, period: int = STL_PERIOD) -> pd
             'seasonal': result.seasonal,
             'resid': result.resid
         })
-        # Reindex back to the original pre-processed index if possible
-        try:
-             decomp_df = decomp_df.reindex(original_index)
-        except ValueError:
-            logger.warning("Could not reindex STL results back to original index.")
-            # Keep the index used by STL if reindexing fails
+
+        # --- Restore Original Index If Possible ---
+        # Check if STL ran on an integer index (due to fallback)
+        ran_on_integer_index = not isinstance(processed_series.index, pd.DatetimeIndex)
+
+        if ran_on_integer_index and isinstance(original_index, pd.DatetimeIndex):
+            # If fallback occurred AND original index was DatetimeIndex
+            if len(decomp_df) == len(original_index):
+                # If lengths match, assign the original index back
+                decomp_df.index = original_index
+                logger.info("Applied original DatetimeIndex to integer-indexed STL result (lengths matched).")
+            else:
+                # Lengths mismatch, cannot reliably map back to dates
+                logger.warning(f"STL used integer index, but length ({len(decomp_df)}) differs from original index ({len(original_index)}). Returning with integer index.")
+                # Keep the integer index in this ambiguous case
+        elif isinstance(decomp_df.index, pd.DatetimeIndex):
+             # If STL ran on a DatetimeIndex (likely regularized), reindex to original_index
+             # This aligns timestamps and handles potential gaps/mismatches from regularization
+            try:
+                decomp_df = decomp_df.reindex(original_index)
+                logger.debug("Reindexed STL results (which had DatetimeIndex) back to original DatetimeIndex.")
+            except Exception as e:
+                logger.warning(f"Failed to reindex STL results back to original DatetimeIndex: {e}. Keeping STL-derived DatetimeIndex.")
+        # else: original index wasn't datetime or STL ran on integer and lengths mismatch - keep decomp_df index as is
 
         return decomp_df
     except Exception as e:
@@ -266,7 +400,7 @@ def perform_stl_decomposition(series: pd.Series, period: int = STL_PERIOD) -> pd
 # --- Anomaly Plotting Functions ---
 
 # --- LOWESS Helper Function (Revised V2) ---
-def _add_lowess_trace(fig, x_data, y_data, name_suffix=" LOWESS", color=None, frac=0.25, row=None, col=None, **kwargs):
+def _add_lowess_trace(fig, x_data, y_data, name_suffix=" LOWESS", color=None, frac=0.05, row=None, col=None, **kwargs):
     """Calculates LOWESS and adds it as a trace to the figure."""
     if not STATSMODELS_AVAILABLE or sm_lowess is None:
         # logger.debug("Statsmodels or LOWESS not available. Skipping LOWESS trace.") # Optional: log skipping
@@ -293,6 +427,9 @@ def _add_lowess_trace(fig, x_data, y_data, name_suffix=" LOWESS", color=None, fr
             if isinstance(x_data.index, pd.DatetimeIndex):
                 x_plot = x_data.index
                 x_calc_numeric = x_data.index.astype(np.int64)
+            elif isinstance(x_data.index, pd.RangeIndex):
+                x_plot = x_data.index
+                x_calc_numeric = x_data.index.values
             elif pd.api.types.is_numeric_dtype(x_data):
                 x_plot = x_data.values
                 x_calc_numeric = x_data.values
@@ -305,7 +442,17 @@ def _add_lowess_trace(fig, x_data, y_data, name_suffix=" LOWESS", color=None, fr
             x_plot = x_data
             x_calc_numeric = x_data.astype(np.int64)
             original_x_index = x_data
-
+        elif isinstance(x_data, pd.RangeIndex):
+            x_plot = x_data
+            x_calc_numeric = x_data.values
+            original_x_index = x_data
+        # Add handling for generic Index before list/array
+        elif isinstance(x_data, pd.Index): # Check for generic pd.Index (that isn't DatetimeIndex/RangeIndex)
+            logger.debug(f"Handling generic pd.Index for LOWESS x_data {name_suffix}. Using index for plot, positional for calc.")
+            x_plot = x_data
+            x_calc_numeric = np.arange(len(x_data))
+            # Use y_series's index if x_data was just an index
+            original_x_index = y_series.index if y_series.index.size == x_data.size else None
         elif isinstance(x_data, (list, np.ndarray)):
             if len(x_data) == len(y_series):
                 try:
@@ -497,8 +644,8 @@ def plot_data_with_z_anomalies(series: pd.Series, z_scores: pd.Series, mod_z_sco
                  mod_z_anomalies_idx = mod_z_scores.loc[common_index][abs(mod_z_scores.loc[common_index]) > MOD_Z_SCORE_THRESHOLD].index
 
         all_anomalies_idx = z_anomalies_idx.union(mod_z_anomalies_idx)
-        # Ensure anomaly indices exist in the original series index
         valid_anomaly_idx = series.index.intersection(all_anomalies_idx)
+        logger.debug(f"[Plot Z Anom] Found {len(valid_anomaly_idx)} valid Z/ModZ anomalies for {series_name}.")
 
         # Plot Anomalies
         if not valid_anomaly_idx.empty:
@@ -535,6 +682,7 @@ def plot_clustering_anomalies(df: pd.DataFrame, features: list[str], anomaly_ser
 
     try:
         data_subset = df[features].dropna()
+        logger.debug(f"[Plot Cluster {method_name}] Shape of input df: {data_subset.shape}, shape of anomaly_series: {anomaly_series.shape}, common index size: {len(data_subset.index.intersection(anomaly_series.index))}")
         # Align anomaly series with the data subset used for clustering/plotting
         # Ensure indices match before aligning
         common_index = data_subset.index.intersection(anomaly_series.index)
@@ -549,6 +697,7 @@ def plot_clustering_anomalies(df: pd.DataFrame, features: list[str], anomaly_ser
         valid_mask = aligned_anomalies.notna()
         aligned_anomalies = aligned_anomalies[valid_mask]
         data_subset = data_subset[valid_mask]
+        logger.debug(f"[Plot Cluster {method_name}] Shape after alignment/masking: {data_subset.shape}")
 
         if data_subset.empty or len(data_subset) < 2:
             logger.warning(f"Not enough valid, aligned data points for {method_name} PCA plot ({symbol}).")
@@ -562,6 +711,8 @@ def plot_clustering_anomalies(df: pd.DataFrame, features: list[str], anomaly_ser
 
         plot_df = pd.DataFrame(pca_results, columns=['PCA1', 'PCA2'], index=data_subset.index)
         plot_df['Anomaly'] = aligned_anomalies # Add the boolean anomaly flag
+        num_plot_anomalies = plot_df['Anomaly'].sum()
+        logger.info(f"[Plot Cluster {method_name}] Plotting {len(plot_df)} points with {num_plot_anomalies} anomalies.")
 
         # Create scatter plot
         fig = px.scatter(
@@ -579,7 +730,7 @@ def plot_clustering_anomalies(df: pd.DataFrame, features: list[str], anomaly_ser
 
         return json.loads(json.dumps(fig, cls=PlotlyJSONEncoder))
     except Exception as e:
-        logger.error(f"Error creating {method_name} PCA plot for {symbol}: {e}", exc_info=True)
+        logger.error(f"[Plot Cluster {method_name}] Error creating PCA plot for {symbol}: {e}", exc_info=True)
         return None
 
 def plot_stl_decomposition(decomp_df: pd.DataFrame, symbol: str) -> dict | None:
@@ -646,74 +797,141 @@ def plot_stl_decomposition(decomp_df: pd.DataFrame, symbol: str) -> dict | None:
 # --- Main Runner Function --- #
 
 def run_all_anomaly_analyses(df: pd.DataFrame, symbol: str) -> dict:
-    """Runs all anomaly detection calculations and plotting."""
-    results = {}
+    """Runs all anomaly detection analyses and returns results."""
+    logger.info(f"Starting anomaly analysis for {symbol}...")
     if df is None or df.empty or 'close' not in df.columns:
-        logger.warning(f"DataFrame empty or 'close' column missing for {symbol} anomaly analysis.")
+        logger.warning(f"Insufficient data for {symbol} to run anomaly analyses. Input df shape: {df.shape if df is not None else 'None'}")
         return {}
         
-    df_indexed = df.set_index('date') if 'date' in df.columns else df
-    if not isinstance(df_indexed.index, pd.DatetimeIndex):
+    results = {}
+    df_analysis = df.copy()
+    logger.debug(f"Initial df_analysis shape: {df_analysis.shape}. Head:\n{df_analysis.head().to_string()}")
+
+    # --- Set DatetimeIndex ---
+    if 'date' in df_analysis.columns:
         try:
-            df_indexed.index = pd.to_datetime(df_indexed.index)
-        except Exception:
-            logger.warning(f"Could not convert index to DatetimeIndex for {symbol} anomaly analysis. Some features might fail.")
-            # Proceed with original index if conversion fails
-            
-    # Use a copy to avoid modifying the original df passed to the function
-    df_analysis = df_indexed.copy()
+            df_analysis['date'] = pd.to_datetime(df_analysis['date'], errors='coerce')
+            df_analysis.set_index('date', inplace=True)
+            df_analysis.sort_index(inplace=True) # Ensure chronological order
+            logger.debug(f"Set 'date' column as DatetimeIndex for {symbol}. Index type: {df_analysis.index.dtype}")
+        except Exception as e:
+            logger.error(f"Failed to set 'date' as index for {symbol}: {e}", exc_info=True)
+            # Continue without date index if setting fails
+    elif not isinstance(df_analysis.index, pd.DatetimeIndex):
+         logger.warning(f"'date' column not found and index is not DatetimeIndex for {symbol}. Plots might use integer index. Index type: {df_analysis.index.dtype}")
+    # -------------------------
     
-    # --- Calculate Base Series for Analysis ---
-    base_series_name = 'close' # Default to close price
-    base_series = df_analysis[base_series_name]
+    logger.debug(f"df_analysis shape after potential index setting: {df_analysis.shape}. Head:\n{df_analysis.head().to_string()}")
 
-    # 1. Z-Score / Modified Z-Score Analysis
-    logger.info(f"Calculating Z-scores for {symbol} ({base_series_name})...")
-    z_scores, mod_z_scores = calculate_z_scores(base_series)
-    results["z_score_plot"] = plot_z_scores(z_scores, mod_z_scores, symbol, base_series_name)
-    results["data_with_z_anomalies_plot"] = plot_data_with_z_anomalies(base_series, z_scores, mod_z_scores, symbol, base_series_name)
-
-    # 2. Clustering-Based Anomaly Detection (Isolation Forest, DBSCAN)
-    # Features commonly used: log returns, volatility
-    # Ensure log returns and volatility are calculated (e.g., reuse from volatility module if available)
-    # For simplicity here, let's recalculate if needed, assuming 'close' exists
-    if 'log_returns' not in df_analysis.columns:
-         if len(df_analysis) > 1:
-            df_analysis['log_returns'] = np.log(df_analysis['close'] / df_analysis['close'].shift(1))
-         else:
-             df_analysis['log_returns'] = np.nan
-    
-    vol_col = f'vol_{STL_PERIOD}d' # Use same period as STL for consistency
-    if vol_col not in df_analysis.columns and 'log_returns' in df_analysis.columns:
-         if len(df_analysis) >= STL_PERIOD:
-             df_analysis[vol_col] = df_analysis['log_returns'].rolling(window=STL_PERIOD).std() * np.sqrt(252) # Annualized
-         else:
-             df_analysis[vol_col] = np.nan
+    # --- Calculate necessary base series (handle potential NaNs later) ---
+    if 'log_return' not in df_analysis.columns:
+        # Ensure close price is numeric and positive before taking log
+        close_numeric = pd.to_numeric(df_analysis['close'], errors='coerce')
+        close_positive = close_numeric[close_numeric > 0]
+        if not close_positive.empty:
+             df_analysis['log_return'] = np.log(close_positive / close_positive.shift(1))
+        else:
+             df_analysis['log_return'] = np.nan # Assign NaN if no valid close prices
+        logger.debug(f"Calculated log_return. Shape: {df_analysis.shape}. NaN count: {df_analysis['log_return'].isnull().sum() if 'log_return' in df_analysis else 'N/A'}")
              
-    features_for_clustering = ['log_returns', vol_col]
-    # Check if features exist and have data before running clustering
-    if all(f in df_analysis.columns for f in features_for_clustering) and not df_analysis[features_for_clustering].isnull().all().all():
-        logger.info(f"Running Isolation Forest for {symbol}...")
-        iforest_anomalies = apply_isolation_forest(df_analysis, features_for_clustering)
-        if iforest_anomalies is not None:
-             results["isolation_forest_plot"] = plot_clustering_anomalies(df_analysis, features_for_clustering, iforest_anomalies, "Isolation Forest", symbol)
+    if 'volatility' not in df_analysis.columns and 'log_return' in df_analysis.columns:
+        df_analysis['volatility'] = df_analysis['log_return'].rolling(window=21).std() * np.sqrt(252)
+        logger.debug(f"Calculated volatility. Shape: {df_analysis.shape}. NaN count: {df_analysis['volatility'].isnull().sum() if 'volatility' in df_analysis else 'N/A'}")
+        
+    if 'volume_pct_change' not in df_analysis.columns and 'volume' in df_analysis.columns:
+         # Ensure volume is numeric before calculating pct_change
+         volume_numeric = pd.to_numeric(df_analysis['volume'], errors='coerce')
+         df_analysis['volume_pct_change'] = volume_numeric.pct_change()
+         logger.debug(f"Calculated volume_pct_change. Shape: {df_analysis.shape}. NaN count: {df_analysis['volume_pct_change'].isnull().sum() if 'volume_pct_change' in df_analysis else 'N/A'}")
+         
+    # REMOVED global dropna call
+    # df_analysis.dropna(subset=['log_return', 'volatility', 'volume_pct_change'], how='any', inplace=True)
 
-        logger.info(f"Running DBSCAN for {symbol}...")
-        dbscan_anomalies = apply_dbscan(df_analysis, features_for_clustering)
-        if dbscan_anomalies is not None:
-             results["dbscan_plot"] = plot_clustering_anomalies(df_analysis, features_for_clustering, dbscan_anomalies, "DBSCAN", symbol)
-    else:
-        logger.warning(f"Skipping clustering analysis for {symbol} due to missing features or all NaN data in: {features_for_clustering}")
-        results["isolation_forest_plot"] = None
-        results["dbscan_plot"] = None
+    # --- 1. Z-Score Analysis (Functions handle internal NaNs) ---
+    logger.info(f"Calculating Z-scores for {symbol}...")
+    # Use the potentially NaN-containing series from df_analysis
+    close_z, close_mod_z = calculate_z_scores(df_analysis['close'])
+    vol_z, vol_mod_z = calculate_z_scores(df_analysis['volume']) if 'volume' in df_analysis else (pd.Series(dtype=float), pd.Series(dtype=float))
+    logret_z, logret_mod_z = calculate_z_scores(df_analysis['log_return']) if 'log_return' in df_analysis and not df_analysis['log_return'].isnull().all() else (pd.Series(dtype=float), pd.Series(dtype=float)) # Added check for all NaN
+    logger.debug(f"Z-Score Results - Close NaNs: {close_z.isnull().sum()}, Vol NaNs: {vol_z.isnull().sum()}, LogRet NaNs: {logret_z.isnull().sum()}")
 
-    # 3. STL Decomposition (using close price)
-    logger.info(f"Performing STL decomposition for {symbol}...")
-    decomp_df = perform_stl_decomposition(base_series, period=STL_PERIOD)
-    if decomp_df is not None:
-        results["stl_decomposition_plot"] = plot_stl_decomposition(decomp_df, symbol)
-    else:
-        results["stl_decomposition_plot"] = None
+    # Plotting functions also handle potential NaNs in scores
+    results['zscore_plots'] = plot_z_scores(close_z, close_mod_z, symbol, 'Close Price')
+    results['zscore_vol_plots'] = plot_z_scores(vol_z, vol_mod_z, symbol, 'Volume')
+    results['log_returns_z_score_plot'] = plot_z_scores(logret_z, logret_mod_z, symbol, 'Log Returns') # Added check for all NaN
 
+    results['close_price_with_z_anomalies'] = plot_data_with_z_anomalies(df_analysis['close'], close_z, close_mod_z, symbol, 'Close Price')
+    results['volume_with_z_anomalies'] = plot_data_with_z_anomalies(df_analysis['volume'], vol_z, vol_mod_z, symbol, 'Volume') if 'volume' in df_analysis else None
+    results['log_returns_z_anomalies_plot'] = plot_data_with_z_anomalies(df_analysis['log_return'], logret_z, logret_mod_z, symbol, 'Log Returns') if 'log_return' in df_analysis else None
+
+    # --- 2. Model-Based Anomaly Detection (Isolation Forest, DBSCAN) ---
+    if SKLEARN_AVAILABLE:
+        features_for_pca = ['log_return', 'volatility', 'volume_pct_change']
+        available_features = [f for f in features_for_pca if f in df_analysis.columns]
+        logger.debug(f"Features available for clustering: {available_features}")
+        
+        if len(available_features) >= 2: # Need at least 2 features for clustering/PCA
+            df_pca_subset = df_analysis[available_features].copy()
+            logger.debug(f"Created df_pca_subset. Shape before dropna: {df_pca_subset.shape}")
+            df_pca_subset.dropna(how='any', inplace=True)
+            logger.info(f"df_pca_subset shape after dropna: {df_pca_subset.shape}")
+            
+            min_samples_needed = max(2, DBSCAN_MIN_SAMPLES)
+            if not df_pca_subset.empty and len(df_pca_subset) >= min_samples_needed:
+                 logger.info(f"Applying Isolation Forest for {symbol} using features: {available_features} on {len(df_pca_subset)} points...")
+                 iforest_anomalies = apply_isolation_forest(df_pca_subset, available_features) # Pass the *cleaned* subset
+                 if iforest_anomalies is not None:
+                     # Align anomalies back to the pca subset index for plotting
+                     iforest_anomalies_aligned = iforest_anomalies.reindex(df_pca_subset.index)
+                     if not iforest_anomalies_aligned.isnull().all(): # Check alignment didn't fail
+                         results['iforest_pca_plot'] = plot_clustering_anomalies(
+                             df_pca_subset, available_features, iforest_anomalies_aligned, "Isolation Forest", symbol
+                         )
+                     else: logger.warning(f"Isolation Forest anomaly alignment failed for {symbol}")
+                 else: logger.warning(f"Isolation Forest returned None for {symbol}.")
+
+                 logger.info(f"Applying DBSCAN for {symbol} using features: {available_features} on {len(df_pca_subset)} points...")
+                 dbscan_anomalies = apply_dbscan(df_pca_subset, available_features) # Pass the *cleaned* subset
+                 if dbscan_anomalies is not None:
+                     dbscan_anomalies_aligned = dbscan_anomalies.reindex(df_pca_subset.index)
+                     if not dbscan_anomalies_aligned.isnull().all():
+                         results['dbscan_pca_plot'] = plot_clustering_anomalies(
+                             df_pca_subset, available_features, dbscan_anomalies_aligned, "DBSCAN", symbol
+                         )
+                     else: logger.warning(f"DBSCAN anomaly alignment failed for {symbol}")
+                 else: logger.warning(f"DBSCAN returned None for {symbol}.")
+            else:
+                logger.warning(f"Skipping Isolation Forest/DBSCAN for {symbol} because not enough valid data points ({len(df_pca_subset)}) remained in subset after dropping NaNs for features: {available_features}. Need at least {min_samples_needed}.")
+        else:
+            logger.warning(f"Skipping Isolation Forest/DBSCAN for {symbol} due to insufficient available base features ({len(available_features)} < 2) from {features_for_pca}")
+
+    # --- 3. STL Decomposition (Function handles internal NaNs) ---
+    if STATSMODELS_AVAILABLE and STL is not None and 'close' in df_analysis and not df_analysis['close'].isnull().all(): # Added check for all NaN
+        logger.info(f"Performing STL decomposition for {symbol} close price...")
+        stl_period = STL_PERIOD # Could make this adaptive or configurable
+        decomp_close = perform_stl_decomposition(df_analysis['close'], period=stl_period)
+        if decomp_close is not None:
+            logger.debug(f"STL decomposition successful. Result shape: {decomp_close.shape}")
+            results['stl_decomposition_plot'] = plot_stl_decomposition(decomp_close, symbol)
+            
+            # Calculate Z-scores on the residual component
+            stl_resid_z, stl_resid_mod_z = calculate_z_scores(decomp_close['resid'])
+            results['stl_residual_with_z_anomalies'] = plot_data_with_z_anomalies(
+                decomp_close['resid'], stl_resid_z, stl_resid_mod_z, symbol, 'STL Residuals'
+            )
+            
+            # Plot Z-scores of STL residuals
+            results['stl_residual_zscore_plots'] = plot_z_scores(
+                stl_resid_z, stl_resid_mod_z, symbol, 'STL Residuals'
+             )
+        else:
+            logger.warning(f"STL decomposition failed or returned None for {symbol}.")
+
+    logger.info(f"Completed Anomaly Analysis for {symbol}. Generated plot keys: {list(results.keys())}")
     # Filter out None results before returning
-    return {k: v for k, v in results.items() if v is not None} 
+    final_results = {k: v for k, v in results.items() if v is not None}
+    logger.info(f"Returning {len(final_results)} non-None anomaly plots for {symbol}.")
+    return final_results
+
+# --- FastAPI Router ---
+# ... existing code ... 

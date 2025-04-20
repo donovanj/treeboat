@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from financial_prediction_system.api.routes import models, predictions, backtests, daily_inference, data_cleaning, eda
+from financial_prediction_system.api.routes import models, predictions, backtests, daily_inference, data_cleaning, eda, feature_engineering
 from financial_prediction_system.api.schemas import ErrorResponse
 from financial_prediction_system.logging_config import logger
 
@@ -65,6 +65,7 @@ app.include_router(predictions.router)
 app.include_router(backtests.router)
 app.include_router(daily_inference.router)
 app.include_router(eda.router)
+app.include_router(feature_engineering.router)
 
 # Root endpoint
 @app.get("/")

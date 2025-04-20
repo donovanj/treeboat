@@ -8,6 +8,7 @@
     "@mantine/core": "^7.17.4",
     "@mantine/dates": "^7.17.4",
     "@mantine/hooks": "^7.17.4",
+    "@monaco-editor/react": "^4.7.0",
     "@mui/icons-material": "^5.14.0",
     "@mui/material": "^5.14.0",
     "@types/react": "^18.2.14",

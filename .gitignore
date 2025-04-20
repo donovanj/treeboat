@@ -18,3 +18,4 @@ __init__.py
 __pycache__/
 node_modules
 .vite/deps
+financial_prediction_system/frontend/.vite/

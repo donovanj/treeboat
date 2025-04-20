@@ -31818,3 +31818,1482 @@ Freq: ns
 2025-04-19 22:30:15,492 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 13
 2025-04-19 22:30:15,492 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 4 estimates for k values 10 to 13.
 2025-04-19 22:30:15,494 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:33:15,861 - financial_prediction_system - INFO - Starting volatility analysis for GME...
+2025-04-19 22:33:15,862 - financial_prediction_system - INFO - Not enough data points (0) or vol column vol_21d empty/all NaN for regime classification.
+2025-04-19 22:33:15,862 - financial_prediction_system - INFO - Generating volatility plots for GME...
+2025-04-19 22:33:15,863 - financial_prediction_system - WARNING - No valid rolling volatility data found to plot for periods [5, 21, 63] for GME.
+2025-04-19 22:33:15,863 - financial_prediction_system - WARNING - Insufficient data for Parkinson volatility plot for GME.
+2025-04-19 22:33:15,863 - financial_prediction_system - WARNING - Insufficient data for ATR plot for GME (requires: ['date', 'close', 'atr_normalized']).
+2025-04-19 22:33:15,864 - financial_prediction_system - WARNING - 5d and 21d volatility data are all NaN for GME. Skipping comparison plot.
+2025-04-19 22:33:15,864 - financial_prediction_system - WARNING - Volatility term structure data is empty after dropping NaNs for GME.
+2025-04-19 22:33:15,864 - financial_prediction_system - WARNING - No valid volatility periods with data found for cone plot for GME.
+2025-04-19 22:33:15,868 - financial_prediction_system - INFO - Volatility analysis complete for GME. Generated 1 plots.
+2025-04-19 22:33:15,868 - financial_prediction_system - INFO - Starting correlation analysis for GME...
+2025-04-19 22:33:15,868 - financial_prediction_system - WARNING - Returns DataFrame is None or empty for correlation analysis of GME. Skipping.
+2025-04-19 22:33:15,868 - financial_prediction_system - INFO - Correlation analysis complete for GME. Generated 0 plots/results.
+2025-04-19 22:33:15,868 - financial_prediction_system - INFO - Starting anomaly analysis for GME...
+2025-04-19 22:33:15,870 - financial_prediction_system - DEBUG - Initial df_analysis shape: (1, 21). Head:
+        date   open   high    low  close    volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2025-04-14  26.66  27.18  25.68  26.98  10628362    2025-04          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN    Unknown
+2025-04-19 22:33:15,870 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (1, 22). NaN count: 1
+2025-04-19 22:33:15,871 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (1, 23). NaN count: 1
+2025-04-19 22:33:15,871 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (1, 24). NaN count: 1
+2025-04-19 22:33:15,871 - financial_prediction_system - INFO - Calculating Z-scores for GME...
+2025-04-19 22:33:15,872 - financial_prediction_system - WARNING - Median Absolute Deviation is 0 or NaN. Cannot calculate Modified Z-scores.
+2025-04-19 22:33:15,872 - financial_prediction_system - WARNING - Median Absolute Deviation is 0 or NaN. Cannot calculate Modified Z-scores.
+2025-04-19 22:33:15,872 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 1, Vol NaNs: 1, LogRet NaNs: 0
+2025-04-19 22:33:15,873 - financial_prediction_system - WARNING - No valid Z-score or Modified Z-score data to plot for GME Close Price.
+2025-04-19 22:33:15,873 - financial_prediction_system - WARNING - No valid Z-score or Modified Z-score data to plot for GME Volume.
+2025-04-19 22:33:15,873 - financial_prediction_system - INFO - No Z-score data provided for GME Log Returns. Skipping Z-score plot.
+2025-04-19 22:33:15,879 - financial_prediction_system - WARNING - Original series Log Returns for GME is empty or all NaN. Skipping anomaly highlight plot.
+2025-04-19 22:33:15,879 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:33:15,879 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (1, 3)
+2025-04-19 22:33:15,880 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (0, 3)
+2025-04-19 22:33:15,880 - financial_prediction_system - WARNING - Skipping Isolation Forest/DBSCAN for GME because not enough valid data points (0) remained in subset after dropping NaNs for features: ['log_return', 'volatility', 'volume_pct_change']. Need at least 5.
+2025-04-19 22:33:15,880 - financial_prediction_system - INFO - Performing STL decomposition for GME close price...
+2025-04-19 22:33:15,880 - financial_prediction_system - WARNING - Not enough data (1) for STL decomposition with period 21. Required: 42
+2025-04-19 22:33:15,880 - financial_prediction_system - WARNING - STL decomposition failed or returned None for GME.
+2025-04-19 22:33:15,880 - financial_prediction_system - INFO - Completed Anomaly Analysis for GME. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot']
+2025-04-19 22:33:15,880 - financial_prediction_system - INFO - Returning 2 non-None anomaly plots for GME.
+2025-04-19 22:33:15,888 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:33:15,888 - financial_prediction_system - WARNING - Tail Risk: Insufficient data (less than 2 rows) to calculate returns.
+2025-04-19 22:33:15,888 - financial_prediction_system - WARNING - Tail Risk Analysis: Return calculation failed or resulted in empty series. Skipping plots.
+2025-04-19 22:33:25,785 - financial_prediction_system - INFO - Starting volatility analysis for GME...
+2025-04-19 22:33:25,791 - financial_prediction_system - INFO - Generating volatility plots for GME...
+2025-04-19 22:33:25,870 - financial_prediction_system - INFO - Volatility analysis complete for GME. Generated 7 plots.
+2025-04-19 22:33:25,870 - financial_prediction_system - INFO - Starting correlation analysis for GME...
+2025-04-19 22:33:25,917 - financial_prediction_system - INFO - Correlation analysis complete for GME. Generated 2 plots/results.
+2025-04-19 22:33:25,917 - financial_prediction_system - INFO - Starting anomaly analysis for GME...
+2025-04-19 22:33:25,919 - financial_prediction_system - DEBUG - Initial df_analysis shape: (176, 21). Head:
+        date   open   high    low  close    volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2024-08-01  22.92  23.09  21.56  21.71   9334381    2024-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+1 2024-08-02  20.95  21.61  20.43  21.07   9029964    2024-08    -0.029923     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2 2024-08-05  18.83  20.80  18.73  20.65  12205928    2024-08    -0.020135     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+3 2024-08-06  21.02  21.58  20.26  21.28   6505327    2024-08     0.030052     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+4 2024-08-07  21.15  21.46  20.38  20.83   6101059    2024-08    -0.021373     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2025-04-19 22:33:25,919 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (176, 22). NaN count: 1
+2025-04-19 22:33:25,919 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (176, 23). NaN count: 21
+2025-04-19 22:33:25,920 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (176, 24). NaN count: 1
+2025-04-19 22:33:25,920 - financial_prediction_system - INFO - Calculating Z-scores for GME...
+2025-04-19 22:33:25,921 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:33:25,984 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:33:25,991 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 6 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:33:25,999 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 2 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:33:26,002 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:33:26,002 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (176, 3)
+2025-04-19 22:33:26,002 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (155, 3)
+2025-04-19 22:33:26,002 - financial_prediction_system - INFO - Applying Isolation Forest for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 155 points...
+2025-04-19 22:33:26,003 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (155, 3)
+2025-04-19 22:33:26,003 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (155, 3)
+2025-04-19 22:33:26,062 - financial_prediction_system - INFO - [IForest] Detected 8 anomalies out of 155 points.
+2025-04-19 22:33:26,062 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (155, 3), shape of anomaly_series: (155,), common index size: 155
+2025-04-19 22:33:26,062 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (155, 3)
+2025-04-19 22:33:26,064 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 155 points with 8 anomalies.
+2025-04-19 22:33:26,078 - financial_prediction_system - INFO - Applying DBSCAN for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 155 points...
+2025-04-19 22:33:26,079 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (155, 3)
+2025-04-19 22:33:26,079 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (155, 3)
+2025-04-19 22:33:26,080 - financial_prediction_system - INFO - [DBSCAN] Detected 48 anomalies out of 155 points.
+2025-04-19 22:33:26,081 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (155, 3), shape of anomaly_series: (155,), common index size: 155
+2025-04-19 22:33:26,081 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (155, 3)
+2025-04-19 22:33:26,082 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 155 points with 48 anomalies.
+2025-04-19 22:33:26,096 - financial_prediction_system - INFO - Performing STL decomposition for GME close price...
+2025-04-19 22:33:26,096 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:33:26,097 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:33:26,097 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:33:26,097 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:33:26,097 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:33:26,097 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:33:26,097 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:33:26,097 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:33:26,097 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 176
+2025-04-19 22:33:26,097 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=176
+2025-04-19 22:33:26,108 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:33:26,108 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0   -0.396408
+1   -0.742316
+2   -0.575037
+3   -0.600500
+4   -0.192454
+2025-04-19 22:33:26,108 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (176, 4)
+2025-04-19 22:33:26,121 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:33:26,126 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 3 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:33:26,129 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:33:26,134 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:33:26,147 - financial_prediction_system - INFO - Completed Anomaly Analysis for GME. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:33:26,147 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for GME.
+2025-04-19 22:33:26,171 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:33:26,171 - financial_prediction_system - INFO - Tail Risk: Calculated 175 returns using column 'close'.
+2025-04-19 22:33:26,171 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:33:26,186 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0505, Normal=-0.0683, t=-0.0622
+2025-04-19 22:33:26,188 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:33:26,222 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 113 rolling VaR points and 113 rolling CVaR points.
+2025-04-19 22:33:26,224 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:33:26,224 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 175 negative returns.
+2025-04-19 22:33:26,224 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 9 exceedances above threshold 0.0745 (quantile=0.95) for 175 losses.
+2025-04-19 22:33:26,224 - financial_prediction_system - WARNING - Tail Risk (GPD Fit): Insufficient or non-unique exceedances (9 total, 9 unique) to reliably fit GPD model. Need >= 10 total and >= 3 unique.
+2025-04-19 22:33:26,224 - financial_prediction_system - WARNING - Tail Risk (Return Level Plot): Cannot plot return levels due to missing/invalid GPD fit parameters.
+2025-04-19 22:33:26,225 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:33:26,226 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 175 valid absolute returns.
+2025-04-19 22:33:26,226 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 17
+2025-04-19 22:33:26,226 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 8 estimates for k values 10 to 17.
+2025-04-19 22:33:26,228 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:33:36,985 - financial_prediction_system - INFO - Starting volatility analysis for AAPL...
+2025-04-19 22:33:36,990 - financial_prediction_system - INFO - Generating volatility plots for AAPL...
+2025-04-19 22:33:37,069 - financial_prediction_system - INFO - Volatility analysis complete for AAPL. Generated 7 plots.
+2025-04-19 22:33:37,069 - financial_prediction_system - INFO - Starting correlation analysis for AAPL...
+2025-04-19 22:33:37,116 - financial_prediction_system - INFO - Correlation analysis complete for AAPL. Generated 2 plots/results.
+2025-04-19 22:33:37,116 - financial_prediction_system - INFO - Starting anomaly analysis for AAPL...
+2025-04-19 22:33:37,118 - financial_prediction_system - DEBUG - Initial df_analysis shape: (176, 21). Head:
+        date    open    high     low   close     volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2024-08-01  224.37  224.48  217.02  218.36   62500996    2024-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+1 2024-08-02  219.15  225.60  217.71  219.86  105568560    2024-08     0.006846     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2 2024-08-05  199.09  213.50  196.00  209.27  119548589    2024-08    -0.049366     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+3 2024-08-06  205.30  209.99  201.07  207.23   69660488    2024-08    -0.009796     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+4 2024-08-07  206.90  213.64  206.39  209.82   63516417    2024-08     0.012421     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2025-04-19 22:33:37,118 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (176, 22). NaN count: 1
+2025-04-19 22:33:37,118 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (176, 23). NaN count: 21
+2025-04-19 22:33:37,119 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (176, 24). NaN count: 1
+2025-04-19 22:33:37,119 - financial_prediction_system - INFO - Calculating Z-scores for AAPL...
+2025-04-19 22:33:37,120 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:33:37,183 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 3 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:33:37,191 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 8 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:33:37,199 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 3 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:33:37,202 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:33:37,202 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (176, 3)
+2025-04-19 22:33:37,202 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (155, 3)
+2025-04-19 22:33:37,202 - financial_prediction_system - INFO - Applying Isolation Forest for AAPL using features: ['log_return', 'volatility', 'volume_pct_change'] on 155 points...
+2025-04-19 22:33:37,203 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (155, 3)
+2025-04-19 22:33:37,203 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (155, 3)
+2025-04-19 22:33:37,262 - financial_prediction_system - INFO - [IForest] Detected 8 anomalies out of 155 points.
+2025-04-19 22:33:37,263 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (155, 3), shape of anomaly_series: (155,), common index size: 155
+2025-04-19 22:33:37,263 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (155, 3)
+2025-04-19 22:33:37,264 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 155 points with 8 anomalies.
+2025-04-19 22:33:37,279 - financial_prediction_system - INFO - Applying DBSCAN for AAPL using features: ['log_return', 'volatility', 'volume_pct_change'] on 155 points...
+2025-04-19 22:33:37,279 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (155, 3)
+2025-04-19 22:33:37,280 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (155, 3)
+2025-04-19 22:33:37,281 - financial_prediction_system - INFO - [DBSCAN] Detected 39 anomalies out of 155 points.
+2025-04-19 22:33:37,281 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (155, 3), shape of anomaly_series: (155,), common index size: 155
+2025-04-19 22:33:37,282 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (155, 3)
+2025-04-19 22:33:37,283 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 155 points with 39 anomalies.
+2025-04-19 22:33:37,297 - financial_prediction_system - INFO - Performing STL decomposition for AAPL close price...
+2025-04-19 22:33:37,297 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:33:37,297 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:33:37,298 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:33:37,298 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:33:37,298 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:33:37,298 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:33:37,298 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:33:37,298 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:33:37,298 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 176
+2025-04-19 22:33:37,298 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=176
+2025-04-19 22:33:37,309 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:33:37,310 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0   -1.337948
+1    1.242373
+2   -1.729236
+3   -3.140060
+4   -1.017799
+2025-04-19 22:33:37,310 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (176, 4)
+2025-04-19 22:33:37,323 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:33:37,328 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 7 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:33:37,331 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:33:37,336 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:33:37,350 - financial_prediction_system - INFO - Completed Anomaly Analysis for AAPL. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:33:37,350 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for AAPL.
+2025-04-19 22:33:37,373 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:33:37,374 - financial_prediction_system - INFO - Tail Risk: Calculated 175 returns using column 'close'.
+2025-04-19 22:33:37,374 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:33:37,390 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0343, Normal=-0.0357, t=-0.0270
+2025-04-19 22:33:37,392 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:33:37,426 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 113 rolling VaR points and 113 rolling CVaR points.
+2025-04-19 22:33:37,428 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:33:37,428 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 175 negative returns.
+2025-04-19 22:33:37,429 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 9 exceedances above threshold 0.0209 (quantile=0.95) for 175 losses.
+2025-04-19 22:33:37,429 - financial_prediction_system - WARNING - Tail Risk (GPD Fit): Insufficient or non-unique exceedances (9 total, 9 unique) to reliably fit GPD model. Need >= 10 total and >= 3 unique.
+2025-04-19 22:33:37,429 - financial_prediction_system - WARNING - Tail Risk (Return Level Plot): Cannot plot return levels due to missing/invalid GPD fit parameters.
+2025-04-19 22:33:37,430 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:33:37,430 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 175 valid absolute returns.
+2025-04-19 22:33:37,430 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 17
+2025-04-19 22:33:37,430 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 8 estimates for k values 10 to 17.
+2025-04-19 22:33:37,433 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:33:59,998 - financial_prediction_system - INFO - Starting volatility analysis for AAPL...
+2025-04-19 22:34:00,004 - financial_prediction_system - INFO - Generating volatility plots for AAPL...
+2025-04-19 22:34:00,130 - financial_prediction_system - INFO - Volatility analysis complete for AAPL. Generated 7 plots.
+2025-04-19 22:34:00,130 - financial_prediction_system - INFO - Starting correlation analysis for AAPL...
+2025-04-19 22:34:00,228 - financial_prediction_system - INFO - Correlation analysis complete for AAPL. Generated 2 plots/results.
+2025-04-19 22:34:00,228 - financial_prediction_system - INFO - Starting anomaly analysis for AAPL...
+2025-04-19 22:34:00,230 - financial_prediction_system - DEBUG - Initial df_analysis shape: (428, 21). Head:
+        date    open    high     low   close     volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2023-08-01  196.24  196.73  195.28  195.61   35306213    2023-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+1 2023-08-02  195.04  195.18  191.85  192.58   50408072    2023-08    -0.015611     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2 2023-08-03  191.57  192.37  190.69  191.17   62366562    2023-08    -0.007349     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+3 2023-08-04  185.52  187.38  181.92  181.99  115956843    2023-08    -0.049211     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+4 2023-08-07  182.13  183.13  177.35  178.85   97586944    2023-08    -0.017404     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2025-04-19 22:34:00,230 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (428, 22). NaN count: 1
+2025-04-19 22:34:00,230 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (428, 23). NaN count: 21
+2025-04-19 22:34:00,231 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (428, 24). NaN count: 1
+2025-04-19 22:34:00,231 - financial_prediction_system - INFO - Calculating Z-scores for AAPL...
+2025-04-19 22:34:00,232 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:34:00,340 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:34:00,354 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 11 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:34:00,368 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 5 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:34:00,371 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:34:00,371 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (428, 3)
+2025-04-19 22:34:00,371 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (407, 3)
+2025-04-19 22:34:00,371 - financial_prediction_system - INFO - Applying Isolation Forest for AAPL using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:34:00,372 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:34:00,373 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (407, 3)
+2025-04-19 22:34:00,435 - financial_prediction_system - INFO - [IForest] Detected 21 anomalies out of 407 points.
+2025-04-19 22:34:00,435 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:34:00,435 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (407, 3)
+2025-04-19 22:34:00,437 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 407 points with 21 anomalies.
+2025-04-19 22:34:00,452 - financial_prediction_system - INFO - Applying DBSCAN for AAPL using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:34:00,452 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:34:00,453 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (407, 3)
+2025-04-19 22:34:00,454 - financial_prediction_system - INFO - [DBSCAN] Detected 73 anomalies out of 407 points.
+2025-04-19 22:34:00,455 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:34:00,455 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (407, 3)
+2025-04-19 22:34:00,456 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 407 points with 73 anomalies.
+2025-04-19 22:34:00,470 - financial_prediction_system - INFO - Performing STL decomposition for AAPL close price...
+2025-04-19 22:34:00,471 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:34:00,471 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:34:00,471 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:34:00,471 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:34:00,471 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:34:00,471 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:34:00,471 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:34:00,471 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:34:00,471 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 428
+2025-04-19 22:34:00,471 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=428
+2025-04-19 22:34:00,497 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:34:00,497 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    1.753117
+1    0.930195
+2   -0.178854
+3   -0.142586
+4   -1.913095
+2025-04-19 22:34:00,498 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (428, 4)
+2025-04-19 22:34:00,510 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:34:00,521 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 16 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:34:00,524 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:34:00,536 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:34:00,556 - financial_prediction_system - INFO - Completed Anomaly Analysis for AAPL. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:34:00,556 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for AAPL.
+2025-04-19 22:34:00,584 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:34:00,584 - financial_prediction_system - INFO - Tail Risk: Calculated 427 returns using column 'close'.
+2025-04-19 22:34:00,584 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:34:00,604 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0275, Normal=-0.0288, t=-0.0238
+2025-04-19 22:34:00,606 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:34:00,713 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 365 rolling VaR points and 365 rolling CVaR points.
+2025-04-19 22:34:00,715 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:34:00,715 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 427 negative returns.
+2025-04-19 22:34:00,716 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 22 exceedances above threshold 0.0211 (quantile=0.95) for 427 losses.
+2025-04-19 22:34:00,720 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=1.2605, scale=0.0031, loc=0.0000 (fixed)
+2025-04-19 22:34:00,720 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=1.2605, scale=0.0031, threshold=0.0211, n=427, n_u=22, lambda_u=0.0515
+2025-04-19 22:34:00,722 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:34:00,723 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 427 valid absolute returns.
+2025-04-19 22:34:00,723 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 42
+2025-04-19 22:34:00,723 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 33 estimates for k values 10 to 42.
+2025-04-19 22:34:00,725 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:36:50,934 - financial_prediction_system - INFO - Starting volatility analysis for RBLX...
+2025-04-19 22:36:50,940 - financial_prediction_system - INFO - Generating volatility plots for RBLX...
+2025-04-19 22:36:51,066 - financial_prediction_system - INFO - Volatility analysis complete for RBLX. Generated 7 plots.
+2025-04-19 22:36:51,066 - financial_prediction_system - INFO - Starting correlation analysis for RBLX...
+2025-04-19 22:36:51,163 - financial_prediction_system - INFO - Correlation analysis complete for RBLX. Generated 2 plots/results.
+2025-04-19 22:36:51,163 - financial_prediction_system - INFO - Starting anomaly analysis for RBLX...
+2025-04-19 22:36:51,165 - financial_prediction_system - DEBUG - Initial df_analysis shape: (428, 21). Head:
+        date   open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2023-08-01  38.90  39.49  38.20  39.43  5381504    2023-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+1 2023-08-02  38.39  38.39  36.60  37.63  9953951    2023-08    -0.046725     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2 2023-08-03  37.45  37.47  36.62  36.68  7959839    2023-08    -0.025570     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+3 2023-08-04  38.00  38.70  37.36  37.48  7470876    2023-08     0.021576     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+4 2023-08-07  37.57  37.70  36.70  37.60  5527293    2023-08     0.003197     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2025-04-19 22:36:51,166 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (428, 22). NaN count: 1
+2025-04-19 22:36:51,166 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (428, 23). NaN count: 21
+2025-04-19 22:36:51,166 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (428, 24). NaN count: 1
+2025-04-19 22:36:51,167 - financial_prediction_system - INFO - Calculating Z-scores for RBLX...
+2025-04-19 22:36:51,168 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:36:51,276 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:36:51,290 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 15 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:36:51,304 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 6 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:36:51,307 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:36:51,307 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (428, 3)
+2025-04-19 22:36:51,307 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (407, 3)
+2025-04-19 22:36:51,307 - financial_prediction_system - INFO - Applying Isolation Forest for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:36:51,308 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:36:51,308 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (407, 3)
+2025-04-19 22:36:51,371 - financial_prediction_system - INFO - [IForest] Detected 21 anomalies out of 407 points.
+2025-04-19 22:36:51,371 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:36:51,371 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (407, 3)
+2025-04-19 22:36:51,372 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 407 points with 21 anomalies.
+2025-04-19 22:36:51,388 - financial_prediction_system - INFO - Applying DBSCAN for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:36:51,388 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:36:51,389 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (407, 3)
+2025-04-19 22:36:51,390 - financial_prediction_system - INFO - [DBSCAN] Detected 56 anomalies out of 407 points.
+2025-04-19 22:36:51,390 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:36:51,391 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (407, 3)
+2025-04-19 22:36:51,392 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 407 points with 56 anomalies.
+2025-04-19 22:36:51,406 - financial_prediction_system - INFO - Performing STL decomposition for RBLX close price...
+2025-04-19 22:36:51,407 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:36:51,407 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:36:51,407 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:36:51,407 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:36:51,407 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:36:51,407 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:36:51,407 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:36:51,407 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:36:51,407 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 428
+2025-04-19 22:36:51,407 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=428
+2025-04-19 22:36:51,433 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:36:51,433 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.250408
+1    1.233200
+2    1.299572
+3    1.302153
+4    1.194020
+2025-04-19 22:36:51,434 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (428, 4)
+2025-04-19 22:36:51,446 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:36:51,458 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 18 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:36:51,460 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:36:51,472 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:36:51,492 - financial_prediction_system - INFO - Completed Anomaly Analysis for RBLX. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:36:51,492 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for RBLX.
+2025-04-19 22:36:51,519 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:36:51,520 - financial_prediction_system - INFO - Tail Risk: Calculated 427 returns using column 'close'.
+2025-04-19 22:36:51,520 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:36:51,540 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0407, Normal=-0.0531, t=-0.0423
+2025-04-19 22:36:51,541 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:36:51,648 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 365 rolling VaR points and 365 rolling CVaR points.
+2025-04-19 22:36:51,650 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:36:51,651 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 427 negative returns.
+2025-04-19 22:36:51,651 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 22 exceedances above threshold 0.0404 (quantile=0.95) for 427 losses.
+2025-04-19 22:36:51,656 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=0.4678, scale=0.0145, loc=0.0000 (fixed)
+2025-04-19 22:36:51,656 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=0.4678, scale=0.0145, threshold=0.0404, n=427, n_u=22, lambda_u=0.0515
+2025-04-19 22:36:51,657 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:36:51,658 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 427 valid absolute returns.
+2025-04-19 22:36:51,658 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 42
+2025-04-19 22:36:51,658 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 33 estimates for k values 10 to 42.
+2025-04-19 22:36:51,660 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:42:26,029 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-19 22:42:28,767 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-19 22:42:33,219 - financial_prediction_system - INFO - Starting volatility analysis for RBLX...
+2025-04-19 22:42:33,225 - financial_prediction_system - INFO - Generating volatility plots for RBLX...
+2025-04-19 22:42:33,424 - financial_prediction_system - INFO - Volatility analysis complete for RBLX. Generated 7 plots.
+2025-04-19 22:42:33,424 - financial_prediction_system - INFO - Starting correlation analysis for RBLX...
+2025-04-19 22:42:33,526 - financial_prediction_system - INFO - Correlation analysis complete for RBLX. Generated 2 plots/results.
+2025-04-19 22:42:33,526 - financial_prediction_system - INFO - Starting anomaly analysis for RBLX...
+2025-04-19 22:42:33,528 - financial_prediction_system - DEBUG - Initial df_analysis shape: (428, 21). Head:
+        date   open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2023-08-01  38.90  39.49  38.20  39.43  5381504    2023-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+1 2023-08-02  38.39  38.39  36.60  37.63  9953951    2023-08    -0.046725     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2 2023-08-03  37.45  37.47  36.62  36.68  7959839    2023-08    -0.025570     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+3 2023-08-04  38.00  38.70  37.36  37.48  7470876    2023-08     0.021576     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+4 2023-08-07  37.57  37.70  36.70  37.60  5527293    2023-08     0.003197     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2025-04-19 22:42:33,528 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (428, 22). NaN count: 1
+2025-04-19 22:42:33,529 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (428, 23). NaN count: 21
+2025-04-19 22:42:33,529 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (428, 24). NaN count: 1
+2025-04-19 22:42:33,529 - financial_prediction_system - INFO - Calculating Z-scores for RBLX...
+2025-04-19 22:42:33,531 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:42:33,635 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:42:33,649 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 15 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:42:33,664 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 6 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:42:33,666 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:42:33,666 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (428, 3)
+2025-04-19 22:42:33,667 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (407, 3)
+2025-04-19 22:42:33,667 - financial_prediction_system - INFO - Applying Isolation Forest for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:42:33,667 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:42:33,668 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (407, 3)
+2025-04-19 22:42:33,732 - financial_prediction_system - INFO - [IForest] Detected 21 anomalies out of 407 points.
+2025-04-19 22:42:33,733 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:42:33,733 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (407, 3)
+2025-04-19 22:42:33,734 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 407 points with 21 anomalies.
+2025-04-19 22:42:33,752 - financial_prediction_system - INFO - Applying DBSCAN for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:42:33,753 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:42:33,753 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (407, 3)
+2025-04-19 22:42:33,755 - financial_prediction_system - INFO - [DBSCAN] Detected 56 anomalies out of 407 points.
+2025-04-19 22:42:33,755 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:42:33,755 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (407, 3)
+2025-04-19 22:42:33,756 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 407 points with 56 anomalies.
+2025-04-19 22:42:33,771 - financial_prediction_system - INFO - Performing STL decomposition for RBLX close price...
+2025-04-19 22:42:33,772 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:42:33,772 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:42:33,772 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:42:33,772 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:42:33,772 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:42:33,772 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:42:33,772 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:42:33,772 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:42:33,772 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 428
+2025-04-19 22:42:33,773 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=428
+2025-04-19 22:42:33,798 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:42:33,799 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.250408
+1    1.233200
+2    1.299572
+3    1.302153
+4    1.194020
+2025-04-19 22:42:33,799 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (428, 4)
+2025-04-19 22:42:33,812 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:42:33,823 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 18 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:42:33,826 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:42:33,837 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:42:33,856 - financial_prediction_system - INFO - Completed Anomaly Analysis for RBLX. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:42:33,856 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for RBLX.
+2025-04-19 22:42:33,886 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:42:33,886 - financial_prediction_system - INFO - Tail Risk: Calculated 427 returns using column 'close'.
+2025-04-19 22:42:33,887 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:42:33,907 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0407, Normal=-0.0531, t=-0.0423
+2025-04-19 22:42:33,909 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:42:34,018 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 365 rolling VaR points and 365 rolling CVaR points.
+2025-04-19 22:42:34,020 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:42:34,020 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 427 negative returns.
+2025-04-19 22:42:34,021 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 22 exceedances above threshold 0.0404 (quantile=0.95) for 427 losses.
+2025-04-19 22:42:34,025 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=0.4678, scale=0.0145, loc=0.0000 (fixed)
+2025-04-19 22:42:34,025 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=0.4678, scale=0.0145, threshold=0.0404, n=427, n_u=22, lambda_u=0.0515
+2025-04-19 22:42:34,027 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:42:34,028 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 427 valid absolute returns.
+2025-04-19 22:42:34,028 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 42
+2025-04-19 22:42:34,028 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 33 estimates for k values 10 to 42.
+2025-04-19 22:42:34,030 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:42:35,401 - financial_prediction_system - INFO - Starting volatility analysis for RBLX...
+2025-04-19 22:42:35,407 - financial_prediction_system - INFO - Generating volatility plots for RBLX...
+2025-04-19 22:42:35,536 - financial_prediction_system - INFO - Volatility analysis complete for RBLX. Generated 7 plots.
+2025-04-19 22:42:35,536 - financial_prediction_system - INFO - Starting correlation analysis for RBLX...
+2025-04-19 22:42:35,636 - financial_prediction_system - INFO - Correlation analysis complete for RBLX. Generated 2 plots/results.
+2025-04-19 22:42:35,636 - financial_prediction_system - INFO - Starting anomaly analysis for RBLX...
+2025-04-19 22:42:35,638 - financial_prediction_system - DEBUG - Initial df_analysis shape: (428, 21). Head:
+        date   open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2023-08-01  38.90  39.49  38.20  39.43  5381504    2023-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+1 2023-08-02  38.39  38.39  36.60  37.63  9953951    2023-08    -0.046725     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2 2023-08-03  37.45  37.47  36.62  36.68  7959839    2023-08    -0.025570     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+3 2023-08-04  38.00  38.70  37.36  37.48  7470876    2023-08     0.021576     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+4 2023-08-07  37.57  37.70  36.70  37.60  5527293    2023-08     0.003197     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2025-04-19 22:42:35,638 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (428, 22). NaN count: 1
+2025-04-19 22:42:35,638 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (428, 23). NaN count: 21
+2025-04-19 22:42:35,639 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (428, 24). NaN count: 1
+2025-04-19 22:42:35,639 - financial_prediction_system - INFO - Calculating Z-scores for RBLX...
+2025-04-19 22:42:35,640 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:42:35,745 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:42:35,758 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 15 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:42:35,772 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 6 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:42:35,774 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:42:35,775 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (428, 3)
+2025-04-19 22:42:35,775 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (407, 3)
+2025-04-19 22:42:35,775 - financial_prediction_system - INFO - Applying Isolation Forest for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:42:35,776 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:42:35,776 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (407, 3)
+2025-04-19 22:42:35,839 - financial_prediction_system - INFO - [IForest] Detected 21 anomalies out of 407 points.
+2025-04-19 22:42:35,840 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:42:35,840 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (407, 3)
+2025-04-19 22:42:35,841 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 407 points with 21 anomalies.
+2025-04-19 22:42:35,856 - financial_prediction_system - INFO - Applying DBSCAN for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:42:35,857 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:42:35,857 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (407, 3)
+2025-04-19 22:42:35,859 - financial_prediction_system - INFO - [DBSCAN] Detected 56 anomalies out of 407 points.
+2025-04-19 22:42:35,859 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:42:35,859 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (407, 3)
+2025-04-19 22:42:35,860 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 407 points with 56 anomalies.
+2025-04-19 22:42:35,875 - financial_prediction_system - INFO - Performing STL decomposition for RBLX close price...
+2025-04-19 22:42:35,875 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:42:35,876 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:42:35,876 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:42:35,876 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:42:35,876 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:42:35,876 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:42:35,876 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:42:35,876 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:42:35,876 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 428
+2025-04-19 22:42:35,876 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=428
+2025-04-19 22:42:35,902 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:42:35,902 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.250408
+1    1.233200
+2    1.299572
+3    1.302153
+4    1.194020
+2025-04-19 22:42:35,903 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (428, 4)
+2025-04-19 22:42:35,915 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:42:35,926 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 18 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:42:35,929 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:42:35,940 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:42:35,959 - financial_prediction_system - INFO - Completed Anomaly Analysis for RBLX. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:42:35,959 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for RBLX.
+2025-04-19 22:42:35,986 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:42:35,987 - financial_prediction_system - INFO - Tail Risk: Calculated 427 returns using column 'close'.
+2025-04-19 22:42:35,987 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:42:36,007 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0407, Normal=-0.0531, t=-0.0423
+2025-04-19 22:42:36,009 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:42:36,116 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 365 rolling VaR points and 365 rolling CVaR points.
+2025-04-19 22:42:36,118 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:42:36,118 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 427 negative returns.
+2025-04-19 22:42:36,119 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 22 exceedances above threshold 0.0404 (quantile=0.95) for 427 losses.
+2025-04-19 22:42:36,123 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=0.4678, scale=0.0145, loc=0.0000 (fixed)
+2025-04-19 22:42:36,123 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=0.4678, scale=0.0145, threshold=0.0404, n=427, n_u=22, lambda_u=0.0515
+2025-04-19 22:42:36,125 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:42:36,125 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 427 valid absolute returns.
+2025-04-19 22:42:36,125 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 42
+2025-04-19 22:42:36,126 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 33 estimates for k values 10 to 42.
+2025-04-19 22:42:36,128 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:42:58,197 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-19 22:43:00,940 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-19 22:43:02,299 - financial_prediction_system - INFO - Starting volatility analysis for RBLX...
+2025-04-19 22:43:02,306 - financial_prediction_system - INFO - Generating volatility plots for RBLX...
+2025-04-19 22:43:02,506 - financial_prediction_system - INFO - Volatility analysis complete for RBLX. Generated 7 plots.
+2025-04-19 22:43:02,506 - financial_prediction_system - INFO - Starting correlation analysis for RBLX...
+2025-04-19 22:43:02,608 - financial_prediction_system - INFO - Correlation analysis complete for RBLX. Generated 2 plots/results.
+2025-04-19 22:43:02,608 - financial_prediction_system - INFO - Starting anomaly analysis for RBLX...
+2025-04-19 22:43:02,611 - financial_prediction_system - DEBUG - Initial df_analysis shape: (428, 21). Head:
+        date   open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2023-08-01  38.90  39.49  38.20  39.43  5381504    2023-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+1 2023-08-02  38.39  38.39  36.60  37.63  9953951    2023-08    -0.046725     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2 2023-08-03  37.45  37.47  36.62  36.68  7959839    2023-08    -0.025570     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+3 2023-08-04  38.00  38.70  37.36  37.48  7470876    2023-08     0.021576     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+4 2023-08-07  37.57  37.70  36.70  37.60  5527293    2023-08     0.003197     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2025-04-19 22:43:02,611 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (428, 22). NaN count: 1
+2025-04-19 22:43:02,611 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (428, 23). NaN count: 21
+2025-04-19 22:43:02,612 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (428, 24). NaN count: 1
+2025-04-19 22:43:02,612 - financial_prediction_system - INFO - Calculating Z-scores for RBLX...
+2025-04-19 22:43:02,613 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:43:02,746 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:43:02,764 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 15 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:43:02,782 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 6 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:43:02,784 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:43:02,785 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (428, 3)
+2025-04-19 22:43:02,785 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (407, 3)
+2025-04-19 22:43:02,785 - financial_prediction_system - INFO - Applying Isolation Forest for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:43:02,785 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:43:02,786 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (407, 3)
+2025-04-19 22:43:02,852 - financial_prediction_system - INFO - [IForest] Detected 21 anomalies out of 407 points.
+2025-04-19 22:43:02,853 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:43:02,853 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (407, 3)
+2025-04-19 22:43:02,854 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 407 points with 21 anomalies.
+2025-04-19 22:43:02,878 - financial_prediction_system - INFO - Applying DBSCAN for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:43:02,879 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:43:02,880 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (407, 3)
+2025-04-19 22:43:02,881 - financial_prediction_system - INFO - [DBSCAN] Detected 56 anomalies out of 407 points.
+2025-04-19 22:43:02,881 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:43:02,882 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (407, 3)
+2025-04-19 22:43:02,883 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 407 points with 56 anomalies.
+2025-04-19 22:43:02,898 - financial_prediction_system - INFO - Performing STL decomposition for RBLX close price...
+2025-04-19 22:43:02,898 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:43:02,898 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:43:02,898 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:43:02,899 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:43:02,899 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:43:02,899 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:43:02,899 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:43:02,899 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:43:02,899 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 428
+2025-04-19 22:43:02,899 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=428
+2025-04-19 22:43:02,925 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:43:02,925 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.250408
+1    1.233200
+2    1.299572
+3    1.302153
+4    1.194020
+2025-04-19 22:43:02,925 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (428, 4)
+2025-04-19 22:43:02,938 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:02,952 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 18 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:43:02,955 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:02,970 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:02,994 - financial_prediction_system - INFO - Completed Anomaly Analysis for RBLX. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:43:02,994 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for RBLX.
+2025-04-19 22:43:03,024 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:43:03,024 - financial_prediction_system - INFO - Tail Risk: Calculated 427 returns using column 'close'.
+2025-04-19 22:43:03,024 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:43:03,044 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0407, Normal=-0.0531, t=-0.0423
+2025-04-19 22:43:03,046 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:43:03,153 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 365 rolling VaR points and 365 rolling CVaR points.
+2025-04-19 22:43:03,155 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:43:03,156 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 427 negative returns.
+2025-04-19 22:43:03,156 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 22 exceedances above threshold 0.0404 (quantile=0.95) for 427 losses.
+2025-04-19 22:43:03,160 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=0.4678, scale=0.0145, loc=0.0000 (fixed)
+2025-04-19 22:43:03,161 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=0.4678, scale=0.0145, threshold=0.0404, n=427, n_u=22, lambda_u=0.0515
+2025-04-19 22:43:03,162 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:43:03,163 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 427 valid absolute returns.
+2025-04-19 22:43:03,163 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 42
+2025-04-19 22:43:03,163 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 33 estimates for k values 10 to 42.
+2025-04-19 22:43:03,166 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:43:04,506 - financial_prediction_system - INFO - Starting volatility analysis for RBLX...
+2025-04-19 22:43:04,512 - financial_prediction_system - INFO - Generating volatility plots for RBLX...
+2025-04-19 22:43:04,640 - financial_prediction_system - INFO - Volatility analysis complete for RBLX. Generated 7 plots.
+2025-04-19 22:43:04,640 - financial_prediction_system - INFO - Starting correlation analysis for RBLX...
+2025-04-19 22:43:04,739 - financial_prediction_system - INFO - Correlation analysis complete for RBLX. Generated 2 plots/results.
+2025-04-19 22:43:04,739 - financial_prediction_system - INFO - Starting anomaly analysis for RBLX...
+2025-04-19 22:43:04,741 - financial_prediction_system - DEBUG - Initial df_analysis shape: (428, 21). Head:
+        date   open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2023-08-01  38.90  39.49  38.20  39.43  5381504    2023-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+1 2023-08-02  38.39  38.39  36.60  37.63  9953951    2023-08    -0.046725     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2 2023-08-03  37.45  37.47  36.62  36.68  7959839    2023-08    -0.025570     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+3 2023-08-04  38.00  38.70  37.36  37.48  7470876    2023-08     0.021576     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+4 2023-08-07  37.57  37.70  36.70  37.60  5527293    2023-08     0.003197     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2025-04-19 22:43:04,742 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (428, 22). NaN count: 1
+2025-04-19 22:43:04,742 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (428, 23). NaN count: 21
+2025-04-19 22:43:04,742 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (428, 24). NaN count: 1
+2025-04-19 22:43:04,742 - financial_prediction_system - INFO - Calculating Z-scores for RBLX...
+2025-04-19 22:43:04,744 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:43:04,874 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:43:04,891 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 15 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:43:04,909 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 6 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:43:04,911 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:43:04,911 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (428, 3)
+2025-04-19 22:43:04,912 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (407, 3)
+2025-04-19 22:43:04,912 - financial_prediction_system - INFO - Applying Isolation Forest for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:43:04,912 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:43:04,913 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (407, 3)
+2025-04-19 22:43:04,976 - financial_prediction_system - INFO - [IForest] Detected 21 anomalies out of 407 points.
+2025-04-19 22:43:04,976 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:43:04,976 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (407, 3)
+2025-04-19 22:43:04,977 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 407 points with 21 anomalies.
+2025-04-19 22:43:04,993 - financial_prediction_system - INFO - Applying DBSCAN for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:43:04,993 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:43:04,994 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (407, 3)
+2025-04-19 22:43:04,995 - financial_prediction_system - INFO - [DBSCAN] Detected 56 anomalies out of 407 points.
+2025-04-19 22:43:04,996 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:43:04,996 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (407, 3)
+2025-04-19 22:43:04,997 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 407 points with 56 anomalies.
+2025-04-19 22:43:05,012 - financial_prediction_system - INFO - Performing STL decomposition for RBLX close price...
+2025-04-19 22:43:05,012 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:43:05,012 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:43:05,012 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:43:05,012 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:43:05,013 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:43:05,013 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:43:05,013 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:43:05,013 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:43:05,013 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 428
+2025-04-19 22:43:05,013 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=428
+2025-04-19 22:43:05,039 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:43:05,039 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.250408
+1    1.233200
+2    1.299572
+3    1.302153
+4    1.194020
+2025-04-19 22:43:05,039 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (428, 4)
+2025-04-19 22:43:05,052 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:05,066 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 18 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:43:05,069 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:05,084 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:05,107 - financial_prediction_system - INFO - Completed Anomaly Analysis for RBLX. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:43:05,107 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for RBLX.
+2025-04-19 22:43:05,135 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:43:05,135 - financial_prediction_system - INFO - Tail Risk: Calculated 427 returns using column 'close'.
+2025-04-19 22:43:05,135 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:43:05,155 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0407, Normal=-0.0531, t=-0.0423
+2025-04-19 22:43:05,157 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:43:05,263 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 365 rolling VaR points and 365 rolling CVaR points.
+2025-04-19 22:43:05,265 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:43:05,266 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 427 negative returns.
+2025-04-19 22:43:05,266 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 22 exceedances above threshold 0.0404 (quantile=0.95) for 427 losses.
+2025-04-19 22:43:05,270 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=0.4678, scale=0.0145, loc=0.0000 (fixed)
+2025-04-19 22:43:05,271 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=0.4678, scale=0.0145, threshold=0.0404, n=427, n_u=22, lambda_u=0.0515
+2025-04-19 22:43:05,272 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:43:05,273 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 427 valid absolute returns.
+2025-04-19 22:43:05,273 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 42
+2025-04-19 22:43:05,273 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 33 estimates for k values 10 to 42.
+2025-04-19 22:43:05,275 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:43:17,714 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-19 22:43:20,447 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-19 22:43:20,614 - financial_prediction_system - INFO - Starting volatility analysis for RBLX...
+2025-04-19 22:43:20,621 - financial_prediction_system - INFO - Generating volatility plots for RBLX...
+2025-04-19 22:43:20,820 - financial_prediction_system - INFO - Volatility analysis complete for RBLX. Generated 7 plots.
+2025-04-19 22:43:20,820 - financial_prediction_system - INFO - Starting correlation analysis for RBLX...
+2025-04-19 22:43:20,921 - financial_prediction_system - INFO - Correlation analysis complete for RBLX. Generated 2 plots/results.
+2025-04-19 22:43:20,921 - financial_prediction_system - INFO - Starting anomaly analysis for RBLX...
+2025-04-19 22:43:20,923 - financial_prediction_system - DEBUG - Initial df_analysis shape: (428, 21). Head:
+        date   open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2023-08-01  38.90  39.49  38.20  39.43  5381504    2023-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+1 2023-08-02  38.39  38.39  36.60  37.63  9953951    2023-08    -0.046725     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2 2023-08-03  37.45  37.47  36.62  36.68  7959839    2023-08    -0.025570     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+3 2023-08-04  38.00  38.70  37.36  37.48  7470876    2023-08     0.021576     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+4 2023-08-07  37.57  37.70  36.70  37.60  5527293    2023-08     0.003197     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2025-04-19 22:43:20,924 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (428, 22). NaN count: 1
+2025-04-19 22:43:20,924 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (428, 23). NaN count: 21
+2025-04-19 22:43:20,924 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (428, 24). NaN count: 1
+2025-04-19 22:43:20,924 - financial_prediction_system - INFO - Calculating Z-scores for RBLX...
+2025-04-19 22:43:20,926 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:43:21,031 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:43:21,045 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 15 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:43:21,060 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 6 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:43:21,062 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:43:21,062 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (428, 3)
+2025-04-19 22:43:21,063 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (407, 3)
+2025-04-19 22:43:21,063 - financial_prediction_system - INFO - Applying Isolation Forest for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:43:21,063 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:43:21,064 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (407, 3)
+2025-04-19 22:43:21,128 - financial_prediction_system - INFO - [IForest] Detected 21 anomalies out of 407 points.
+2025-04-19 22:43:21,128 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:43:21,128 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (407, 3)
+2025-04-19 22:43:21,130 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 407 points with 21 anomalies.
+2025-04-19 22:43:21,147 - financial_prediction_system - INFO - Applying DBSCAN for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:43:21,148 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:43:21,149 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (407, 3)
+2025-04-19 22:43:21,150 - financial_prediction_system - INFO - [DBSCAN] Detected 56 anomalies out of 407 points.
+2025-04-19 22:43:21,150 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:43:21,151 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (407, 3)
+2025-04-19 22:43:21,152 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 407 points with 56 anomalies.
+2025-04-19 22:43:21,166 - financial_prediction_system - INFO - Performing STL decomposition for RBLX close price...
+2025-04-19 22:43:21,167 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:43:21,167 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:43:21,167 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:43:21,167 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:43:21,167 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:43:21,167 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:43:21,167 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:43:21,167 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:43:21,167 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 428
+2025-04-19 22:43:21,167 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=428
+2025-04-19 22:43:21,193 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:43:21,193 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.250408
+1    1.233200
+2    1.299572
+3    1.302153
+4    1.194020
+2025-04-19 22:43:21,194 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (428, 4)
+2025-04-19 22:43:21,206 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:21,217 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 18 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:43:21,220 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:21,231 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:21,250 - financial_prediction_system - INFO - Completed Anomaly Analysis for RBLX. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:43:21,250 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for RBLX.
+2025-04-19 22:43:21,279 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:43:21,280 - financial_prediction_system - INFO - Tail Risk: Calculated 427 returns using column 'close'.
+2025-04-19 22:43:21,280 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:43:21,300 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0407, Normal=-0.0531, t=-0.0423
+2025-04-19 22:43:21,302 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:43:21,408 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 365 rolling VaR points and 365 rolling CVaR points.
+2025-04-19 22:43:21,410 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:43:21,411 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 427 negative returns.
+2025-04-19 22:43:21,411 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 22 exceedances above threshold 0.0404 (quantile=0.95) for 427 losses.
+2025-04-19 22:43:21,415 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=0.4678, scale=0.0145, loc=0.0000 (fixed)
+2025-04-19 22:43:21,415 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=0.4678, scale=0.0145, threshold=0.0404, n=427, n_u=22, lambda_u=0.0515
+2025-04-19 22:43:21,417 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:43:21,418 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 427 valid absolute returns.
+2025-04-19 22:43:21,418 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 42
+2025-04-19 22:43:21,418 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 33 estimates for k values 10 to 42.
+2025-04-19 22:43:21,420 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:43:22,807 - financial_prediction_system - INFO - Starting volatility analysis for RBLX...
+2025-04-19 22:43:22,813 - financial_prediction_system - INFO - Generating volatility plots for RBLX...
+2025-04-19 22:43:22,940 - financial_prediction_system - INFO - Volatility analysis complete for RBLX. Generated 7 plots.
+2025-04-19 22:43:22,940 - financial_prediction_system - INFO - Starting correlation analysis for RBLX...
+2025-04-19 22:43:23,039 - financial_prediction_system - INFO - Correlation analysis complete for RBLX. Generated 2 plots/results.
+2025-04-19 22:43:23,039 - financial_prediction_system - INFO - Starting anomaly analysis for RBLX...
+2025-04-19 22:43:23,041 - financial_prediction_system - DEBUG - Initial df_analysis shape: (428, 21). Head:
+        date   open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2023-08-01  38.90  39.49  38.20  39.43  5381504    2023-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+1 2023-08-02  38.39  38.39  36.60  37.63  9953951    2023-08    -0.046725     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2 2023-08-03  37.45  37.47  36.62  36.68  7959839    2023-08    -0.025570     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+3 2023-08-04  38.00  38.70  37.36  37.48  7470876    2023-08     0.021576     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+4 2023-08-07  37.57  37.70  36.70  37.60  5527293    2023-08     0.003197     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN       High
+2025-04-19 22:43:23,041 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (428, 22). NaN count: 1
+2025-04-19 22:43:23,041 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (428, 23). NaN count: 21
+2025-04-19 22:43:23,042 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (428, 24). NaN count: 1
+2025-04-19 22:43:23,042 - financial_prediction_system - INFO - Calculating Z-scores for RBLX...
+2025-04-19 22:43:23,043 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:43:23,147 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:43:23,160 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 15 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:43:23,174 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 6 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:43:23,177 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:43:23,177 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (428, 3)
+2025-04-19 22:43:23,177 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (407, 3)
+2025-04-19 22:43:23,177 - financial_prediction_system - INFO - Applying Isolation Forest for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:43:23,178 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:43:23,178 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (407, 3)
+2025-04-19 22:43:23,241 - financial_prediction_system - INFO - [IForest] Detected 21 anomalies out of 407 points.
+2025-04-19 22:43:23,241 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:43:23,241 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (407, 3)
+2025-04-19 22:43:23,243 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 407 points with 21 anomalies.
+2025-04-19 22:43:23,258 - financial_prediction_system - INFO - Applying DBSCAN for RBLX using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:43:23,258 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:43:23,259 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (407, 3)
+2025-04-19 22:43:23,260 - financial_prediction_system - INFO - [DBSCAN] Detected 56 anomalies out of 407 points.
+2025-04-19 22:43:23,261 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:43:23,261 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (407, 3)
+2025-04-19 22:43:23,262 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 407 points with 56 anomalies.
+2025-04-19 22:43:23,277 - financial_prediction_system - INFO - Performing STL decomposition for RBLX close price...
+2025-04-19 22:43:23,277 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:43:23,277 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:43:23,277 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:43:23,277 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:43:23,277 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:43:23,277 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:43:23,277 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:43:23,277 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:43:23,277 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 428
+2025-04-19 22:43:23,278 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=428
+2025-04-19 22:43:23,303 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:43:23,304 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.250408
+1    1.233200
+2    1.299572
+3    1.302153
+4    1.194020
+2025-04-19 22:43:23,304 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (428, 4)
+2025-04-19 22:43:23,316 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:23,327 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 18 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:43:23,330 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:23,341 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:23,360 - financial_prediction_system - INFO - Completed Anomaly Analysis for RBLX. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:43:23,360 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for RBLX.
+2025-04-19 22:43:23,387 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:43:23,387 - financial_prediction_system - INFO - Tail Risk: Calculated 427 returns using column 'close'.
+2025-04-19 22:43:23,387 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:43:23,407 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0407, Normal=-0.0531, t=-0.0423
+2025-04-19 22:43:23,409 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:43:23,515 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 365 rolling VaR points and 365 rolling CVaR points.
+2025-04-19 22:43:23,517 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:43:23,518 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 427 negative returns.
+2025-04-19 22:43:23,518 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 22 exceedances above threshold 0.0404 (quantile=0.95) for 427 losses.
+2025-04-19 22:43:23,522 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=0.4678, scale=0.0145, loc=0.0000 (fixed)
+2025-04-19 22:43:23,523 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=0.4678, scale=0.0145, threshold=0.0404, n=427, n_u=22, lambda_u=0.0515
+2025-04-19 22:43:23,524 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:43:23,525 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 427 valid absolute returns.
+2025-04-19 22:43:23,525 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 42
+2025-04-19 22:43:23,525 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 33 estimates for k values 10 to 42.
+2025-04-19 22:43:23,527 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:43:41,651 - financial_prediction_system - INFO - Starting volatility analysis for GME...
+2025-04-19 22:43:41,657 - financial_prediction_system - INFO - Generating volatility plots for GME...
+2025-04-19 22:43:41,783 - financial_prediction_system - INFO - Volatility analysis complete for GME. Generated 7 plots.
+2025-04-19 22:43:41,783 - financial_prediction_system - INFO - Starting correlation analysis for GME...
+2025-04-19 22:43:41,881 - financial_prediction_system - INFO - Correlation analysis complete for GME. Generated 2 plots/results.
+2025-04-19 22:43:41,881 - financial_prediction_system - INFO - Starting anomaly analysis for GME...
+2025-04-19 22:43:41,883 - financial_prediction_system - DEBUG - Initial df_analysis shape: (428, 21). Head:
+        date   open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2023-08-01  21.95  22.00  21.26  21.50  2574804    2023-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+1 2023-08-02  21.15  21.15  20.34  20.83  2630714    2023-08    -0.031659     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2 2023-08-03  20.88  21.18  20.74  20.93  1324938    2023-08     0.004789     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+3 2023-08-04  20.95  21.89  20.89  20.98  2406033    2023-08     0.002386     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+4 2023-08-07  20.90  21.24  20.48  21.07  1441290    2023-08     0.004281     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2025-04-19 22:43:41,883 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (428, 22). NaN count: 1
+2025-04-19 22:43:41,883 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (428, 23). NaN count: 21
+2025-04-19 22:43:41,884 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (428, 24). NaN count: 1
+2025-04-19 22:43:41,884 - financial_prediction_system - INFO - Calculating Z-scores for GME...
+2025-04-19 22:43:41,885 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:43:41,988 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 3 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:43:42,002 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 48 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:43:42,016 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 14 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:43:42,018 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:43:42,019 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (428, 3)
+2025-04-19 22:43:42,019 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (407, 3)
+2025-04-19 22:43:42,019 - financial_prediction_system - INFO - Applying Isolation Forest for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:43:42,019 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:43:42,020 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (407, 3)
+2025-04-19 22:43:42,081 - financial_prediction_system - INFO - [IForest] Detected 21 anomalies out of 407 points.
+2025-04-19 22:43:42,082 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:43:42,082 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (407, 3)
+2025-04-19 22:43:42,083 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 407 points with 21 anomalies.
+2025-04-19 22:43:42,098 - financial_prediction_system - INFO - Applying DBSCAN for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:43:42,098 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:43:42,099 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (407, 3)
+2025-04-19 22:43:42,101 - financial_prediction_system - INFO - [DBSCAN] Detected 62 anomalies out of 407 points.
+2025-04-19 22:43:42,101 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:43:42,101 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (407, 3)
+2025-04-19 22:43:42,102 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 407 points with 62 anomalies.
+2025-04-19 22:43:42,117 - financial_prediction_system - INFO - Performing STL decomposition for GME close price...
+2025-04-19 22:43:42,117 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:43:42,118 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:43:42,118 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:43:42,118 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:43:42,118 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:43:42,118 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:43:42,118 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:43:42,118 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:43:42,118 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 428
+2025-04-19 22:43:42,118 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=428
+2025-04-19 22:43:42,144 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:43:42,144 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.490991
+1    0.143700
+2    0.328961
+3    0.054189
+4    0.183518
+2025-04-19 22:43:42,144 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (428, 4)
+2025-04-19 22:43:42,157 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:42,168 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 24 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:43:42,171 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:42,182 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:43:42,201 - financial_prediction_system - INFO - Completed Anomaly Analysis for GME. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:43:42,201 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for GME.
+2025-04-19 22:43:42,229 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:43:42,230 - financial_prediction_system - INFO - Tail Risk: Calculated 427 returns using column 'close'.
+2025-04-19 22:43:42,230 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:43:42,247 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0678, Normal=-0.1186, t=-0.0855
+2025-04-19 22:43:42,248 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:43:42,356 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 365 rolling VaR points and 365 rolling CVaR points.
+2025-04-19 22:43:42,358 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:43:42,358 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 427 negative returns.
+2025-04-19 22:43:42,358 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 22 exceedances above threshold 0.0919 (quantile=0.95) for 427 losses.
+2025-04-19 22:43:42,362 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=0.4588, scale=0.0577, loc=0.0000 (fixed)
+2025-04-19 22:43:42,362 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=0.4588, scale=0.0577, threshold=0.0919, n=427, n_u=22, lambda_u=0.0515
+2025-04-19 22:43:42,364 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:43:42,364 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 427 valid absolute returns.
+2025-04-19 22:43:42,364 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 42
+2025-04-19 22:43:42,365 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 33 estimates for k values 10 to 42.
+2025-04-19 22:43:42,367 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:45:49,547 - financial_prediction_system - INFO - Starting volatility analysis for GME...
+2025-04-19 22:45:49,614 - financial_prediction_system - INFO - Generating volatility plots for GME...
+2025-04-19 22:45:49,742 - financial_prediction_system - INFO - Volatility analysis complete for GME. Generated 7 plots.
+2025-04-19 22:45:49,742 - financial_prediction_system - INFO - Starting correlation analysis for GME...
+2025-04-19 22:45:49,839 - financial_prediction_system - INFO - Correlation analysis complete for GME. Generated 2 plots/results.
+2025-04-19 22:45:49,839 - financial_prediction_system - INFO - Starting anomaly analysis for GME...
+2025-04-19 22:45:49,841 - financial_prediction_system - DEBUG - Initial df_analysis shape: (428, 21). Head:
+        date   open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2023-08-01  21.95  22.00  21.26  21.50  2574804    2023-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+1 2023-08-02  21.15  21.15  20.34  20.83  2630714    2023-08    -0.031659     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2 2023-08-03  20.88  21.18  20.74  20.93  1324938    2023-08     0.004789     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+3 2023-08-04  20.95  21.89  20.89  20.98  2406033    2023-08     0.002386     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+4 2023-08-07  20.90  21.24  20.48  21.07  1441290    2023-08     0.004281     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2025-04-19 22:45:49,842 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (428, 22). NaN count: 1
+2025-04-19 22:45:49,842 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (428, 23). NaN count: 21
+2025-04-19 22:45:49,843 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (428, 24). NaN count: 1
+2025-04-19 22:45:49,843 - financial_prediction_system - INFO - Calculating Z-scores for GME...
+2025-04-19 22:45:49,844 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:45:49,947 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 3 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:45:49,961 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 48 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:45:49,974 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 14 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:45:49,977 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:45:49,977 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (428, 3)
+2025-04-19 22:45:49,977 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (407, 3)
+2025-04-19 22:45:49,977 - financial_prediction_system - INFO - Applying Isolation Forest for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:45:49,978 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:45:49,978 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (407, 3)
+2025-04-19 22:45:50,040 - financial_prediction_system - INFO - [IForest] Detected 21 anomalies out of 407 points.
+2025-04-19 22:45:50,040 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:45:50,040 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (407, 3)
+2025-04-19 22:45:50,041 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 407 points with 21 anomalies.
+2025-04-19 22:45:50,057 - financial_prediction_system - INFO - Applying DBSCAN for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:45:50,057 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:45:50,058 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (407, 3)
+2025-04-19 22:45:50,060 - financial_prediction_system - INFO - [DBSCAN] Detected 62 anomalies out of 407 points.
+2025-04-19 22:45:50,060 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:45:50,060 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (407, 3)
+2025-04-19 22:45:50,061 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 407 points with 62 anomalies.
+2025-04-19 22:45:50,076 - financial_prediction_system - INFO - Performing STL decomposition for GME close price...
+2025-04-19 22:45:50,076 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:45:50,077 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:45:50,077 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:45:50,077 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:45:50,077 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:45:50,077 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:45:50,077 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:45:50,077 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:45:50,077 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 428
+2025-04-19 22:45:50,077 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=428
+2025-04-19 22:45:50,103 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:45:50,103 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.490991
+1    0.143700
+2    0.328961
+3    0.054189
+4    0.183518
+2025-04-19 22:45:50,103 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (428, 4)
+2025-04-19 22:45:50,116 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:45:50,127 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 24 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:45:50,130 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:45:50,140 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:45:50,159 - financial_prediction_system - INFO - Completed Anomaly Analysis for GME. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:45:50,159 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for GME.
+2025-04-19 22:45:50,187 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:45:50,188 - financial_prediction_system - INFO - Tail Risk: Calculated 427 returns using column 'close'.
+2025-04-19 22:45:50,188 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:45:50,205 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0678, Normal=-0.1186, t=-0.0855
+2025-04-19 22:45:50,207 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:45:50,314 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 365 rolling VaR points and 365 rolling CVaR points.
+2025-04-19 22:45:50,316 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:45:50,316 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 427 negative returns.
+2025-04-19 22:45:50,317 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 22 exceedances above threshold 0.0919 (quantile=0.95) for 427 losses.
+2025-04-19 22:45:50,320 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=0.4588, scale=0.0577, loc=0.0000 (fixed)
+2025-04-19 22:45:50,320 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=0.4588, scale=0.0577, threshold=0.0919, n=427, n_u=22, lambda_u=0.0515
+2025-04-19 22:45:50,322 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:45:50,323 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 427 valid absolute returns.
+2025-04-19 22:45:50,323 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 42
+2025-04-19 22:45:50,323 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 33 estimates for k values 10 to 42.
+2025-04-19 22:45:50,325 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 22:45:51,729 - financial_prediction_system - INFO - Starting volatility analysis for GME...
+2025-04-19 22:45:51,735 - financial_prediction_system - INFO - Generating volatility plots for GME...
+2025-04-19 22:45:51,861 - financial_prediction_system - INFO - Volatility analysis complete for GME. Generated 7 plots.
+2025-04-19 22:45:51,861 - financial_prediction_system - INFO - Starting correlation analysis for GME...
+2025-04-19 22:45:51,961 - financial_prediction_system - INFO - Correlation analysis complete for GME. Generated 2 plots/results.
+2025-04-19 22:45:51,961 - financial_prediction_system - INFO - Starting anomaly analysis for GME...
+2025-04-19 22:45:51,963 - financial_prediction_system - DEBUG - Initial df_analysis shape: (428, 21). Head:
+        date   open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2023-08-01  21.95  22.00  21.26  21.50  2574804    2023-08          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+1 2023-08-02  21.15  21.15  20.34  20.83  2630714    2023-08    -0.031659     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2 2023-08-03  20.88  21.18  20.74  20.93  1324938    2023-08     0.004789     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+3 2023-08-04  20.95  21.89  20.89  20.98  2406033    2023-08     0.002386     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+4 2023-08-07  20.90  21.24  20.48  21.07  1441290    2023-08     0.004281     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2025-04-19 22:45:51,963 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (428, 22). NaN count: 1
+2025-04-19 22:45:51,963 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (428, 23). NaN count: 21
+2025-04-19 22:45:51,964 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (428, 24). NaN count: 1
+2025-04-19 22:45:51,964 - financial_prediction_system - INFO - Calculating Z-scores for GME...
+2025-04-19 22:45:51,965 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 22:45:52,069 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 3 valid Z/ModZ anomalies for Close Price.
+2025-04-19 22:45:52,082 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 48 valid Z/ModZ anomalies for Volume.
+2025-04-19 22:45:52,097 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 14 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 22:45:52,099 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 22:45:52,100 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (428, 3)
+2025-04-19 22:45:52,100 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (407, 3)
+2025-04-19 22:45:52,100 - financial_prediction_system - INFO - Applying Isolation Forest for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:45:52,100 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:45:52,101 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (407, 3)
+2025-04-19 22:45:52,163 - financial_prediction_system - INFO - [IForest] Detected 21 anomalies out of 407 points.
+2025-04-19 22:45:52,163 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:45:52,164 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (407, 3)
+2025-04-19 22:45:52,165 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 407 points with 21 anomalies.
+2025-04-19 22:45:52,180 - financial_prediction_system - INFO - Applying DBSCAN for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 407 points...
+2025-04-19 22:45:52,181 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (407, 3)
+2025-04-19 22:45:52,181 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (407, 3)
+2025-04-19 22:45:52,183 - financial_prediction_system - INFO - [DBSCAN] Detected 62 anomalies out of 407 points.
+2025-04-19 22:45:52,183 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (407, 3), shape of anomaly_series: (407,), common index size: 407
+2025-04-19 22:45:52,183 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (407, 3)
+2025-04-19 22:45:52,184 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 407 points with 62 anomalies.
+2025-04-19 22:45:52,200 - financial_prediction_system - INFO - Performing STL decomposition for GME close price...
+2025-04-19 22:45:52,200 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 22:45:52,200 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 22:45:52,200 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 22:45:52,200 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 22:45:52,200 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 22:45:52,200 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 22:45:52,200 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 22:45:52,200 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 22:45:52,200 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 428
+2025-04-19 22:45:52,200 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=428
+2025-04-19 22:45:52,226 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 22:45:52,226 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.490991
+1    0.143700
+2    0.328961
+3    0.054189
+4    0.183518
+2025-04-19 22:45:52,227 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (428, 4)
+2025-04-19 22:45:52,239 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:45:52,250 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 24 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 22:45:52,253 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:45:52,264 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 22:45:52,283 - financial_prediction_system - INFO - Completed Anomaly Analysis for GME. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 22:45:52,284 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for GME.
+2025-04-19 22:45:52,312 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 22:45:52,312 - financial_prediction_system - INFO - Tail Risk: Calculated 427 returns using column 'close'.
+2025-04-19 22:45:52,312 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 22:45:52,329 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0678, Normal=-0.1186, t=-0.0855
+2025-04-19 22:45:52,331 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 22:45:52,440 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 365 rolling VaR points and 365 rolling CVaR points.
+2025-04-19 22:45:52,442 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 22:45:52,442 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 427 negative returns.
+2025-04-19 22:45:52,442 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 22 exceedances above threshold 0.0919 (quantile=0.95) for 427 losses.
+2025-04-19 22:45:52,446 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=0.4588, scale=0.0577, loc=0.0000 (fixed)
+2025-04-19 22:45:52,446 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=0.4588, scale=0.0577, threshold=0.0919, n=427, n_u=22, lambda_u=0.0515
+2025-04-19 22:45:52,448 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 22:45:52,448 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 427 valid absolute returns.
+2025-04-19 22:45:52,448 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 42
+2025-04-19 22:45:52,449 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 33 estimates for k values 10 to 42.
+2025-04-19 22:45:52,451 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 23:03:28,624 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-19 23:03:31,337 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-19 23:05:33,514 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-19 23:05:36,221 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-19 23:05:40,651 - financial_prediction_system - INFO - Starting volatility analysis for GME...
+2025-04-19 23:05:40,705 - financial_prediction_system - INFO - Generating volatility plots for GME...
+2025-04-19 23:05:40,852 - financial_prediction_system - INFO - Volatility analysis complete for GME. Generated 7 plots.
+2025-04-19 23:05:40,852 - financial_prediction_system - INFO - Starting correlation analysis for GME...
+2025-04-19 23:05:40,886 - financial_prediction_system - INFO - Correlation analysis complete for GME. Generated 2 plots/results.
+2025-04-19 23:05:40,886 - financial_prediction_system - INFO - Starting anomaly analysis for GME...
+2025-04-19 23:05:40,888 - financial_prediction_system - DEBUG - Initial df_analysis shape: (89, 21). Head:
+        date   open   high    low  close    volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2024-12-04  27.07  27.83  26.63  27.03   6387537    2024-12          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+1 2024-12-05  27.00  30.87  26.15  28.63  40704909    2024-12     0.057508     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2 2024-12-06  29.12  29.35  28.11  29.06  15161435    2024-12     0.014908     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+3 2024-12-09  29.00  29.86  27.74  27.93  11495415    2024-12    -0.039661     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+4 2024-12-10  27.88  28.39  26.85  26.93  18209436    2024-12    -0.036460     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2025-04-19 23:05:40,888 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (89, 22). NaN count: 1
+2025-04-19 23:05:40,889 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (89, 23). NaN count: 21
+2025-04-19 23:05:40,889 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (89, 24). NaN count: 1
+2025-04-19 23:05:40,889 - financial_prediction_system - INFO - Calculating Z-scores for GME...
+2025-04-19 23:05:40,891 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 23:05:40,940 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 23:05:40,945 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 4 valid Z/ModZ anomalies for Volume.
+2025-04-19 23:05:40,952 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 1 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 23:05:40,954 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 23:05:40,955 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (89, 3)
+2025-04-19 23:05:40,955 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (68, 3)
+2025-04-19 23:05:40,955 - financial_prediction_system - INFO - Applying Isolation Forest for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 68 points...
+2025-04-19 23:05:40,956 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (68, 3)
+2025-04-19 23:05:40,956 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (68, 3)
+2025-04-19 23:05:41,014 - financial_prediction_system - INFO - [IForest] Detected 4 anomalies out of 68 points.
+2025-04-19 23:05:41,014 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (68, 3), shape of anomaly_series: (68,), common index size: 68
+2025-04-19 23:05:41,014 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (68, 3)
+2025-04-19 23:05:41,016 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 68 points with 4 anomalies.
+2025-04-19 23:05:41,033 - financial_prediction_system - INFO - Applying DBSCAN for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 68 points...
+2025-04-19 23:05:41,033 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (68, 3)
+2025-04-19 23:05:41,034 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (68, 3)
+2025-04-19 23:05:41,035 - financial_prediction_system - INFO - [DBSCAN] Detected 27 anomalies out of 68 points.
+2025-04-19 23:05:41,035 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (68, 3), shape of anomaly_series: (68,), common index size: 68
+2025-04-19 23:05:41,035 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (68, 3)
+2025-04-19 23:05:41,036 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 68 points with 27 anomalies.
+2025-04-19 23:05:41,051 - financial_prediction_system - INFO - Performing STL decomposition for GME close price...
+2025-04-19 23:05:41,051 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 23:05:41,051 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 23:05:41,051 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 23:05:41,051 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 23:05:41,051 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 23:05:41,051 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 23:05:41,051 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 23:05:41,051 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 23:05:41,051 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 89
+2025-04-19 23:05:41,052 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=89
+2025-04-19 23:05:41,057 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 23:05:41,058 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.022198
+1    0.008652
+2   -0.053637
+3    0.033870
+4    0.076615
+2025-04-19 23:05:41,058 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (89, 4)
+2025-04-19 23:05:41,070 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 23:05:41,073 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 24 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 23:05:41,076 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 23:05:41,079 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 23:05:41,091 - financial_prediction_system - INFO - Completed Anomaly Analysis for GME. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 23:05:41,091 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for GME.
+2025-04-19 23:05:41,112 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 23:05:41,113 - financial_prediction_system - INFO - Tail Risk: Calculated 88 returns using column 'close'.
+2025-04-19 23:05:41,113 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 23:05:41,125 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0636, Normal=-0.0782, t=-0.0679
+2025-04-19 23:05:41,127 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 23:05:41,136 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 26 rolling VaR points and 26 rolling CVaR points.
+2025-04-19 23:05:41,138 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 23:05:41,138 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 88 negative returns.
+2025-04-19 23:05:41,138 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 5 exceedances above threshold 0.0685 (quantile=0.95) for 88 losses.
+2025-04-19 23:05:41,139 - financial_prediction_system - WARNING - Tail Risk (GPD Fit): Insufficient or non-unique exceedances (5 total, 5 unique) to reliably fit GPD model. Need >= 10 total and >= 3 unique.
+2025-04-19 23:05:41,139 - financial_prediction_system - WARNING - Tail Risk (Return Level Plot): Cannot plot return levels due to missing/invalid GPD fit parameters.
+2025-04-19 23:05:41,139 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 23:05:41,140 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 88 valid absolute returns.
+2025-04-19 23:05:41,140 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 10
+2025-04-19 23:05:41,140 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 1 estimates for k values 10 to 10.
+2025-04-19 23:05:41,142 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 23:05:41,243 - financial_prediction_system - INFO - Starting volatility analysis for GME...
+2025-04-19 23:05:41,248 - financial_prediction_system - INFO - Generating volatility plots for GME...
+2025-04-19 23:05:41,312 - financial_prediction_system - INFO - Volatility analysis complete for GME. Generated 7 plots.
+2025-04-19 23:05:41,312 - financial_prediction_system - INFO - Starting correlation analysis for GME...
+2025-04-19 23:05:41,343 - financial_prediction_system - INFO - Correlation analysis complete for GME. Generated 2 plots/results.
+2025-04-19 23:05:41,343 - financial_prediction_system - INFO - Starting anomaly analysis for GME...
+2025-04-19 23:05:41,345 - financial_prediction_system - DEBUG - Initial df_analysis shape: (89, 21). Head:
+        date   open   high    low  close    volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2024-12-04  27.07  27.83  26.63  27.03   6387537    2024-12          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+1 2024-12-05  27.00  30.87  26.15  28.63  40704909    2024-12     0.057508     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2 2024-12-06  29.12  29.35  28.11  29.06  15161435    2024-12     0.014908     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+3 2024-12-09  29.00  29.86  27.74  27.93  11495415    2024-12    -0.039661     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+4 2024-12-10  27.88  28.39  26.85  26.93  18209436    2024-12    -0.036460     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2025-04-19 23:05:41,346 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (89, 22). NaN count: 1
+2025-04-19 23:05:41,346 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (89, 23). NaN count: 21
+2025-04-19 23:05:41,346 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (89, 24). NaN count: 1
+2025-04-19 23:05:41,346 - financial_prediction_system - INFO - Calculating Z-scores for GME...
+2025-04-19 23:05:41,348 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 23:05:41,397 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 23:05:41,402 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 4 valid Z/ModZ anomalies for Volume.
+2025-04-19 23:05:41,408 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 1 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 23:05:41,410 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 23:05:41,411 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (89, 3)
+2025-04-19 23:05:41,411 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (68, 3)
+2025-04-19 23:05:41,411 - financial_prediction_system - INFO - Applying Isolation Forest for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 68 points...
+2025-04-19 23:05:41,411 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (68, 3)
+2025-04-19 23:05:41,412 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (68, 3)
+2025-04-19 23:05:41,468 - financial_prediction_system - INFO - [IForest] Detected 4 anomalies out of 68 points.
+2025-04-19 23:05:41,468 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (68, 3), shape of anomaly_series: (68,), common index size: 68
+2025-04-19 23:05:41,469 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (68, 3)
+2025-04-19 23:05:41,470 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 68 points with 4 anomalies.
+2025-04-19 23:05:41,484 - financial_prediction_system - INFO - Applying DBSCAN for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 68 points...
+2025-04-19 23:05:41,485 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (68, 3)
+2025-04-19 23:05:41,486 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (68, 3)
+2025-04-19 23:05:41,486 - financial_prediction_system - INFO - [DBSCAN] Detected 27 anomalies out of 68 points.
+2025-04-19 23:05:41,487 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (68, 3), shape of anomaly_series: (68,), common index size: 68
+2025-04-19 23:05:41,487 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (68, 3)
+2025-04-19 23:05:41,488 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 68 points with 27 anomalies.
+2025-04-19 23:05:41,502 - financial_prediction_system - INFO - Performing STL decomposition for GME close price...
+2025-04-19 23:05:41,502 - financial_prediction_system - DEBUG - [STL Prep] Input index is not DatetimeIndex. Attempting conversion.
+2025-04-19 23:05:41,503 - financial_prediction_system - INFO - [STL Prep] Successfully converted index to DatetimeIndex.
+2025-04-19 23:05:41,503 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting QL NYSE calendar regularization.
+2025-04-19 23:05:41,503 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) QL calendar generated no business days. Falling back.
+2025-04-19 23:05:41,503 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Attempting pandas frequency inference.
+2025-04-19 23:05:41,503 - financial_prediction_system - DEBUG - [STL Prep] (Post-Convert) Inferred frequency: ns
+2025-04-19 23:05:41,503 - financial_prediction_system - WARNING - [STL Prep] (Post-Convert) Inferred frequency ('ns') is not B or D.
+2025-04-19 23:05:41,503 - financial_prediction_system - WARNING - [STL Prep] Could not establish a regular frequency or convert index. Falling back to integer index.
+2025-04-19 23:05:41,503 - financial_prediction_system - INFO - [STL Prep] Using integer index. Length: 89
+2025-04-19 23:05:41,503 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='Integer', length=89
+2025-04-19 23:05:41,509 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 23:05:41,509 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+0    0.022198
+1    0.008652
+2   -0.053637
+3    0.033870
+4    0.076615
+2025-04-19 23:05:41,509 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (89, 4)
+2025-04-19 23:05:41,521 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 23:05:41,524 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 24 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 23:05:41,527 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 23:05:41,530 - financial_prediction_system - DEBUG - Handling generic pd.Index for LOWESS x_data  LOWESS. Using index for plot, positional for calc.
+2025-04-19 23:05:41,542 - financial_prediction_system - INFO - Completed Anomaly Analysis for GME. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 23:05:41,542 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for GME.
+2025-04-19 23:05:41,563 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 23:05:41,563 - financial_prediction_system - INFO - Tail Risk: Calculated 88 returns using column 'close'.
+2025-04-19 23:05:41,563 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 23:05:41,575 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0636, Normal=-0.0782, t=-0.0679
+2025-04-19 23:05:41,577 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 23:05:41,585 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 26 rolling VaR points and 26 rolling CVaR points.
+2025-04-19 23:05:41,587 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 23:05:41,588 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 88 negative returns.
+2025-04-19 23:05:41,588 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 5 exceedances above threshold 0.0685 (quantile=0.95) for 88 losses.
+2025-04-19 23:05:41,588 - financial_prediction_system - WARNING - Tail Risk (GPD Fit): Insufficient or non-unique exceedances (5 total, 5 unique) to reliably fit GPD model. Need >= 10 total and >= 3 unique.
+2025-04-19 23:05:41,588 - financial_prediction_system - WARNING - Tail Risk (Return Level Plot): Cannot plot return levels due to missing/invalid GPD fit parameters.
+2025-04-19 23:05:41,589 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 23:05:41,589 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 88 valid absolute returns.
+2025-04-19 23:05:41,589 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 10
+2025-04-19 23:05:41,589 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 1 estimates for k values 10 to 10.
+2025-04-19 23:05:41,592 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 23:07:08,900 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-19 23:07:11,689 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-19 23:08:33,497 - financial_prediction_system - INFO - Financial Prediction API shutting down
+2025-04-19 23:08:36,250 - financial_prediction_system - INFO - Financial Prediction API starting up
+2025-04-19 23:08:40,344 - financial_prediction_system - INFO - Starting volatility analysis for GME...
+2025-04-19 23:08:40,397 - financial_prediction_system - INFO - Generating volatility plots for GME...
+2025-04-19 23:08:40,543 - financial_prediction_system - INFO - Volatility analysis complete for GME. Generated 7 plots.
+2025-04-19 23:08:40,543 - financial_prediction_system - INFO - Starting correlation analysis for GME...
+2025-04-19 23:08:40,577 - financial_prediction_system - INFO - Correlation analysis complete for GME. Generated 2 plots/results.
+2025-04-19 23:08:40,577 - financial_prediction_system - INFO - Starting anomaly analysis for GME...
+2025-04-19 23:08:40,579 - financial_prediction_system - DEBUG - Initial df_analysis shape: (89, 21). Head:
+        date   open   high    low  close    volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2024-12-04  27.07  27.83  26.63  27.03   6387537    2024-12          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+1 2024-12-05  27.00  30.87  26.15  28.63  40704909    2024-12     0.057508     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2 2024-12-06  29.12  29.35  28.11  29.06  15161435    2024-12     0.014908     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+3 2024-12-09  29.00  29.86  27.74  27.93  11495415    2024-12    -0.039661     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+4 2024-12-10  27.88  28.39  26.85  26.93  18209436    2024-12    -0.036460     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2025-04-19 23:08:40,579 - financial_prediction_system - DEBUG - Set 'date' column as DatetimeIndex for GME. Index type: datetime64[ns]
+2025-04-19 23:08:40,581 - financial_prediction_system - DEBUG - df_analysis shape after potential index setting: (89, 20). Head:
+             open   high    low  close    volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+date                                                                                                                                                                                                                                  
+2024-12-04  27.07  27.83  26.63  27.03   6387537    2024-12          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2024-12-05  27.00  30.87  26.15  28.63  40704909    2024-12     0.057508     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2024-12-06  29.12  29.35  28.11  29.06  15161435    2024-12     0.014908     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2024-12-09  29.00  29.86  27.74  27.93  11495415    2024-12    -0.039661     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2024-12-10  27.88  28.39  26.85  26.93  18209436    2024-12    -0.036460     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2025-04-19 23:08:40,581 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (89, 21). NaN count: 1
+2025-04-19 23:08:40,582 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (89, 22). NaN count: 21
+2025-04-19 23:08:40,582 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (89, 23). NaN count: 1
+2025-04-19 23:08:40,582 - financial_prediction_system - INFO - Calculating Z-scores for GME...
+2025-04-19 23:08:40,584 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 23:08:40,635 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 23:08:40,641 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 4 valid Z/ModZ anomalies for Volume.
+2025-04-19 23:08:40,648 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 1 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 23:08:40,650 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 23:08:40,650 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (89, 3)
+2025-04-19 23:08:40,651 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (68, 3)
+2025-04-19 23:08:40,651 - financial_prediction_system - INFO - Applying Isolation Forest for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 68 points...
+2025-04-19 23:08:40,651 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (68, 3)
+2025-04-19 23:08:40,652 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (68, 3)
+2025-04-19 23:08:40,709 - financial_prediction_system - INFO - [IForest] Detected 4 anomalies out of 68 points.
+2025-04-19 23:08:40,710 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (68, 3), shape of anomaly_series: (68,), common index size: 68
+2025-04-19 23:08:40,710 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (68, 3)
+2025-04-19 23:08:40,711 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 68 points with 4 anomalies.
+2025-04-19 23:08:40,729 - financial_prediction_system - INFO - Applying DBSCAN for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 68 points...
+2025-04-19 23:08:40,729 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (68, 3)
+2025-04-19 23:08:40,730 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (68, 3)
+2025-04-19 23:08:40,730 - financial_prediction_system - INFO - [DBSCAN] Detected 27 anomalies out of 68 points.
+2025-04-19 23:08:40,731 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (68, 3), shape of anomaly_series: (68,), common index size: 68
+2025-04-19 23:08:40,731 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (68, 3)
+2025-04-19 23:08:40,732 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 68 points with 27 anomalies.
+2025-04-19 23:08:40,747 - financial_prediction_system - INFO - Performing STL decomposition for GME close price...
+2025-04-19 23:08:40,747 - financial_prediction_system - DEBUG - [STL Prep] Input has DatetimeIndex.
+2025-04-19 23:08:40,747 - financial_prediction_system - DEBUG - [STL Prep] QuantLib available. Attempting NYSE calendar regularization.
+2025-04-19 23:08:40,748 - financial_prediction_system - INFO - [STL Prep] Successfully regularized index using QuantLib NYSE calendar. Freq='B'. New length: 89
+2025-04-19 23:08:40,748 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='B', length=89
+2025-04-19 23:08:40,754 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 23:08:40,754 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+2024-12-04    0.022198
+2024-12-05    0.008652
+2024-12-06   -0.053637
+2024-12-09    0.033870
+2024-12-10    0.076615
+2025-04-19 23:08:40,754 - financial_prediction_system - DEBUG - Reindexed STL results (which had DatetimeIndex) back to original DatetimeIndex.
+2025-04-19 23:08:40,754 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (89, 4)
+2025-04-19 23:08:40,770 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 24 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 23:08:40,788 - financial_prediction_system - INFO - Completed Anomaly Analysis for GME. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 23:08:40,788 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for GME.
+2025-04-19 23:08:40,810 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 23:08:40,810 - financial_prediction_system - INFO - Tail Risk: Calculated 88 returns using column 'close'.
+2025-04-19 23:08:40,810 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 23:08:40,822 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0636, Normal=-0.0782, t=-0.0679
+2025-04-19 23:08:40,824 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 23:08:40,834 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 26 rolling VaR points and 26 rolling CVaR points.
+2025-04-19 23:08:40,835 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 23:08:40,836 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 88 negative returns.
+2025-04-19 23:08:40,836 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 5 exceedances above threshold 0.0685 (quantile=0.95) for 88 losses.
+2025-04-19 23:08:40,836 - financial_prediction_system - WARNING - Tail Risk (GPD Fit): Insufficient or non-unique exceedances (5 total, 5 unique) to reliably fit GPD model. Need >= 10 total and >= 3 unique.
+2025-04-19 23:08:40,836 - financial_prediction_system - WARNING - Tail Risk (Return Level Plot): Cannot plot return levels due to missing/invalid GPD fit parameters.
+2025-04-19 23:08:40,837 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 23:08:40,838 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 88 valid absolute returns.
+2025-04-19 23:08:40,838 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 10
+2025-04-19 23:08:40,838 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 1 estimates for k values 10 to 10.
+2025-04-19 23:08:40,841 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 23:08:40,942 - financial_prediction_system - INFO - Starting volatility analysis for GME...
+2025-04-19 23:08:40,947 - financial_prediction_system - INFO - Generating volatility plots for GME...
+2025-04-19 23:08:41,012 - financial_prediction_system - INFO - Volatility analysis complete for GME. Generated 7 plots.
+2025-04-19 23:08:41,012 - financial_prediction_system - INFO - Starting correlation analysis for GME...
+2025-04-19 23:08:41,044 - financial_prediction_system - INFO - Correlation analysis complete for GME. Generated 2 plots/results.
+2025-04-19 23:08:41,044 - financial_prediction_system - INFO - Starting anomaly analysis for GME...
+2025-04-19 23:08:41,046 - financial_prediction_system - DEBUG - Initial df_analysis shape: (89, 21). Head:
+        date   open   high    low  close    volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2024-12-04  27.07  27.83  26.63  27.03   6387537    2024-12          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+1 2024-12-05  27.00  30.87  26.15  28.63  40704909    2024-12     0.057508     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2 2024-12-06  29.12  29.35  28.11  29.06  15161435    2024-12     0.014908     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+3 2024-12-09  29.00  29.86  27.74  27.93  11495415    2024-12    -0.039661     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+4 2024-12-10  27.88  28.39  26.85  26.93  18209436    2024-12    -0.036460     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2025-04-19 23:08:41,046 - financial_prediction_system - DEBUG - Set 'date' column as DatetimeIndex for GME. Index type: datetime64[ns]
+2025-04-19 23:08:41,048 - financial_prediction_system - DEBUG - df_analysis shape after potential index setting: (89, 20). Head:
+             open   high    low  close    volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+date                                                                                                                                                                                                                                  
+2024-12-04  27.07  27.83  26.63  27.03   6387537    2024-12          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2024-12-05  27.00  30.87  26.15  28.63  40704909    2024-12     0.057508     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2024-12-06  29.12  29.35  28.11  29.06  15161435    2024-12     0.014908     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2024-12-09  29.00  29.86  27.74  27.93  11495415    2024-12    -0.039661     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2024-12-10  27.88  28.39  26.85  26.93  18209436    2024-12    -0.036460     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN     Normal
+2025-04-19 23:08:41,049 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (89, 21). NaN count: 1
+2025-04-19 23:08:41,049 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (89, 22). NaN count: 21
+2025-04-19 23:08:41,049 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (89, 23). NaN count: 1
+2025-04-19 23:08:41,050 - financial_prediction_system - INFO - Calculating Z-scores for GME...
+2025-04-19 23:08:41,051 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 23:08:41,106 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 0 valid Z/ModZ anomalies for Close Price.
+2025-04-19 23:08:41,112 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 4 valid Z/ModZ anomalies for Volume.
+2025-04-19 23:08:41,118 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 1 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 23:08:41,121 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 23:08:41,121 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (89, 3)
+2025-04-19 23:08:41,121 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (68, 3)
+2025-04-19 23:08:41,121 - financial_prediction_system - INFO - Applying Isolation Forest for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 68 points...
+2025-04-19 23:08:41,122 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (68, 3)
+2025-04-19 23:08:41,122 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (68, 3)
+2025-04-19 23:08:41,179 - financial_prediction_system - INFO - [IForest] Detected 4 anomalies out of 68 points.
+2025-04-19 23:08:41,180 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (68, 3), shape of anomaly_series: (68,), common index size: 68
+2025-04-19 23:08:41,180 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (68, 3)
+2025-04-19 23:08:41,181 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 68 points with 4 anomalies.
+2025-04-19 23:08:41,196 - financial_prediction_system - INFO - Applying DBSCAN for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 68 points...
+2025-04-19 23:08:41,197 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (68, 3)
+2025-04-19 23:08:41,197 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (68, 3)
+2025-04-19 23:08:41,198 - financial_prediction_system - INFO - [DBSCAN] Detected 27 anomalies out of 68 points.
+2025-04-19 23:08:41,198 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (68, 3), shape of anomaly_series: (68,), common index size: 68
+2025-04-19 23:08:41,199 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (68, 3)
+2025-04-19 23:08:41,200 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 68 points with 27 anomalies.
+2025-04-19 23:08:41,215 - financial_prediction_system - INFO - Performing STL decomposition for GME close price...
+2025-04-19 23:08:41,215 - financial_prediction_system - DEBUG - [STL Prep] Input has DatetimeIndex.
+2025-04-19 23:08:41,215 - financial_prediction_system - DEBUG - [STL Prep] QuantLib available. Attempting NYSE calendar regularization.
+2025-04-19 23:08:41,216 - financial_prediction_system - INFO - [STL Prep] Successfully regularized index using QuantLib NYSE calendar. Freq='B'. New length: 89
+2025-04-19 23:08:41,216 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='B', length=89
+2025-04-19 23:08:41,222 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 23:08:41,222 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+2024-12-04    0.022198
+2024-12-05    0.008652
+2024-12-06   -0.053637
+2024-12-09    0.033870
+2024-12-10    0.076615
+2025-04-19 23:08:41,222 - financial_prediction_system - DEBUG - Reindexed STL results (which had DatetimeIndex) back to original DatetimeIndex.
+2025-04-19 23:08:41,222 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (89, 4)
+2025-04-19 23:08:41,238 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 24 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 23:08:41,256 - financial_prediction_system - INFO - Completed Anomaly Analysis for GME. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 23:08:41,256 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for GME.
+2025-04-19 23:08:41,277 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 23:08:41,277 - financial_prediction_system - INFO - Tail Risk: Calculated 88 returns using column 'close'.
+2025-04-19 23:08:41,277 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 23:08:41,290 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0636, Normal=-0.0782, t=-0.0679
+2025-04-19 23:08:41,291 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 23:08:41,300 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 26 rolling VaR points and 26 rolling CVaR points.
+2025-04-19 23:08:41,302 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 23:08:41,303 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 88 negative returns.
+2025-04-19 23:08:41,303 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 5 exceedances above threshold 0.0685 (quantile=0.95) for 88 losses.
+2025-04-19 23:08:41,303 - financial_prediction_system - WARNING - Tail Risk (GPD Fit): Insufficient or non-unique exceedances (5 total, 5 unique) to reliably fit GPD model. Need >= 10 total and >= 3 unique.
+2025-04-19 23:08:41,303 - financial_prediction_system - WARNING - Tail Risk (Return Level Plot): Cannot plot return levels due to missing/invalid GPD fit parameters.
+2025-04-19 23:08:41,304 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 23:08:41,304 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 88 valid absolute returns.
+2025-04-19 23:08:41,304 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 10
+2025-04-19 23:08:41,304 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 1 estimates for k values 10 to 10.
+2025-04-19 23:08:41,307 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.
+2025-04-19 23:09:03,106 - financial_prediction_system - INFO - Starting volatility analysis for GME...
+2025-04-19 23:09:03,111 - financial_prediction_system - INFO - Generating volatility plots for GME...
+2025-04-19 23:09:03,215 - financial_prediction_system - INFO - Volatility analysis complete for GME. Generated 7 plots.
+2025-04-19 23:09:03,216 - financial_prediction_system - INFO - Starting correlation analysis for GME...
+2025-04-19 23:09:03,287 - financial_prediction_system - INFO - Correlation analysis complete for GME. Generated 2 plots/results.
+2025-04-19 23:09:03,287 - financial_prediction_system - INFO - Starting anomaly analysis for GME...
+2025-04-19 23:09:03,289 - financial_prediction_system - DEBUG - Initial df_analysis shape: (301, 21). Head:
+        date   open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+0 2024-02-01  14.34  14.42  14.02  14.42  2220154    2024-02          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+1 2024-02-02  14.15  14.92  14.08  14.73  2924462    2024-02     0.021270     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2 2024-02-05  14.50  14.61  13.40  13.46  4361519    2024-02    -0.090164     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+3 2024-02-06  13.60  14.30  13.43  14.10  3052466    2024-02     0.046452     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+4 2024-02-07  14.12  14.30  13.78  14.07  1947793    2024-02    -0.002130     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2025-04-19 23:09:03,289 - financial_prediction_system - DEBUG - Set 'date' column as DatetimeIndex for GME. Index type: datetime64[ns]
+2025-04-19 23:09:03,291 - financial_prediction_system - DEBUG - df_analysis shape after potential index setting: (301, 20). Head:
+             open   high    low  close   volume year_month  log_returns  vol_5d  vol_10d  vol_21d  vol_42d  vol_63d  vol_126d  vol_252d  parkinson_vol  atr_14d  atr_14d_smoothed  atr_normalized  atr_normalized_smoothed vol_regime
+date                                                                                                                                                                                                                                 
+2024-02-01  14.34  14.42  14.02  14.42  2220154    2024-02          NaN     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2024-02-02  14.15  14.92  14.08  14.73  2924462    2024-02     0.021270     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2024-02-05  14.50  14.61  13.40  13.46  4361519    2024-02    -0.090164     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2024-02-06  13.60  14.30  13.43  14.10  3052466    2024-02     0.046452     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2024-02-07  14.12  14.30  13.78  14.07  1947793    2024-02    -0.002130     NaN      NaN      NaN      NaN      NaN       NaN       NaN            NaN      NaN               NaN             NaN                      NaN        Low
+2025-04-19 23:09:03,292 - financial_prediction_system - DEBUG - Calculated log_return. Shape: (301, 21). NaN count: 1
+2025-04-19 23:09:03,292 - financial_prediction_system - DEBUG - Calculated volatility. Shape: (301, 22). NaN count: 21
+2025-04-19 23:09:03,292 - financial_prediction_system - DEBUG - Calculated volume_pct_change. Shape: (301, 23). NaN count: 1
+2025-04-19 23:09:03,292 - financial_prediction_system - INFO - Calculating Z-scores for GME...
+2025-04-19 23:09:03,294 - financial_prediction_system - DEBUG - Z-Score Results - Close NaNs: 0, Vol NaNs: 0, LogRet NaNs: 1
+2025-04-19 23:09:03,378 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 2 valid Z/ModZ anomalies for Close Price.
+2025-04-19 23:09:03,390 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 32 valid Z/ModZ anomalies for Volume.
+2025-04-19 23:09:03,401 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 13 valid Z/ModZ anomalies for Log Returns.
+2025-04-19 23:09:03,404 - financial_prediction_system - DEBUG - Features available for clustering: ['log_return', 'volatility', 'volume_pct_change']
+2025-04-19 23:09:03,404 - financial_prediction_system - DEBUG - Created df_pca_subset. Shape before dropna: (301, 3)
+2025-04-19 23:09:03,404 - financial_prediction_system - INFO - df_pca_subset shape after dropna: (280, 3)
+2025-04-19 23:09:03,404 - financial_prediction_system - INFO - Applying Isolation Forest for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 280 points...
+2025-04-19 23:09:03,405 - financial_prediction_system - DEBUG - [IForest] Shape of data_subset after dropna: (280, 3)
+2025-04-19 23:09:03,406 - financial_prediction_system - DEBUG - [IForest] Scaled data shape: (280, 3)
+2025-04-19 23:09:03,468 - financial_prediction_system - INFO - [IForest] Detected 14 anomalies out of 280 points.
+2025-04-19 23:09:03,469 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape of input df: (280, 3), shape of anomaly_series: (280,), common index size: 280
+2025-04-19 23:09:03,469 - financial_prediction_system - DEBUG - [Plot Cluster Isolation Forest] Shape after alignment/masking: (280, 3)
+2025-04-19 23:09:03,470 - financial_prediction_system - INFO - [Plot Cluster Isolation Forest] Plotting 280 points with 14 anomalies.
+2025-04-19 23:09:03,486 - financial_prediction_system - INFO - Applying DBSCAN for GME using features: ['log_return', 'volatility', 'volume_pct_change'] on 280 points...
+2025-04-19 23:09:03,486 - financial_prediction_system - DEBUG - [DBSCAN] Shape of data_subset after dropna: (280, 3)
+2025-04-19 23:09:03,487 - financial_prediction_system - DEBUG - [DBSCAN] Scaled data shape: (280, 3)
+2025-04-19 23:09:03,488 - financial_prediction_system - INFO - [DBSCAN] Detected 45 anomalies out of 280 points.
+2025-04-19 23:09:03,489 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape of input df: (280, 3), shape of anomaly_series: (280,), common index size: 280
+2025-04-19 23:09:03,489 - financial_prediction_system - DEBUG - [Plot Cluster DBSCAN] Shape after alignment/masking: (280, 3)
+2025-04-19 23:09:03,490 - financial_prediction_system - INFO - [Plot Cluster DBSCAN] Plotting 280 points with 45 anomalies.
+2025-04-19 23:09:03,505 - financial_prediction_system - INFO - Performing STL decomposition for GME close price...
+2025-04-19 23:09:03,505 - financial_prediction_system - DEBUG - [STL Prep] Input has DatetimeIndex.
+2025-04-19 23:09:03,505 - financial_prediction_system - DEBUG - [STL Prep] QuantLib available. Attempting NYSE calendar regularization.
+2025-04-19 23:09:03,508 - financial_prediction_system - INFO - [STL Prep] Successfully regularized index using QuantLib NYSE calendar. Freq='B'. New length: 301
+2025-04-19 23:09:03,508 - financial_prediction_system - INFO - Performing STL decomposition with period=21, frequency='B', length=301
+2025-04-19 23:09:03,526 - financial_prediction_system - DEBUG - [STL Debug] Residuals directly after STL fit - NaN count: 0
+2025-04-19 23:09:03,527 - financial_prediction_system - DEBUG - [STL Debug] Residuals head:
+2024-02-01   -0.383385
+2024-02-02    0.058892
+2024-02-05   -0.445695
+2024-02-06   -0.278908
+2024-02-07   -0.192292
+2025-04-19 23:09:03,527 - financial_prediction_system - DEBUG - Reindexed STL results (which had DatetimeIndex) back to original DatetimeIndex.
+2025-04-19 23:09:03,527 - financial_prediction_system - DEBUG - STL decomposition successful. Result shape: (301, 4)
+2025-04-19 23:09:03,548 - financial_prediction_system - DEBUG - [Plot Z Anom] Found 11 valid Z/ModZ anomalies for STL Residuals.
+2025-04-19 23:09:03,576 - financial_prediction_system - INFO - Completed Anomaly Analysis for GME. Generated plot keys: ['zscore_plots', 'zscore_vol_plots', 'log_returns_z_score_plot', 'close_price_with_z_anomalies', 'volume_with_z_anomalies', 'log_returns_z_anomalies_plot', 'iforest_pca_plot', 'dbscan_pca_plot', 'stl_decomposition_plot', 'stl_residual_with_z_anomalies', 'stl_residual_zscore_plots']
+2025-04-19 23:09:03,576 - financial_prediction_system - INFO - Returning 11 non-None anomaly plots for GME.
+2025-04-19 23:09:03,723 - financial_prediction_system - INFO - Starting tail risk analysis...
+2025-04-19 23:09:03,723 - financial_prediction_system - INFO - Tail Risk: Calculated 300 returns using column 'close'.
+2025-04-19 23:09:03,723 - financial_prediction_system - INFO - Generating VaR comparison plot...
+2025-04-19 23:09:03,741 - financial_prediction_system - INFO - Tail Risk (VaR Plot): VaR values calculated: Historical=-0.0786, Normal=-0.1327, t=-0.0917
+2025-04-19 23:09:03,743 - financial_prediction_system - INFO - Generating rolling VaR/CVaR plot...
+2025-04-19 23:09:03,815 - financial_prediction_system - INFO - Tail Risk (Rolling VaR Plot): Calculated 238 rolling VaR points and 238 rolling CVaR points.
+2025-04-19 23:09:03,817 - financial_prediction_system - INFO - Generating EVT return level plot...
+2025-04-19 23:09:03,817 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): Calculating based on 300 negative returns.
+2025-04-19 23:09:03,818 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Found 15 exceedances above threshold 0.1002 (quantile=0.95) for 300 losses.
+2025-04-19 23:09:03,822 - financial_prediction_system - INFO - Tail Risk (GPD Fit): Successful: c=0.1772, scale=0.1026, loc=0.0000 (fixed)
+2025-04-19 23:09:03,822 - financial_prediction_system - INFO - Tail Risk (Return Level Plot): GPD Params: c=0.1772, scale=0.1026, threshold=0.1002, n=300, n_u=15, lambda_u=0.0500
+2025-04-19 23:09:03,824 - financial_prediction_system - INFO - Generating Hill plot...
+2025-04-19 23:09:03,825 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculating for 300 valid absolute returns.
+2025-04-19 23:09:03,825 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): k range: 10 to 30
+2025-04-19 23:09:03,825 - financial_prediction_system - INFO - Tail Risk (Hill Estimator): Calculated 21 estimates for k values 10 to 30.
+2025-04-19 23:09:03,827 - financial_prediction_system - INFO - Tail risk analysis complete. Generated 4 plots.

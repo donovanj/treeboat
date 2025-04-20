@@ -367,12 +367,30 @@ def perform_stl_decomposition(series: pd.Series, period: int = STL_PERIOD) -> pd
             'seasonal': result.seasonal,
             'resid': result.resid
         })
-        # Reindex back to the original pre-processed index if possible
-        try:
-             decomp_df = decomp_df.reindex(original_index)
-        except ValueError:
-            logger.warning("Could not reindex STL results back to original index.")
-            # Keep the index used by STL if reindexing fails
+
+        # --- Restore Original Index If Possible ---
+        # Check if STL ran on an integer index (due to fallback)
+        ran_on_integer_index = not isinstance(processed_series.index, pd.DatetimeIndex)
+
+        if ran_on_integer_index and isinstance(original_index, pd.DatetimeIndex):
+            # If fallback occurred AND original index was DatetimeIndex
+            if len(decomp_df) == len(original_index):
+                # If lengths match, assign the original index back
+                decomp_df.index = original_index
+                logger.info("Applied original DatetimeIndex to integer-indexed STL result (lengths matched).")
+            else:
+                # Lengths mismatch, cannot reliably map back to dates
+                logger.warning(f"STL used integer index, but length ({len(decomp_df)}) differs from original index ({len(original_index)}). Returning with integer index.")
+                # Keep the integer index in this ambiguous case
+        elif isinstance(decomp_df.index, pd.DatetimeIndex):
+             # If STL ran on a DatetimeIndex (likely regularized), reindex to original_index
+             # This aligns timestamps and handles potential gaps/mismatches from regularization
+            try:
+                decomp_df = decomp_df.reindex(original_index)
+                logger.debug("Reindexed STL results (which had DatetimeIndex) back to original DatetimeIndex.")
+            except Exception as e:
+                logger.warning(f"Failed to reindex STL results back to original DatetimeIndex: {e}. Keeping STL-derived DatetimeIndex.")
+        # else: original index wasn't datetime or STL ran on integer and lengths mismatch - keep decomp_df index as is
 
         return decomp_df
     except Exception as e:
@@ -382,7 +400,7 @@ def perform_stl_decomposition(series: pd.Series, period: int = STL_PERIOD) -> pd
 # --- Anomaly Plotting Functions ---
 
 # --- LOWESS Helper Function (Revised V2) ---
-def _add_lowess_trace(fig, x_data, y_data, name_suffix=" LOWESS", color=None, frac=0.25, row=None, col=None, **kwargs):
+def _add_lowess_trace(fig, x_data, y_data, name_suffix=" LOWESS", color=None, frac=0.05, row=None, col=None, **kwargs):
     """Calculates LOWESS and adds it as a trace to the figure."""
     if not STATSMODELS_AVAILABLE or sm_lowess is None:
         # logger.debug("Statsmodels or LOWESS not available. Skipping LOWESS trace.") # Optional: log skipping
@@ -788,6 +806,22 @@ def run_all_anomaly_analyses(df: pd.DataFrame, symbol: str) -> dict:
     results = {}
     df_analysis = df.copy()
     logger.debug(f"Initial df_analysis shape: {df_analysis.shape}. Head:\n{df_analysis.head().to_string()}")
+
+    # --- Set DatetimeIndex ---
+    if 'date' in df_analysis.columns:
+        try:
+            df_analysis['date'] = pd.to_datetime(df_analysis['date'], errors='coerce')
+            df_analysis.set_index('date', inplace=True)
+            df_analysis.sort_index(inplace=True) # Ensure chronological order
+            logger.debug(f"Set 'date' column as DatetimeIndex for {symbol}. Index type: {df_analysis.index.dtype}")
+        except Exception as e:
+            logger.error(f"Failed to set 'date' as index for {symbol}: {e}", exc_info=True)
+            # Continue without date index if setting fails
+    elif not isinstance(df_analysis.index, pd.DatetimeIndex):
+         logger.warning(f"'date' column not found and index is not DatetimeIndex for {symbol}. Plots might use integer index. Index type: {df_analysis.index.dtype}")
+    # -------------------------
+    
+    logger.debug(f"df_analysis shape after potential index setting: {df_analysis.shape}. Head:\n{df_analysis.head().to_string()}")
 
     # --- Calculate necessary base series (handle potential NaNs later) ---
     if 'log_return' not in df_analysis.columns:

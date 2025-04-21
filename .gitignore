@@ -32,3 +32,5 @@ financial_prediction_system/__pycache__
 logs/
 *.sql
 financial_prediction_system/logs/financial_prediction_system.log
+alembic/
+alembic*

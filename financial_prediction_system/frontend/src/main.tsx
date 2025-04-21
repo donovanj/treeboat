@@ -4,6 +4,7 @@ import App from './App';
 import { ThemeProvider, createTheme as createMuiTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { GlobalSelectionProvider } from './context/GlobalSelectionContext';
+import { StockFeatureProvider } from './context/StockFeatureContext';
 
 // --- Mantine Imports ---
 import { MantineProvider, createTheme as createMantineTheme } from '@mantine/core';
@@ -26,7 +27,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ThemeProvider theme={muiTheme}>
         <CssBaseline /> { /* Normalize CSS */ }
         <GlobalSelectionProvider>
-          <App />
+          <StockFeatureProvider>
+            <App />
+          </StockFeatureProvider>
         </GlobalSelectionProvider>
       </ThemeProvider>
     </MantineProvider>

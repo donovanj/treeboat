@@ -34,6 +34,14 @@ interface TargetPreviewResponse {
     metrics: TargetMetrics;
 }
 
+export interface FeatureComposition {
+    id: string;
+    name: string;
+    description?: string;
+    type: string;
+    parameters: Record<string, any>;
+}
+
 export const useFeatureEngineering = () => {
     const [previewData, setPreviewData] = useState<PreviewResponse | null>(null);
     const [isLoading, setIsLoading] = useState(false);

@@ -11,12 +11,16 @@ import {
     Divider
 } from '@mui/material';
 import { useGlobalSelection } from '../context/GlobalSelectionContext';
+import { useStockFeature } from '../context/StockFeatureContext';
 import StockAutocomplete from '../components/StockAutocomplete';
 import FeaturePreviewPlot from '../components/FeaturePreviewPlot';
 import FeatureMetrics from '../components/FeatureMetrics';
 import FeatureBuilder from '../components/FeatureBuilder';
 import SavedFeatures from '../components/SavedFeatures';
 import TargetPreview from '../components/TargetPreview';
+import FeatureCategories from '../components/FeatureCategories';
+import FeatureComposer from '../components/FeatureComposer';
+import FeatureBacktest from '../components/FeatureBacktest';
 import { useFeatureEngineering } from '../hooks/useFeatureEngineering';
 
 interface TabPanelProps {
@@ -61,6 +65,15 @@ const FeatureEngineering: React.FC = () => {
         isLoading, 
         error 
     } = useFeatureEngineering();
+
+    const {
+        selectedFeatures,
+        addFeature,
+        removeFeature,
+        updateFeature,
+        previewFeatures,
+        saveFeatures
+    } = useStockFeature();
 
     useEffect(() => {
         if (stock && startDate && endDate) {
@@ -124,6 +137,27 @@ const FeatureEngineering: React.FC = () => {
         handlePreview(feature.formula);
     };
 
+    const handleFeatureSelect = (feature: any) => {
+        // Generate a unique ID
+        const featureId = `feature_${Date.now()}`;
+        
+        // Add the feature to the composition with default parameters
+        addFeature({
+            id: featureId,
+            name: feature.name,
+            description: feature.description,
+            type: feature.name.toLowerCase(),
+            parameters: feature.parameters?.reduce((params: any, param: any) => {
+                params[param.name] = param.defaultValue;
+                return params;
+            }, {}) || {}
+        });
+    };
+
+    const handleUpdateParameters = (id: string, params: Record<string, any>) => {
+        updateFeature(id, { parameters: params });
+    };
+
     return (
         <Paper sx={{ p: 3, minHeight: '80vh' }}>
             <Typography variant="h4" gutterBottom>
@@ -158,7 +192,9 @@ const FeatureEngineering: React.FC = () => {
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <Tabs value={tabValue} onChange={handleTabChange}>
                                     <Tab label="Feature Builder" />
+                                    <Tab label="Feature Composer" />
                                     <Tab label="Analysis & Preview" />
+                                    <Tab label="Backtesting" />
                                     <Tab label="Saved Features" />
                                 </Tabs>
                             </Box>
@@ -166,6 +202,7 @@ const FeatureEngineering: React.FC = () => {
 
                         {/* Tab Panels */}
                         <Grid item xs={12}>
+                            {/* Feature Builder Tab */}
                             <TabPanel value={tabValue} index={0}>
                                 <Grid container spacing={3}>
                                     <Grid item xs={12} md={6}>
@@ -197,7 +234,27 @@ const FeatureEngineering: React.FC = () => {
                                 </Grid>
                             </TabPanel>
 
+                            {/* Feature Composer Tab */}
                             <TabPanel value={tabValue} index={1}>
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12} md={5}>
+                                        <FeatureCategories onFeatureSelect={handleFeatureSelect} />
+                                    </Grid>
+                                    <Grid item xs={12} md={7}>
+                                        <FeatureComposer
+                                            selectedFeatures={selectedFeatures}
+                                            onAddFeature={handleFeatureSelect}
+                                            onRemoveFeature={removeFeature}
+                                            onUpdateParameters={handleUpdateParameters}
+                                            onPreview={previewFeatures}
+                                            onSave={saveFeatures}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            </TabPanel>
+
+                            {/* Analysis & Preview Tab */}
+                            <TabPanel value={tabValue} index={2}>
                                 <Grid container spacing={3}>
                                     <Grid item xs={12}>
                                         {currentFeature && (
@@ -224,7 +281,30 @@ const FeatureEngineering: React.FC = () => {
                                 </Grid>
                             </TabPanel>
 
-                            <TabPanel value={tabValue} index={2}>
+                            {/* Backtesting Tab */}
+                            <TabPanel value={tabValue} index={3}>
+                                {selectedFeatures.length > 0 ? (
+                                    selectedFeatures.map((feature) => (
+                                        <Box key={feature.id} sx={{ mb: 3 }}>
+                                            <Typography variant="subtitle1" gutterBottom>
+                                                {feature.name}
+                                            </Typography>
+                                            <FeatureBacktest
+                                                composition={feature}
+                                                startDate={startDate || ''}
+                                                endDate={endDate || ''}
+                                            />
+                                        </Box>
+                                    ))
+                                ) : (
+                                    <Alert severity="info">
+                                        Add features in the Feature Composer tab to run backtests
+                                    </Alert>
+                                )}
+                            </TabPanel>
+
+                            {/* Saved Features Tab */}
+                            <TabPanel value={tabValue} index={4}>
                                 {stock ? (
                                     <SavedFeatures
                                         symbol={stock}

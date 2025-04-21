@@ -39,14 +39,20 @@ interface Feature {
 
 interface SavedFeaturesProps {
     symbol: string;
-    onPreview: (formula: string) => void;
-    onEdit: (feature: Feature) => void;
+    onPreview?: (formula: string) => void;
+    onEdit?: (feature: Feature) => void;
+    onSelect?: (featureId: string) => void;
+    selectedIds?: string[];
+    selectionMode?: boolean;
 }
 
 const SavedFeatures: React.FC<SavedFeaturesProps> = ({
     symbol,
     onPreview,
-    onEdit
+    onEdit,
+    onSelect,
+    selectedIds = [],
+    selectionMode = false
 }) => {
     const [features, setFeatures] = useState<Feature[]>([]);
     const [loading, setLoading] = useState(false);
@@ -91,12 +97,20 @@ const SavedFeatures: React.FC<SavedFeaturesProps> = ({
     };
 
     const handlePreview = (feature: Feature) => {
-        onPreview(feature.formula);
+        if (onPreview) {
+            onPreview(feature.formula);
+        }
     };
 
     const handleFormulaView = (feature: Feature) => {
         setSelectedFeature(feature);
         setDialogOpen(true);
+    };
+    
+    const handleSelect = (feature: Feature) => {
+        if (onSelect) {
+            onSelect(feature.id.toString());
+        }
     };
 
     if (loading) {
@@ -138,24 +152,37 @@ const SavedFeatures: React.FC<SavedFeaturesProps> = ({
                                     {feature.returns_correlation?.toFixed(4) || '-'}
                                 </TableCell>
                                 <TableCell>
-                                    <IconButton 
-                                        onClick={() => handlePreview(feature)}
-                                        title="Preview"
-                                    >
-                                        <PreviewIcon />
-                                    </IconButton>
-                                    <IconButton
-                                        onClick={() => handleFormulaView(feature)}
-                                        title="View Formula"
-                                    >
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton
-                                        onClick={() => handleDelete(feature.id)}
-                                        title="Delete"
-                                    >
-                                        <DeleteIcon />
-                                    </IconButton>
+                                    {selectionMode ? (
+                                        <Button
+                                            variant={selectedIds.includes(feature.id.toString()) ? "contained" : "outlined"}
+                                            color="primary"
+                                            size="small"
+                                            onClick={() => handleSelect(feature)}
+                                        >
+                                            {selectedIds.includes(feature.id.toString()) ? "Selected" : "Select"}
+                                        </Button>
+                                    ) : (
+                                        <>
+                                            <IconButton 
+                                                onClick={() => handlePreview(feature)}
+                                                title="Preview"
+                                            >
+                                                <PreviewIcon />
+                                            </IconButton>
+                                            <IconButton
+                                                onClick={() => handleFormulaView(feature)}
+                                                title="View Formula"
+                                            >
+                                                <EditIcon />
+                                            </IconButton>
+                                            <IconButton
+                                                onClick={() => handleDelete(feature.id)}
+                                                title="Delete"
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </>
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -188,17 +215,19 @@ const SavedFeatures: React.FC<SavedFeaturesProps> = ({
                     <Button onClick={() => setDialogOpen(false)}>
                         Close
                     </Button>
-                    <Button 
-                        onClick={() => {
-                            if (selectedFeature) {
-                                onEdit(selectedFeature);
-                            }
-                            setDialogOpen(false);
-                        }}
-                        color="primary"
-                    >
-                        Edit Feature
-                    </Button>
+                    {onEdit && (
+                        <Button 
+                            onClick={() => {
+                                if (selectedFeature && onEdit) {
+                                    onEdit(selectedFeature);
+                                }
+                                setDialogOpen(false);
+                            }}
+                            color="primary"
+                        >
+                            Edit Feature
+                        </Button>
+                    )}
                 </DialogActions>
             </Dialog>
         </>

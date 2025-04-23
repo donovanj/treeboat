@@ -1,8 +1,15 @@
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [react()],
+  envDir: '..',
+  plugins: [react(), sentryVitePlugin({
+    authToken: process.env.SENTRY_AUTH_TOKEN,
+    org: "djx",
+    project: "javascript-react-treeboat"
+  })],
+
   server: {
     port: 5173,
     open: true,
@@ -25,5 +32,9 @@ export default defineConfig({
         },
       },
     },
+  },
+
+  build: {
+    sourcemap: true
   }
 });

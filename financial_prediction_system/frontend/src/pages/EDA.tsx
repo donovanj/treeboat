@@ -12,6 +12,40 @@ dayjs.extend(isBetween);
 import '@mantine/dates/styles.css';
 // ---------------------
 
+// NYSE Holiday Utility
+const isNYSEHoliday = (date: Date): boolean => {
+  const d = dayjs(date);
+  const year = d.year();
+  const month = d.month(); // 0-based
+  const day = d.date();
+  
+  // Weekend check
+  if (d.day() === 0 || d.day() === 6) return true;
+  
+  // Fixed holidays
+  if (
+    (month === 0 && day === 1) || // New Year's Day
+    (month === 6 && day === 4) || // Independence Day
+    (month === 11 && day === 25) // Christmas
+  ) return true;
+  
+  // Monday holidays
+  if (
+    (month === 0 && d.day() === 1 && day <= 3) || // New Year's Day (observed)
+    (month === 1 && d.day() === 1 && day <= 21) || // Presidents Day
+    (month === 4 && d.day() === 1 && day >= 25) || // Memorial Day
+    (month === 8 && d.day() === 1 && day <= 7) || // Labor Day
+    (month === 10 && d.day() === 4 && day >= 22 && day <= 28) || // Thanksgiving
+    (month === 11 && d.day() === 1 && day === 26) // Christmas (observed)
+  ) return true;
+  
+  // Good Friday (approximation - first Friday after first full moon after March 21)
+  // This is a simplification - for a production app, you would want to fetch actual holidays from an API
+  if (month === 3 && d.day() === 5 && day >= 1 && day <= 7) return true;
+  
+  return false;
+};
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -37,6 +71,25 @@ function TabPanel(props: TabPanelProps) {
     </div>
   );
 }
+
+// Styled Calendar wrapper component
+const StyledCalendarWrapper = ({ children }: { children: React.ReactNode }) => (
+  <Box sx={{
+    '.mantine-Calendar-day[data-today]': {
+      borderColor: 'blue.6',
+      borderWidth: 2,
+      borderStyle: 'solid'
+    },
+    '.mantine-Calendar-day[data-holiday]': {
+      backgroundColor: 'red.1',
+      '&:hover': {
+        backgroundColor: 'red.2'
+      }
+    }
+  }}>
+    {children}
+  </Box>
+);
 
 const EDA: React.FC = () => {
   const { stock, setStock, startDate, setStartDate, endDate, setEndDate } = useGlobalSelection();
@@ -644,6 +697,11 @@ const EDA: React.FC = () => {
 
     const selected = isSelectedStart || isSelectedEnd || (isInRange && !(isSelectedStart || isSelectedEnd)); // Highlight range but not ends
 
+    // Check if the date is today
+    const isToday = day.isSame(dayjs(), 'day');
+    // Check if it's a NYSE holiday
+    const isHoliday = isNYSEHoliday(date);
+
     return {
       // selected: selected ? true : undefined, // Mantine doesn't use 'selected' prop directly here for styling
       style: (theme) => ({
@@ -651,6 +709,8 @@ const EDA: React.FC = () => {
             ? theme.colors.blue[6] 
             : selected // Use the calculated 'selected' for in-range background
             ? 'rgba(34, 139, 230, 0.15)' 
+            : isHoliday 
+            ? theme.colors.red[1]  // Light red background for holidays
             : undefined,
         color: isSelectedStart || isSelectedEnd ? theme.white : selected ? theme.black : undefined,
         // Simpler border radius handling might be needed depending on desired look
@@ -658,6 +718,7 @@ const EDA: React.FC = () => {
                       isSelectedStart && end ? '50% 0 0 50%' : 
                       isSelectedEnd ? '0 50% 50% 0' : 
                       selected ? 0 : '50%', 
+        border: isToday ? `2px solid ${theme.colors.blue[6]}` : undefined, // Blue border for today
       }),
       onClick: (event) => { 
         event.preventDefault(); 
@@ -683,14 +744,16 @@ const EDA: React.FC = () => {
         </Grid>
          <Grid item xs={12} sm={6} md={8}>
             {/* Use basic Calendar with getDayProps for range styling */}
-            <Calendar
-              // value={selectedRange[0]} // Don't control single value
-              getDayProps={getDayProps} // Apply styling and click handler
-              minDate={new Date("2020-01-02")}
-              maxDate={new Date()}
-              numberOfColumns={2} // Display two months
-              highlightToday={true} // Highlight today's date
-            />
+            <StyledCalendarWrapper>
+              <Calendar
+                firstDayOfWeek={0} // 0 for Sunday
+                getDayProps={getDayProps} // Apply styling and click handler
+                minDate={new Date("2020-01-02")}
+                maxDate={new Date()}
+                numberOfColumns={2} // Display two months
+                highlightToday={false} // We're handling today's highlighting in getDayProps
+              />
+            </StyledCalendarWrapper>
         </Grid>
       </Grid>
       

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@clerk/clerk-react": "^5.29.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mantine/core": "^7.17.4",
@@ -11,6 +12,8 @@
     "@monaco-editor/react": "^4.7.0",
     "@mui/icons-material": "^5.14.0",
     "@mui/material": "^5.14.0",
+    "@sentry/react": "^9.13.0",
+    "@sentry/vite-plugin": "^3.3.1",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.7",
     "d3": "^7.9.0",

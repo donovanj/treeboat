@@ -1,12 +1,21 @@
 """Main FastAPI application"""
 
+import sentry_sdk
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from financial_prediction_system.api.routes import models, predictions, backtests, daily_inference, data_cleaning, eda, feature_engineering
-from financial_prediction_system.api.schemas import ErrorResponse
+from financial_prediction_system.api.routes import data_cleaning, eda
+from financial_prediction_system.api.schemas.base import ErrorResponse
 from financial_prediction_system.logging_config import logger
+
+# Initialize Sentry
+sentry_sdk.init(
+    dsn="https://d3191e273f6f68e11d7278a2485d0299@o4509098273275904.ingest.us.sentry.io/4509197987086336",
+    # Add data like request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    send_default_pii=True,
+)
 
 # Create FastAPI app
 app = FastAPI(
@@ -60,12 +69,7 @@ async def http_exception_handler(request: Request, exc: HTTPException):
 
 # Register routers
 app.include_router(data_cleaning.router)
-app.include_router(models.router)
-app.include_router(predictions.router)
-app.include_router(backtests.router)
-app.include_router(daily_inference.router)
 app.include_router(eda.router)
-app.include_router(feature_engineering.router)
 
 # Root endpoint
 @app.get("/")
@@ -82,6 +86,11 @@ async def root():
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy"}
+
+# Sentry debug endpoint
+@app.get("/sentry-debug")
+async def trigger_error():
+    division_by_zero = 1 / 0
 
 # Add model endpoints for non-interactive API exploration
 @app.get("/models-api")

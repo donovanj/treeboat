@@ -3,8 +3,12 @@ import json
 import pymongo
 from datetime import datetime
 import time
-from financial_prediction_system.infrastructure.database.connection import SessionLocal
 import os
+import sys
+from sqlalchemy import text
+from financial_prediction_system.infrastructure.database.connection import SessionLocal
+from financial_prediction_system.data_loaders.rate_limiter import rate_limited, with_retry
+from financial_prediction_system.logging_config import logger
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -34,26 +38,15 @@ HEADERS = {
     "Accept-Encoding": "gzip, deflate"
 }
 
-def get_with_retry(url, max_retries=3):
-    """Get data with retry logic"""
-    for attempt in range(max_retries):
-        try:
-            print(f"Requesting: {url}")
-            response = requests.get(url, headers=HEADERS)
-            if response.status_code == 200:
-                return response.json()
-            elif response.status_code == 429:  # Too Many Requests
-                wait_time = 10 * (attempt + 1)
-                print(f"Rate limited, waiting {wait_time} seconds...")
-                time.sleep(wait_time)
-            else:
-                print(f"Error {response.status_code}: {response.text}")
-                time.sleep(5)
-                return None
-        except Exception as e:
-            print(f"Exception during request: {e}")
-            time.sleep(5)
-    return None
+@rate_limited(name="sec_api", tokens=1, tokens_per_second=0.1, max_tokens=1)
+@with_retry(max_retries=3, base_delay=2.0, backoff_factor=2.0, 
+           exceptions=(requests.RequestException, json.JSONDecodeError))
+def get_with_retry(url):
+    """Get data with SEC API rate limiting and exponential backoff retry"""
+    logger.info(f"Requesting: {url}")
+    response = requests.get(url, headers=HEADERS)
+    response.raise_for_status()  # This will raise an exception for 4XX/5XX responses
+    return response.json()
 
 def get_company_filings(cik):
     """Get recent filings for a company by CIK number"""
@@ -126,16 +119,27 @@ def process_company(symbol, company_name, sector, industry, missing_ciks=None):
     """Process a company's SEC data, only processing new filings and accumulating missing CIKs."""
     print(f"Processing {company_name} ({symbol})...")
 
-    # First, find CIK for the company
-    ticker_lookup_url = "https://www.sec.gov/include/ticker.txt"
-    response = requests.get(ticker_lookup_url, headers=HEADERS)
+    # Find CIK using the official company_tickers.json file
     cik = None
-    if response.status_code == 200:
-        for line in response.text.splitlines():
-            parts = line.strip().split('\t')
-            if len(parts) == 2 and parts[0].lower() == symbol.lower():
-                cik = parts[1]
+    try:
+        tickers_url = "https://www.sec.gov/files/company_tickers.json"
+        response = requests.get(tickers_url, headers=HEADERS)
+        response.raise_for_status()
+        company_data = response.json()
+        
+        # Iterate through the dictionary values to find the matching ticker
+        for item in company_data.values():
+            if item.get('ticker', '').upper() == symbol.upper():
+                cik = str(item.get('cik_str')) # CIK is already zero-padded
                 break
+                
+    except requests.RequestException as e:
+        print(f"Error fetching company tickers JSON: {e}")
+    except json.JSONDecodeError as e:
+        print(f"Error parsing company tickers JSON: {e}")
+    except Exception as e: # Catch any other unexpected errors during lookup
+        print(f"An unexpected error occurred during CIK lookup for {symbol}: {e}")
+
 
     if not cik:
         print(f"Could not find CIK for {symbol}")
@@ -245,28 +249,24 @@ def process_company(symbol, company_name, sector, industry, missing_ciks=None):
         )
         if metrics_list:
             # Insert metrics only if not already present (by cik, symbol, metric, period_end, value)
-            inserted_count = 0
-            for metric_doc in metrics_list:
-                query = {
-                    "cik": metric_doc["cik"],
-                    "symbol": metric_doc["symbol"],
-                    "metric": metric_doc["metric"],
-                    "period_end": metric_doc["period_end"],
-                    "value": metric_doc["value"]
-                }
-                if not metrics.find_one(query):
-                    metrics.insert_one(metric_doc)
-                    inserted_count += 1
-            print(f"Stored {inserted_count} new metrics for {symbol}")
-    # Respect SEC rate limits
-    time.sleep(1)
+            # Use our bulk operations utility
+            from financial_prediction_system.sec_data.bulk_operations import bulk_upsert_documents
+            
+            # Define key fields for uniqueness
+            key_fields = ["cik", "symbol", "metric", "period_end", "value"]
+            
+            # Perform bulk upsert
+            result = bulk_upsert_documents(metrics, metrics_list, key_fields)
+            print(f"Stored {len(metrics_list)} metrics for {symbol} (upserted: {result['upserted']})")
+    # Using the rate limiter decorator handles this for us now
+    # No need for manual sleep
 
 
 def test_symbol(symbol, missing_ciks=None):
     """Run the process for a single test symbol"""
     try:
         result = session.execute(
-            "SELECT symbol, company_name, sector, industry FROM stocks WHERE symbol = :symbol",
+            text("SELECT symbol, company_name, sector, industry FROM stocks WHERE symbol = :symbol"),
             {"symbol": symbol}
         ).fetchone()
         if result:
@@ -285,31 +285,80 @@ def test_symbol(symbol, missing_ciks=None):
 
 
 # Main process
-def main(test_symbol_val=None):
+def main(test_symbol_val=None, start_index=0):
     missing_ciks = []
+    processed_symbols = set()
+    start_time = datetime.now()
+    
+    # State file for resume functionality
+    state_file = "sec_update_state.json"
+    
     try:
         if test_symbol_val:
             print(f"Testing single symbol: {test_symbol_val}")
             test_symbol(test_symbol_val, missing_ciks)
         else:
-            stocks = session.execute("SELECT symbol, company_name, sector, industry FROM stocks WHERE is_active = TRUE").fetchall()
-            for symbol, company_name, sector, industry in stocks:
-                process_company(symbol, company_name, sector, industry, missing_ciks)
-                time.sleep(2)
+            # Load already processed symbols to avoid reprocessing
+            for company in companies.find({}, {"symbol": 1}):
+                processed_symbols.add(company.get("symbol"))
+            
+            print(f"Already processed {len(processed_symbols)} symbols")
+            
+            # Use text() for the raw SQL query
+            stocks = session.execute(text("SELECT symbol, company_name, sector, industry FROM stocks WHERE is_active = TRUE")).fetchall()
+            for idx, (symbol, company_name, sector, industry) in enumerate(stocks):
+                if idx < start_index:
+                    continue
+                
+                if symbol in processed_symbols:
+                    print(f"Skipping already processed {symbol}")
+                    continue
+                    
+                try:
+                    process_company(symbol, company_name, sector, industry, missing_ciks)
+                except Exception as e:
+                    logger.error(f"Error processing {symbol}: {str(e)}")
+                    # Log the error and continue with next symbol
+                    with open("error_log.txt", "a") as f:
+                        f.write(f"{datetime.now()} - Error processing {symbol}: {e}\n")
+                
+                # Save progress periodically
+                if idx % 10 == 0:
+                    with open(state_file, "w") as f:
+                        json.dump({
+                            "resume_from": symbol,
+                            "index": idx,
+                            "missing_ciks": missing_ciks,
+                            "processed_count": idx + 1,
+                            "last_updated": datetime.now().isoformat()
+                        }, f)
+                    print(f"Progress: {idx}/{len(stocks)} companies processed")
     finally:
+        elapsed = datetime.now() - start_time
+        print(f"\nProcess completed in {elapsed}")
         if missing_ciks:
             print("\nSymbols with missing CIKs:")
             print(", ".join(missing_ciks))
+            with open("missing_ciks.txt", "w") as f:
+                f.write("\n".join(missing_ciks))
         else:
             print("\nNo missing CIKs!")
         session.close()
 
 
 if __name__ == "__main__":
-    import sys
-    
-    # Check if a symbol was provided as a command-line argument
-    if len(sys.argv) > 1:
+    # Add resume functionality
+    if len(sys.argv) > 1 and sys.argv[1].lower() == "resume":
+        try:
+            with open("sec_update_state.json", "r") as f:
+                state = json.load(f)
+                start_index = state.get("index", 0)
+            print(f"Resuming from index {start_index}")
+            main(start_index=start_index)
+        except FileNotFoundError:
+            print("No state file found. Starting from beginning.")
+            main()
+    elif len(sys.argv) > 1:
         test_symbol_val = sys.argv[1].upper()
         main(test_symbol_val)
     else:

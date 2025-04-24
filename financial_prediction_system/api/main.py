@@ -24,15 +24,22 @@ app = FastAPI(
     version="1.0.0"
 )
 
-@app.on_event("startup")
-async def startup_event():
-    """Log when the API starts"""
-    logger.info("Financial Prediction API starting up")
+from contextlib import asynccontextmanager
 
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Log when the API shuts down"""
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup logic
+    logger.info("Financial Prediction API starting up")
+    yield
+    # Shutdown logic
     logger.info("Financial Prediction API shutting down")
+
+app = FastAPI(
+    title="Financial Prediction API",
+    description="API for financial predictions using machine learning models",
+    version="1.0.0",
+    lifespan=lifespan
+)
 
 # Add CORS middleware
 app.add_middleware(

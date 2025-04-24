@@ -11,6 +11,9 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 from plotly.utils import PlotlyJSONEncoder
 
+from financial_prediction_system.logging_config import logger
+
+
 # Stats / Math
 from scipy import stats
 

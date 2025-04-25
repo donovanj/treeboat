@@ -169,13 +169,22 @@ def process_company(symbol, company_name, sector, industry, missing_ciks=None):
     latest_date = latest_filing["filing_date"] if latest_filing else None
 
     # Get company filings
-    filings_data = get_company_filings(cik)
+    try:
+        filings_data = get_company_filings(cik)
+    except requests.exceptions.HTTPError as e:
+        logger.warning(f"Could not get filings for {symbol} (CIK: {cik}): {e}")
+        filings_data = None # Ensure filings_data is None if request fails
+    except Exception as e: # Catch other potential errors like JSONDecodeError
+        logger.error(f"Unexpected error getting filings for {symbol} (CIK: {cik}): {e}")
+        filings_data = None
+        
     if not filings_data:
-        print(f"No filings data for {symbol}")
-        return
+        print(f"No filings data retrieved for {symbol}")
+        # Decide if you want to return here or continue to try getting facts
+        # return # Optional: uncomment to stop processing if filings fail
 
     # Store only new filings
-    if 'filings' in filings_data and 'recent' in filings_data['filings']:
+    if filings_data and 'filings' in filings_data and 'recent' in filings_data['filings']:
         recent_filings = filings_data['filings']['recent']
         stored_count = 0
         for i in range(len(recent_filings.get('accessionNumber', []))):
@@ -211,8 +220,22 @@ def process_company(symbol, company_name, sector, industry, missing_ciks=None):
                 )
         print(f"Stored {stored_count} truly new filings for {symbol}")
 
-    # Get facts data (only once per company)
-    facts_data = get_company_facts(cik)
+    # Get facts data (only once per company), handle 404 gracefully
+    facts_data = None
+    try:
+        facts_data = get_company_facts(cik)
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 404:
+            logger.warning(f"No Company Facts data found (404) for {symbol} (CIK: {cik}). Skipping facts processing.")
+        else:
+            # Re-raise other HTTP errors to be handled by the retry logic or general error handling
+            logger.error(f"HTTP error getting facts for {symbol} (CIK: {cik}): {e}")
+            raise # Or handle differently if needed
+    except Exception as e:
+        # Catch other potential errors (like JSONDecodeError from retry failures)
+        logger.error(f"Error getting or processing facts for {symbol} (CIK: {cik}): {e}")
+        # facts_data remains None
+
     if facts_data:
         # Store the whole facts data in the facts collection, sanitizing large ints
         def sanitize_for_mongo(obj):

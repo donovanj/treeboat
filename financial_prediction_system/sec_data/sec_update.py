@@ -25,8 +25,21 @@ session = SessionLocal()
 # pg_cursor = pg_conn.cursor()
 
 # MongoDB connection
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-sec_db = client["sec_database"]
+mongo_user = os.getenv("MONGO_USERNAME")
+mongo_pass = os.getenv("MONGO_PASSWORD")
+mongo_host = os.getenv("MONGO_HOST", "localhost") # Default to localhost if not set
+mongo_port = os.getenv("MONGO_PORT", "27017") # Default to 27017 if not set
+mongo_db_name = os.getenv("MONGO_DB_NAME", "sec_database") # Default db name
+
+if mongo_user and mongo_pass:
+    MONGO_URI = f"mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:{mongo_port}/"
+else:
+    # Fallback to old connection string if no user/pass are set
+    MONGO_URI = f"mongodb://{mongo_host}:{mongo_port}/"
+    logger.warning("Connecting to MongoDB without authentication. Ensure MONGO_USERNAME and MONGO_PASSWORD are set in .env if authentication is enabled.")
+
+client = pymongo.MongoClient(MONGO_URI)
+sec_db = client[mongo_db_name]
 companies = sec_db["companies"]
 filings = sec_db["filings"]
 facts = sec_db["facts"]
@@ -38,7 +51,7 @@ HEADERS = {
     "Accept-Encoding": "gzip, deflate"
 }
 
-@rate_limited(name="sec_api", tokens=1, tokens_per_second=0.1, max_tokens=1)
+@rate_limited(name="sec_api", tokens=1, tokens_per_second=5, max_tokens=5)
 @with_retry(max_retries=3, base_delay=2.0, backoff_factor=2.0, 
            exceptions=(requests.RequestException, json.JSONDecodeError))
 def get_with_retry(url):
